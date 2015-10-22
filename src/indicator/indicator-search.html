@@ -1,0 +1,16 @@
+<md-content>
+  <section class="npdc-search">
+    
+    <npdc:create-button class="np-primary-control"></npdc:create-button>
+    
+    <p>Filter: <input ng-model="query"></p>
+    <ol>
+    <li ng-repeat="i in feed.entries | filter:query | orderBy:orderProp">
+      <a href="{{i.id}}/show" ng-repeat="title in i.titles" ng-if="title.lang == T.lang">
+        {{ title.title || i.id }}
+      </a> [{{i.parameters.length || 0 }} parameter{{i.parameters.length == 1 ? "" : "s"}}]
+    </li> 
+    </ol>
+
+  </section>
+</md-content>

@@ -1,0 +1,35 @@
+
+
+<article ng-if="document">
+  <h1>Timeseries:
+    <a ng-if="T.lang == t.lang" ng-repeat="t in document.titles" editable-titlearea="t.title" minLength="80" e-rows="1" e-cols="{{t.title.length}}" onaftersave="save()">{{t.title}}
+    </a> ({{ document.systems.join(',') }})
+  </h1>
+<!--
+	<dygraph ng-click="newData = !newData" ng-show="!newData" data="dygraph.data" options="dygraph.options" ng-click="dataEdit = !dataEdit"></dygraph>
+-->
+<npdc:formula></npdc:formula>
+ 
+<!--
+<div ng-repeat="e in edits">
+-->
+
+<!--      <span ng-repeat="sibling in siblings">
+-->
+				
+<!--	<dt>Indicator</dt>
+  <dd ng-repeat="t in indicator.titles">
+    <a ng-if="t.lang == lang" ng-href="{{indicator.id}}/show">{{t.title}}</a>
+  </dd>-->
+    
+<!--  <dt>Parameter</dt>
+  <dd ng-repeat="t in parameter.titles">
+    <a ng-if="t.lang == T.{{" ng-href="parameter/{{parameter.id}}">{{t.title}}</a>
+  </dd>-->
+
+<md-input-container>
+  <label>Raw JSON data</label>
+	<textarea json-text type="text" class="form-control" ng-model="document.data" ></textarea>
+</md-input-container>
+
+</article>

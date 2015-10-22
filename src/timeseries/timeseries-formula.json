@@ -1,0 +1,62 @@
+{
+  "fieldsets": [
+    {
+      "title": "Timeseries",
+      "fields": [
+        {
+          "id": "titles"
+        }
+      ]
+    },
+    {
+      "title": "Systems",
+      "fields": [
+         "systems"
+      ]
+    },
+    {
+      "title": "Data",
+      "fields": [
+        {
+          "id": "data"
+        }
+      ]
+    },
+    {
+      "title": "Units and labels",
+      "fields": [
+        "unit",
+        {
+          "id": "labels"
+        }
+      ]
+    },
+    {
+      "title": "Locations and species",
+      "fields": [
+
+       
+        "locations",
+        "species"
+
+
+      ]
+    },
+    {
+      "title": "Metadata",
+      "fields": [
+        { "id": "_id", "hidden": false, "disabled": true },
+        { "id": "_rev", "hidden": false, "disabled": true },
+        { "id": "schema", "hidden": false, "disabled": true },
+        { "id": "workspace", "hidden": false, "disabled": true },
+        { "id": "collection", "hidden": false, "disabled": true },
+        { "id": "created", "hidden": false, "disabled": true },
+         { "id": "created_by", "hidden": false, "disabled": true },
+         { "id": "updated", "hidden": false, "disabled": true },
+         { "id": "updated_by", "hidden": false, "disabled": true }
+
+      ]
+    }
+     
+  ]
+}

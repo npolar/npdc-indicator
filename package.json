@@ -1,0 +1,38 @@
+{
+  "name": "npdc-indicator",
+  "version": "0.0.1",
+  "description": "https://data.npolar.no/indicator",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "npolar",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.4.5",
+    "angular-npolar": "git://github.com/npolar/angular-npolar.git",
+    "angular-route": "^1.4.5",
+    "angular-xeditable": "*",
+    "formula": "git://github.com/npolar/formula.git",
+    "lodash": "^3.10.0",
+    "tv4": "^1.1.12",
+    "npdc-common": "git://github.com/npolar/npdc-common.git"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-debug": "^2.0.1",
+    "should": "^7.0.2",
+    "npdc-gulp": "npolar/npdc-gulp",
+    "babelify": "^6.2.0",
+    "browserify": "^11.1.0",
+    "browserify-ngannotate": "^1.0.1",
+    "partialify": "^3.1.3"
+  },
+"browserify": {
+    "transform": [
+      "babelify",
+      "partialify",
+      "browserify-ngannotate"
+    ]
+  }
+}

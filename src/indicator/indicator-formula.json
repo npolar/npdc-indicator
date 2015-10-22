@@ -1,0 +1,64 @@
+{
+  "fieldsets": [
+    {
+      "title": "Indicator",
+      "fields": [
+        {
+          "id": "titles"
+        }
+      ]
+    },
+    {
+      "title": "Parameters",
+      "fields": [
+        {
+          "id": "parameters",
+          "placeholder": "Parameter URI"
+        }
+      ]
+    },
+    {
+      "title": "Locations",
+      "fields": [
+        {
+          "id": "locations"
+        }
+      ]
+    },
+    {
+      "title": "Species",
+      "fields": [
+        {
+          "id": "species"
+        }
+      ]
+    },
+    {
+      "title": "Locations and species",
+      "fields": [
+
+       
+        "locations",
+        "species"
+
+
+      ]
+    },
+    {
+      "title": "Metadata",
+      "fields": [
+        { "id": "_id", "hidden": false, "disabled": true },
+        { "id": "_rev", "hidden": false, "disabled": true },
+        { "id": "schema", "hidden": false, "disabled": true },
+        { "id": "workspace", "hidden": false, "disabled": true },
+        { "id": "collection", "hidden": false, "disabled": true },
+        { "id": "created", "hidden": false, "disabled": true },
+         { "id": "created_by", "hidden": false, "disabled": true },
+         { "id": "updated", "hidden": false, "disabled": true },
+         { "id": "updated_by", "hidden": false, "disabled": true }
+
+      ]
+    }
+    
+  ]
+}

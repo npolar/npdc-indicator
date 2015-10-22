@@ -1,0 +1,27 @@
+<npdc:create-button class="np-primary-control"></npdc:create-button>
+
+<p>Filter: <input ng-model="query"></p>
+
+<section class="alert alert-danger" role="alert">
+	<h4>Timeseries with no data</h4>
+  
+	<ol>
+    <li ng-repeat="t in noData | filter:query | orderBy:orderProp">
+      <a ng-href="timeseries/{{t.id}}" ng-repeat="title in t.titles" ng-if="title.lang == T.lang">
+        {{ title.title }}
+      </a>
+    </li>
+  </ol>
+</section>
+
+<section>
+  <h4>Timeseries with data</h4>
+    
+  <ol>
+    <li ng-repeat="t in feed.entries | filter:query"> 
+      <a ng-href="timeseries/{{t.id}}" ng-repeat="title in t.titles" ng-if="title.lang == T.lang">
+        {{title.title}}
+      </a>
+    </li>
+  </ol>
+</section>
