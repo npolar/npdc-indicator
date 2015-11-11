@@ -1,19 +1,15 @@
-<article ng-if="document">
-  <h1>Parameter:
-    <a ng-if="T.lang == t.lang" ng-repeat="t in document.titles" editable-titlearea="t.title" minLength="80" e-rows="1" e-cols="{{t.title.length}}" onaftersave="save()">{{t.title}}
-    </a> ({{ document.systems.join(',') }})
-  </h1>
-  
-  <npdc:edit-button></npdc:edit-button>
-  
+<!DOCTYPE html>
+<article ng-if="document" layout-padding>
+  <npdc:edit-button class="np-primary-control"></npdc:edit-button>
+
   <h4>Indicator</h4>
   <div ng-repeat="t in indicator.titles">
-    <a ng-if="t.lang == T.lang" ng-href="{{indicator.id}}/show">{{t.title}}</a>
+    <a ng-if="t.lang == lang" ng-href="{{indicator.id}}/show">{{t.title}}</a>
   </div>
-    
+
   <h4>Timeseries ({{ timeseries.length }})</h4>
   <ul ng-repeat="p in timeseries">
-    <li ng-repeat="t in p.titles" ng-if="t.lang == T.lang">
+    <li ng-repeat="t in p.titles" ng-if="t.lang == lang">
       <a ng-href="timeseries/{{p.id}}">{{t.title}}</a>
     </li>
   </ul>

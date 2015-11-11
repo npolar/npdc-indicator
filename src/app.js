@@ -21,8 +21,8 @@ let app = angular.module('indicatorApp', [
   "templates"
 ]);
 
-app.service('NpolarLang', require('./../node_modules/angular-npolar/src/api/i18n/LangService'));
-app.service('NpolarTranslate', require('./../node_modules/angular-npolar/src/api/i18n/TranslateService'));
+//app.service('NpolarLang', require('./../node_modules/angular-npolar/src/api/i18n/LangService'));
+//app.service('NpolarTranslate', require('./../node_modules/angular-npolar/src/api/i18n/TranslateService'));
 
 app.controller('IndicatorSearchController', require('./indicator/IndicatorSearchController.js'));
 app.controller('IndicatorEditController', require('./indicator/IndicatorEditController.js'));
@@ -32,27 +32,8 @@ app.controller('ParameterSearchController', require('./parameter/ParameterSearch
 app.controller('ParameterEditController', require('./parameter/ParameterEditController.js'));
 app.controller('ParameterShowController', require('./parameter/ParameterShowController.js'));
 
-app.controller('TimeseriesSearchController', require('./timeseries/TimeseriesSearchController'));
-app.controller('TimeseriesEditController', require('./timeseries/TimeseriesEditController'));
-
-app.directive('jsonText', function() {
-    return {
-        restrict: 'A',
-        require: 'ngModel',
-        link: function(scope, element, attr, ngModel) {            
-          function into(input) {
-            return JSON.parse(input);
-          }
-          function out(data) {
-
-            return JSON.stringify(data);
-          }
-          ngModel.$parsers.push(into);
-          ngModel.$formatters.push(out);
-
-        }
-    };
-});
+app.controller('TimeseriesSearchController', require('./indicator-timeseries/TimeseriesSearchController'));
+app.controller('TimeseriesEditController', require('./indicator-timeseries/TimeseriesEditController'));
 
 var services = [
   {"path": "/indicator",  "resource": "Indicator", schema: "/indicator/edit/indicator-schema.json"},
@@ -70,31 +51,24 @@ services.forEach(function (service) {
   }]);
 });
 
-//app..config(['$compileProvider', function ($compileProvider) {
-//  $compileProvider.debugInfoEnabled(true);
-//}]);
-  
 // Routing
 app.config(require('./routes'));
-  
+
 // Inject auth interceptor
 app.config(function($httpProvider) {
   $httpProvider.interceptors.push("npolarApiInterceptor");
 });
 
 // Inject npolarApiConfig and run
-app.run(function(npolarApiConfig, Config, npdcAppConfig, NpolarLang, NpolarTranslate) {
-  
-  NpolarLang.lang = 'nb';
-  
+app.run(function(npolarApiConfig, Config, npdcAppConfig) {
   let environment = "production"; // development | test | production
 
   Object.assign(npolarApiConfig, new AutoConfig(environment));
-  
+
   npdcAppConfig.cardTitle = 'Environmental monitoring';
   npdcAppConfig.toolbarTitle = 'Indicators';
-    
+
   console.debug("npolarApiConfig", npolarApiConfig);
   console.debug("npdcAppConfig", npdcAppConfig);
-  
+
 });

@@ -7,16 +7,18 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "npolar",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/npolar/npdc-indicator.git"
+  },
   "license": "MIT",
   "dependencies": {
-    "angular": "^1.4.5",
-    "angular-npolar": "git://github.com/npolar/angular-npolar.git",
-    "angular-route": "^1.4.5",
+    "angular": "^1.4.7",
+    "angular-npolar": "npolar/angular-npolar",
+    "angular-route": "^1.4.7",
     "angular-xeditable": "*",
-    "formula": "git://github.com/npolar/formula.git",
-    "lodash": "^3.10.0",
-    "tv4": "^1.1.12",
-    "npdc-common": "git://github.com/npolar/npdc-common.git"
+    "formula": "npolar/formula",
+    "npdc-common": "npolar/npdc-common"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
