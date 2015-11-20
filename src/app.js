@@ -1,24 +1,16 @@
 'use strict';
 // [indicatorApp](https://github.com/npolar/npdc-indicator)
 
-require('angular-npolar');
-require('angular-route');
-require('angular-xeditable');
-require('formula');
-
 let angular = require('angular');
 let npdcCommon = require('npdc-common');
 let AutoConfig = npdcCommon.AutoConfig;
+require('angular-xeditable');
+
 
 // Create "vesselApp" (angular module) and declare its dependencies
 let app = angular.module('indicatorApp', [
-  'ngRoute',
-  'formula',
-  "npolarApi",
-  'npolarUi',
   'npdcUi',
-  "xeditable",
-  "templates"
+  "xeditable"
 ]);
 
 //app.service('NpolarLang', require('./../node_modules/angular-npolar/src/api/i18n/LangService'));
