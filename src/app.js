@@ -65,14 +65,7 @@ app.config(function($httpProvider) {
 // Inject npolarApiConfig and run
 app.run(function($http, npolarApiConfig, npdcAppConfig, NpolarLang, NpolarTranslate) {
 
-  //let environment; // development | test | production
-  let environment = 'production';
-  //let dictionary = [{ code: 'npdc.app.title', context, texts: [
-  //      { text: "Indikatorovervåkning", lang: 'nb' },
-  //      { text: "Indicator monitoring", lang: 'en' }
-  //    ]
-  //  }
-  //];
+  let environment; // development | test | production
   
   // i18n
   $http.get('//api.npolar.no/text/?q=&filter-bundle=npolar|npdc|npdc-indicator&format=json&variant=array&limit=all').then(response => {
@@ -84,7 +77,7 @@ app.run(function($http, npolarApiConfig, npdcAppConfig, NpolarLang, NpolarTransl
   
   Object.assign(npolarApiConfig, new AutoConfig(environment));
 
-  npdcAppConfig.cardTitle = "X";
+  npdcAppConfig.cardTitle = '';
   npdcAppConfig.toolbarTitle = NpolarTranslate.translate('npdc.app.Title');
 
   console.debug("npolarApiConfig", npolarApiConfig);
