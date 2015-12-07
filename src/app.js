@@ -9,7 +9,7 @@ require('angular-xeditable');
 
 // Create "vesselApp" (angular module) and declare its dependencies
 let app = angular.module('indicatorApp', [
-  'npdcUi',
+  'npdcCommon',
   "xeditable"
 ]);
 

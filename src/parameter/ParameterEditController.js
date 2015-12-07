@@ -1,7 +1,7 @@
 'use strict';
 
 // @ngInject
-var ParameterEditController = function($scope, $routeParams, $location, $controller, $route, npolarApiConfig, NpolarApiMessage, Indicator, Parameter, Timeseries) {
+var ParameterEditController = function($scope, $controller, npolarApiConfig, Parameter, Timeseries) {
 
   $controller('NpolarEditController', {
     $scope: $scope
