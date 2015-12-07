@@ -33,7 +33,7 @@ app.controller('TimeseriesSearchController', require('./indicator-timeseries/Tim
 app.controller('TimeseriesEditController', require('./indicator-timeseries/TimeseriesEditController'));
 
 
-app.directive('input', require('npdc-common/wrappers/chronopic')({
+app.directive('input', require('npdc-common/src/wrappers/chronopic')({
   css: { 'max-width': '340px' },
   format: '{date}' // display format (stored as proper RFC 3339 date or date-time)
 }));
@@ -66,15 +66,15 @@ app.config(function($httpProvider) {
 app.run(function($http, npolarApiConfig, npdcAppConfig, NpolarLang, NpolarTranslate) {
 
   let environment; // development | test | production
-  
+
   // i18n
   $http.get('//api.npolar.no/text/?q=&filter-bundle=npolar|npdc|npdc-indicator&format=json&variant=array&limit=all').then(response => {
     NpolarTranslate.appendToDictionary(response.data);
     NpolarLang.setLanguagesFromDictionaryUse({ min: 0.50, force: ['en', 'nb'], dictionary: response.data});
     console.debug(NpolarLang.getLanguageCounts(response.data));
   });
-  
-  
+
+
   Object.assign(npolarApiConfig, new AutoConfig(environment));
 
   npdcAppConfig.cardTitle = '';
@@ -83,5 +83,5 @@ app.run(function($http, npolarApiConfig, npdcAppConfig, NpolarLang, NpolarTransl
   console.debug("npolarApiConfig", npolarApiConfig);
   console.debug("npdcAppConfig", npdcAppConfig);
 
-  
+
 });
