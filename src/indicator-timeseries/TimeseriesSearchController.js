@@ -3,25 +3,15 @@ var angular = require('angular');
 var _ = require('lodash');
 
 // @ngInject
-var TimeseriesFeedController = function($scope, $location, $controller, npdcAppConfig, Timeseries) {
-
+var TimeseriesSearchController = function($scope, $location, $controller, npdcAppConfig, Timeseries) {
+  
   // Extend NpolarApiBaseController
   $controller("NpolarBaseController", {
     $scope: $scope
   });
   $scope.resource = Timeseries;
-  npdcAppConfig.cardTitle = 'Environmental monitoring timeseries';
 
-  //Nav.array(function(data) {
-  //  var nav = _.reject(data, function(li) {
-  //    if (angular.isDefined(li.access)) {
-  //      return true;
-  //    } else {
-  //      return false;
-  //    }
-  //  });
-  //   $scope.nav = nav;
-  //});
+  npdcAppConfig.cardTitle = 'Environmental monitoring timeseries';
 
   var query = {
     start: 0,
@@ -43,13 +33,6 @@ var TimeseriesFeedController = function($scope, $location, $controller, npdcAppC
 
   $scope.orderProp = 'updated';
 
-  // Switch language
-  //$scope.setLang = function(lang) {
-  //  $scope.lang = lang;
-  //  $scope.title = $scope.getTitle(lang);
-  //
-  //};
-
   $scope.getTitle = function(lang) {
     return _.where($scope.timeseries.titles, {
       lang: lang
@@ -65,6 +48,7 @@ var TimeseriesFeedController = function($scope, $location, $controller, npdcAppC
       "not-data.year": "0..",
       fields: "id,titles",
       sort: "-updated"
+
     };
     Timeseries.array(angular.extend(noDataQuery, $location.search()), function(array) {
       $scope.noData = array;
@@ -75,4 +59,4 @@ var TimeseriesFeedController = function($scope, $location, $controller, npdcAppC
 
 
 };
-module.exports = TimeseriesFeedController;
+module.exports = TimeseriesSearchController;

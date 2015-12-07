@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <article ng-if="document">
+  <h1>Timeseries:
+    <a>{{ document.titles | title }}</a> ({{ document.systems.join(',') }})
+  </h1>
+  <h3>Parameter:
+    <a ng-href="{{parameter/parameter.id}}">{{ parameter.titles | title }}</a>
+  </h3>
+  <h3>Indicator:
+    <a ng-href="./{{indicator.id}}">{{ indicator.titles | title }}</a>
+  </h3>
 <!--
 	<dygraph ng-click="newData = !newData" ng-show="!newData" data="dygraph.data" options="dygraph.options" ng-click="dataEdit = !dataEdit"></dygraph>
 -->

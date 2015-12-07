@@ -4,15 +4,19 @@
 <article ng-if="document" layout-padding>
   <npdc:edit-button class="np-primary-control"></npdc:edit-button>
 
-  <h4>Indicator</h4>
-  <div ng-repeat="t in indicator.titles">
-    <a ng-if="t.lang == lang" ng-href="{{indicator.id}}/show">{{t.title}}</a>
-  </div>
-
-  <h4>Timeseries ({{ timeseries.length }})</h4>
-  <ul ng-repeat="p in timeseries">
-    <li ng-repeat="t in p.titles" ng-if="t.lang == lang">
-      <a ng-href="timeseries/{{p.id}}">{{t.title}}</a>
+  <h1>Parameter:
+    <a>{{ document.titles | title }}
+    </a> ({{ document.systems.join(',') }})
+  </h1>
+  
+  <h3>Indicator:
+    <a ng-href="{{indicator.id}}/show">{{ indicator.titles | title }}</a>
+  </h3>
+  
+  <h3>Timeseries ({{ timeseries.length }})</h3>
+  <ul ng-repeat="t in timeseries">
+    <li>
+      <a ng-href="timeseries/{{t.id}}?title={{t.titles|title}}">{{ t.titles | title }}</a>
     </li>
   </ul>
 </article>

@@ -8,41 +8,43 @@ var routes = function($routeProvider, $locationProvider) {
 
   $routeProvider
   // timeseries
-    .when('/timeseries/:id/edit', {
-      templateUrl: 'indicator-timeseries/timeseries-edit.html',
-      controller: 'TimeseriesEditController'
-    })
-    .when('/timeseries/:id', {
-      redirectTo: '/timeseries/:id/edit'
-    })
-    .when('/timeseries', {
-      templateUrl: 'indicator-timeseries/timeseries-search.html',
-      controller: 'TimeseriesSearchController'
-    })
-
+  .when('/timeseries/:id/edit', {
+    templateUrl: 'indicator-timeseries/timeseries-edit.html', controller: 'TimeseriesEditController'
+  })
+  .when('/timeseries/:id', {
+    redirectTo: '/timeseries/:id/edit'
+  })
+  .when('/timeseries', {
+    templateUrl: 'indicator-timeseries/timeseries-search.html', controller: 'TimeseriesSearchController'
+  })
+  
   // parameter
   .when('/parameter/:id/show', {
-      redirectTo: '/parameter/:id'
-    })
-    .when('/parameter', {
-      templateUrl: 'parameter/parameter-search.html',
-      controller: 'ParameterSearchController'
-    })
-    .when('/parameter/:id', {
-      templateUrl: 'parameter/parameter-show.html',
-      controller: 'ParameterShowController'
-    })
-    .when('/parameter/:id/edit', {
-      templateUrl: 'parameter/parameter-edit.html',
-      controller: 'ParameterEditController'
-    })
-
-
-  .when('/__new/edit', {
-    templateUrl: 'indicator/indicator-edit.html',
-    controller: 'IndicatorEditController'
+    redirectTo: '/parameter/:id'
+  })  
+  //.when('/parameter', {
+  //  redirectTo: '/parameter/search'
+  //})  
+  .when('/parameter', {
+    templateUrl: 'parameter/parameter-search.html', controller: 'ParameterSearchController'
+  })    
+  .when('/parameter/:id', {
+    //redirectTo: '/parameter/:id/edit'
+    templateUrl: 'parameter/parameter-show.html', controller: 'ParameterShowController'
   })
-
+  .when('/parameter/:id/edit', {
+    templateUrl: 'parameter/parameter-edit.html', controller: 'ParameterEditController'
+  })
+  
+  // (indicator)
+  //.when('/', {
+  //  redirectTo: '/search'
+  //})
+  
+  //.when('/__new/edit', {
+  //  templateUrl: 'indicator/indicator-edit.html', controller: 'IndicatorEditController'
+  //})
+  
   .when('/', {
       templateUrl: 'indicator/indicator-search.html',
       controller: 'IndicatorSearchController'

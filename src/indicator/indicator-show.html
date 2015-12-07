@@ -4,13 +4,15 @@
 <article ng-if="document" layout-padding>
   <npdc:edit-button class="np-primary-control"></npdc:edit-button>
 
-  <section ng-if="document.parameters.length > 0">
-  <h3>Parameters ({{document.systems.join(",")}})</h3>
+  <h1>
+    Indicator: <a href="#">{{ document.titles | json }}</a> ({{ document.systems.join(', ') }})
+  </h1>
+  <npdc:edit-button class="np-primary-control"></npdc:edit-button>
+  
+  <section ng-if="document.parameters.length > 0">    
+  <h3>Parameters ({{parameters.length}})</h3>
   <ul ng-repeat="p in parameters">
-    <li>
-      <a ng-if="t.lang == lang" ng-repeat="t in p.titles" ng-href="parameter/{{p.id}}/show">{{t.title}}</a> [{{p.timeseries.length || 0}} timeseries]
-    </li>
+    <li><a ng-href="parameter/{{p.id}}/show">{{ p.titles | title }}</a> [{{p.timeseries.length || 0}} timeseries]
   </ul>
   </section>
-
 </article>

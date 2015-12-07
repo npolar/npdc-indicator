@@ -1,7 +1,9 @@
 'use strict';
 
 // @ngInject
-var ParameterEditController = function($scope, $controller, npolarApiConfig, Parameter, Timeseries) {
+let ParameterEditController = function($scope, $routeParams, $location, $controller, $route, npolarApiConfig, NpolarApiMessage, Indicator, Parameter, Timeseries) {
+
+  const schema = '//api.npolar.no/schema/indicator-parameter-1';
 
   $controller('NpolarEditController', {
     $scope: $scope
@@ -18,7 +20,7 @@ var ParameterEditController = function($scope, $controller, npolarApiConfig, Par
       workspace: 'indicator',
       systems: duplicate.systems,
       locations: duplicate.locations,
-      schema: 'https://api.npolar.no/schema/indicator-timeseries-1'
+      schema: 'http://api.npolar.no/schema/indicator-timeseries-1'
     });
 
     timeseries.$save(function(timeseries) {
@@ -28,10 +30,24 @@ var ParameterEditController = function($scope, $controller, npolarApiConfig, Par
     });
   };
 
-  $scope.formula.schema = '//api.npolar.no/schema/indicator-parameter-1';
+  $scope.formula.schema = schema;
   $scope.formula.form = "parameter/parameter-formula.json";
   $scope.formula.template = 'material';
-
+  
+  // @overide
+  $scope.newAction = function() {
+    console.debug('newAction');
+    $scope.document = new Parameter({
+      titles: [{ lang: "nb", title: "Parameter (nb)"}, { lang: "en", title: "Parameter (en)"}],
+      systems: ["mosj.no"],
+      schema: 'http:'+schema,
+      workspace: "indicator",
+      collection: "indicator"
+    });
+    
+    console.debug($scope.document);
+    $scope.formula.model = $scope.document;
+  };
   $scope.edit();
 
 };

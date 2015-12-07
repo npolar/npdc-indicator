@@ -3,9 +3,10 @@
     {
       "title": "Indicator",
       "fields": [
-        {
+        "systems", {
           "id": "titles"
         }
+        
       ]
     },
     {
@@ -31,17 +32,6 @@
         {
           "id": "species"
         }
-      ]
-    },
-    {
-      "title": "Locations and species",
-      "fields": [
-
-       
-        "locations",
-        "species"
-
-
       ]
     },
     {

@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <npdc:create-button class="np-primary-control"></npdc:create-button>
 <md-whiteframe class="np-search-input md-whiteframe-z1">
+  
+      <md-content layout-padding>
+<h2>System: <span ng-repeat="system in ['mosj.no', 'nare']">
+    <a href="?q=&filter-systems={{system}}">{{  system | t }}</a>
+  </span></h2>
+      </md-content>
+  
   <md-input-container flex md-no-float md-autofocus class="np-search-input-input">
     <md-icon>search</md-icon>
-    <input ng-model="query" placeholder="Filter" type="text">
+    <input ng-model="query" placeholder="Search indicators" type="text">
   </md-input-container>
 </md-whiteframe>
 
@@ -13,14 +20,14 @@
     <section>
       <npdc:loader ng-if="!feed.entries"></npdc:loader>
 
-      <div ng-repeat="i in feed.entries | filter:query | orderBy:orderProp">
+      <div ng-repeat="i in feed.entries | filter:query ">
         <md-content class="np-layout-list">
-          <a ng-href="{{i.id}}/show" ng-repeat="title in i.titles" ng-if="title.lang == lang">
+          <a ng-href="{{i.id}}/show"> <!--?title={{ i.titles | title }}&lang={{lang.getLang()}}-->
             <md-list>
               <md-list-item class="md-2-line">
                 <div class="md-list-item-text">
                   <h3 class="md-headline">
-                    {{ title.title || i.id }}
+                   {{ i.titles | title }}
                   </h3>
                   <h4>{{i.parameters.length || 0 }} parameter{{i.parameters.length == 1 ? "" : "s"}}</h4>
                 </div>
@@ -42,3 +49,9 @@
     </section>
   </md-content>
 </div>
+
+  <h4>Language: <span ng-repeat="lang in ['nb', 'en']">
+    <a ng-href="?lang={{lang}}">{{ lang }}</a>
+  </span></h4>
+
+<md-content>
