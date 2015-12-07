@@ -25,21 +25,21 @@ app.controller('IndicatorSearchController', require('./indicator/IndicatorSearch
 app.controller('IndicatorEditController', require('./indicator/IndicatorEditController.js'));
 app.controller('IndicatorShowController', require('./indicator/IndicatorShowController.js'));
 
-app.controller('ParameterSearchController', require('./parameter/ParameterSearchController.js'));
-app.controller('ParameterEditController', require('./parameter/ParameterEditController.js'));
-app.controller('ParameterShowController', require('./parameter/ParameterShowController.js'));
+app.controller('ParameterSearchController', require('./indicator-parameter/ParameterSearchController.js'));
+app.controller('ParameterEditController', require('./indicator-parameter/ParameterEditController.js'));
+app.controller('ParameterShowController', require('./indicator-parameter/ParameterShowController.js'));
 
 app.controller('TimeseriesSearchController', require('./indicator-timeseries/TimeseriesSearchController'));
 app.controller('TimeseriesEditController', require('./indicator-timeseries/TimeseriesEditController'));
 
 
-app.directive('input', require('npdc-common/src/wrappers/chronopic')({
+app.directive('input', require('npdc-common/wrappers/chronopic')({
   css: { 'max-width': '340px' },
   format: '{date}' // display format (stored as proper RFC 3339 date or date-time)
 }));
 
 var services = [
-  {"path": "/indicator",  "resource": "Indicator", schema: "/indicator/edit/indicator-schema.json"},
+  {"path": "/indicator",  "resource": "Indicator"},
   {"path": "/indicator/parameter",  "resource": "Parameter"},
   {"path": "/indicator/timeseries", "resource": "Timeseries" },
   {"path": "/placename", "base": "//api.npolar.no", "resource": "Placename", fields: "*" },
@@ -63,28 +63,32 @@ app.config(function($httpProvider) {
 });
 
 // Inject npolarApiConfig and run
-app.run(function(npolarApiConfig, npdcAppConfig, NpolarLang, NpolarTranslate) {
+app.run(function($http, npolarApiConfig, npdcAppConfig, NpolarLang, NpolarTranslate) {
 
   //let environment; // development | test | production
   let environment = 'production';
-
-  //let context = 'npdc-indicator';
-
   //let dictionary = [{ code: 'npdc.app.title', context, texts: [
-  //      { text: "Mljøindikatorovervåkning", lang: 'nb' },
-  //      { text: "Environmental indicator monitoring", lang: 'en' }
+  //      { text: "Indikatorovervåkning", lang: 'nb' },
+  //      { text: "Indicator monitoring", lang: 'en' }
   //    ]
   //  }
   //];
-
+  
+  // i18n
+  $http.get('//api.npolar.no/text/?q=&filter-bundle=npolar|npdc|npdc-indicator&format=json&variant=array&limit=all').then(response => {
+    NpolarTranslate.appendToDictionary(response.data);
+    NpolarLang.setLanguagesFromDictionaryUse({ min: 0.50, force: ['en', 'nb'], dictionary: response.data});
+    console.debug(NpolarLang.getLanguageCounts(response.data));
+  });
+  
+  
   Object.assign(npolarApiConfig, new AutoConfig(environment));
 
-  npdcAppConfig.cardTitle = 'Environmental monitoring';
-  npdcAppConfig.toolbarTitle = 'Indicators';
-
+  npdcAppConfig.cardTitle = "X";
+  npdcAppConfig.toolbarTitle = NpolarTranslate.translate('npdc.app.Title');
 
   console.debug("npolarApiConfig", npolarApiConfig);
   console.debug("npdcAppConfig", npdcAppConfig);
 
-
+  
 });
