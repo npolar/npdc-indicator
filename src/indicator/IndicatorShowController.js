@@ -1,17 +1,13 @@
 'use strict';
 
 // @ngInject
-let IndicatorShowController = function($log, $scope, $routeParams, $location, $controller, npdcAppConfig, Indicator, Parameter) {
+let IndicatorShowController = function($log, $scope, $routeParams, $location, $controller, $filter, npdcAppConfig, Indicator, Parameter) {
 
   // Extend NpolarApiBaseController and inject resource
   $controller("NpolarBaseController", {
     $scope: $scope
   });
   $scope.resource = Indicator;
-
-  let title = function (titles, lang) {
-    return titles.find((title) => title.lang === lang).title;
-  };
   
   let showAction = function() {
     
@@ -19,7 +15,7 @@ let IndicatorShowController = function($log, $scope, $routeParams, $location, $c
     Indicator.fetch($routeParams, function(indicator) {
 
       $scope.document = indicator;
-      npdcAppConfig.cardTitle = title(indicator.titles, $scope.lang);
+      npdcAppConfig.cardTitle = $filter('title')(indicator.titles);
 
       $scope.parameters = [];
       let parameter_ids = [];
