@@ -1,15 +1,20 @@
 'use strict';
 
 // @ngInject
-var IndicatorController = function($log, $scope, $routeParams, $location, $controller, npdcAppConfig, Indicator, Parameter) {
+let IndicatorShowController = function($log, $scope, $routeParams, $location, $controller, npdcAppConfig, Indicator, Parameter) {
+
+  // Extend NpolarApiBaseController and inject resource
+  $controller("NpolarBaseController", {
+    $scope: $scope
+  });
+  $scope.resource = Indicator;
 
   let title = function (titles, lang) {
     return titles.find((title) => title.lang === lang).title;
   };
-  $scope.lang = $location.search().lang || "nb";
-
-  let showAction = function () {
-
+  
+  let showAction = function() {
+    
     // Fetch indicator document and its descendants (parameter children and timeseries grandchildren)
     Indicator.fetch($routeParams, function(indicator) {
 
@@ -36,12 +41,8 @@ var IndicatorController = function($log, $scope, $routeParams, $location, $contr
     });
   };
 
-  // Extend NpolarApiBaseController and inject resource
-  $controller("NpolarBaseController", {
-    $scope: $scope
-  });
-  $scope.resource = Indicator;
+
   showAction();
 
 };
-module.exports = IndicatorController;
+module.exports = IndicatorShowController;

@@ -7,6 +7,29 @@
   </md-input-container>
 </md-whiteframe>
 
+<md-content>
+  <section class="npdc-search">
+    
+    <npdc:create-button class="np-primary-control"></npdc:create-button>
+    
+    <h2>System: <span ng-repeat="system in ['mosj.no', 'nare']">
+      <a href="?q=&filter-systems={{system}}">{{ system | t }}</a>
+    </span></h2>
+        
+    <p>Filter: <input ng-model="query" placeholder="Filter parameters"></p>
+    <ol>
+    <li ng-repeat="p in feed.entries | filter:query">
+      <a href="parameter/{{p.id}}/show?title={{ p.titles | title }}">
+        {{ p.titles | title }}
+      </a> [{{p.timeseries.length || 0 }} timeseries ]
+    </li> 
+    </ol>
+    
+  </section>
+</md-content> 
+    
+<!--Stashed changes
+
 <div class="npdc-search">
   <md-content>
 
@@ -42,3 +65,4 @@
     </section>
   </md-content>
 </div>
+-->

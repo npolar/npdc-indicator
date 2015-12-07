@@ -6,7 +6,6 @@ let npdcCommon = require('npdc-common');
 let AutoConfig = npdcCommon.AutoConfig;
 require('angular-xeditable');
 
-
 // Create "vesselApp" (angular module) and declare its dependencies
 let app = angular.module('indicatorApp', [
   'npdcUi',
@@ -15,6 +14,12 @@ let app = angular.module('indicatorApp', [
 
 //app.service('NpolarLang', require('./../node_modules/angular-npolar/src/api/i18n/LangService'));
 //app.service('NpolarTranslate', require('./../node_modules/angular-npolar/src/api/i18n/TranslateService'));
+
+// app.value('npolarTranslateDictionary', require('angular-npolar/src/ui/i18n/translateDictionary'));
+//app.service('NpolarLang', require('angular-npolar/src/ui/i18n/LangService'));
+//app.service('NpolarTranslate', require('angular-npolar/src/ui/i18n/TranslateService'));
+//app.filter('t', require('angular-npolar/src/ui/i18n/translateFilter'));
+//app.filter('title', require('angular-npolar/src/ui/i18n/titleFilter'));
 
 app.controller('IndicatorSearchController', require('./indicator/IndicatorSearchController.js'));
 app.controller('IndicatorEditController', require('./indicator/IndicatorEditController.js'));
@@ -26,6 +31,12 @@ app.controller('ParameterShowController', require('./parameter/ParameterShowCont
 
 app.controller('TimeseriesSearchController', require('./indicator-timeseries/TimeseriesSearchController'));
 app.controller('TimeseriesEditController', require('./indicator-timeseries/TimeseriesEditController'));
+
+
+app.directive('input', require('npdc-common/wrappers/chronopic')({
+  css: { 'max-width': '340px' },
+  format: '{date}' // display format (stored as proper RFC 3339 date or date-time)
+}));
 
 var services = [
   {"path": "/indicator",  "resource": "Indicator", schema: "/indicator/edit/indicator-schema.json"},
@@ -52,15 +63,28 @@ app.config(function($httpProvider) {
 });
 
 // Inject npolarApiConfig and run
-app.run(function(npolarApiConfig, Config, npdcAppConfig) {
-  let environment = "production"; // development | test | production
+app.run(function(npolarApiConfig, npdcAppConfig, NpolarLang, NpolarTranslate) {
 
+  //let environment; // development | test | production
+  let environment = 'production';
+  
+  let context = 'npdc-indicator';
+  
+  //let dictionary = [{ code: 'npdc.app.title', context, texts: [
+  //      { text: "Mljøindikatorovervåkning", lang: 'nb' },
+  //      { text: "Environmental indicator monitoring", lang: 'en' }
+  //    ]
+  //  }
+  //];
+  
   Object.assign(npolarApiConfig, new AutoConfig(environment));
 
   npdcAppConfig.cardTitle = 'Environmental monitoring';
   npdcAppConfig.toolbarTitle = 'Indicators';
 
+  
   console.debug("npolarApiConfig", npolarApiConfig);
   console.debug("npdcAppConfig", npdcAppConfig);
 
+  
 });

@@ -3,20 +3,16 @@
     {
       "title": "Timeseries",
       "fields": [
+        "systems",
         {
           "id": "titles"
         }
       ]
     },
     {
-      "title": "Systems",
-      "fields": [
-         "systems"
-      ]
-    },
-    {
       "title": "Data",
       "fields": [
+        "resolution",
         {
           "id": "data"
         }
