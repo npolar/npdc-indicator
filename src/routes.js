@@ -17,34 +17,34 @@ var routes = function($routeProvider, $locationProvider) {
   .when('/timeseries', {
     templateUrl: 'indicator-timeseries/timeseries-search.html', controller: 'TimeseriesSearchController'
   })
-  
+
   // parameter
   .when('/parameter/:id/show', {
     redirectTo: '/parameter/:id'
-  })  
+  })
   //.when('/parameter', {
   //  redirectTo: '/parameter/search'
-  //})  
+  //})
   .when('/parameter', {
-    templateUrl: 'parameter/parameter-search.html', controller: 'ParameterSearchController'
-  })    
+    templateUrl: 'indicator-parameter/parameter-search.html', controller: 'ParameterSearchController'
+  })
   .when('/parameter/:id', {
     //redirectTo: '/parameter/:id/edit'
-    templateUrl: 'parameter/parameter-show.html', controller: 'ParameterShowController'
+    templateUrl: 'indicator-parameter/parameter-show.html', controller: 'ParameterShowController'
   })
   .when('/parameter/:id/edit', {
-    templateUrl: 'parameter/parameter-edit.html', controller: 'ParameterEditController'
+    templateUrl: 'indicator-parameter/parameter-edit.html', controller: 'ParameterEditController'
   })
-  
+
   // (indicator)
   //.when('/', {
   //  redirectTo: '/search'
   //})
-  
+
   //.when('/__new/edit', {
   //  templateUrl: 'indicator/indicator-edit.html', controller: 'IndicatorEditController'
   //})
-  
+
   .when('/', {
       templateUrl: 'indicator/indicator-search.html',
       controller: 'IndicatorSearchController'

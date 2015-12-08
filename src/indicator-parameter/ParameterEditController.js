@@ -1,7 +1,7 @@
 'use strict';
 
 // @ngInject
-let ParameterEditController = function($scope, $routeParams, $location, $controller, $route, npolarApiConfig, NpolarApiMessage, Indicator, Parameter, Timeseries) {
+let ParameterEditController = function($scope, $routeParams, $location, $controller, $route, npolarApiConfig, NpolarMessage, Indicator, Parameter, Timeseries) {
 
   const schema = '//api.npolar.no/schema/indicator-parameter-1';
 
@@ -33,7 +33,7 @@ let ParameterEditController = function($scope, $routeParams, $location, $control
   $scope.formula.schema = schema;
   $scope.formula.form = "parameter/parameter-formula.json";
   $scope.formula.template = 'material';
-  
+
   // @overide
   $scope.newAction = function() {
     console.debug('newAction');
@@ -44,7 +44,7 @@ let ParameterEditController = function($scope, $routeParams, $location, $control
       workspace: "indicator",
       collection: "indicator"
     });
-    
+
     console.debug($scope.document);
     $scope.formula.model = $scope.document;
   };

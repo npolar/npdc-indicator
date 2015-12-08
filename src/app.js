@@ -65,7 +65,7 @@ app.config(function($httpProvider) {
 // Inject npolarApiConfig and run
 app.run(function($http, npolarApiConfig, npdcAppConfig, NpolarLang, NpolarTranslate) {
 
-  let environment; // development | test | production
+  let environment = "production"; // development | test | production
 
   // i18n
   $http.get('//api.npolar.no/text/?q=&filter-bundle=npolar|npdc|npdc-indicator&format=json&variant=array&limit=all').then(response => {
