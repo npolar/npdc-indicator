@@ -3,8 +3,8 @@
 // @ngInject
 var TimeseriesEditController = function($scope, $controller, $routeParams, NpolarApiSecurity, Timeseries, Parameter, Indicator) {
   
-  //const schema = '//api.npolar.no/schema/indicator-timeseries-1';
-  const schema = 'indicator-timeseries/indicator-timeseries-1.json';
+  const schema = '//api.npolar.no/schema/indicator-timeseries-1';
+  //const schema = 'indicator-timeseries/indicator-timeseries-1.json';
   
   $controller("NpolarEditController", {$scope: $scope});
   $scope.resource = Timeseries;

@@ -1,4 +1,4 @@
-'use strict';
+  'use strict';
 // [indicatorApp](https://github.com/npolar/npdc-indicator)
 
 let angular = require('angular');
@@ -11,15 +11,6 @@ let app = angular.module('indicatorApp', [
   'npdcCommon',
   "xeditable"
 ]);
-
-//app.service('NpolarLang', require('./../node_modules/angular-npolar/src/api/i18n/LangService'));
-//app.service('NpolarTranslate', require('./../node_modules/angular-npolar/src/api/i18n/TranslateService'));
-
-// app.value('npolarTranslateDictionary', require('angular-npolar/src/ui/i18n/translateDictionary'));
-//app.service('NpolarLang', require('angular-npolar/src/ui/i18n/LangService'));
-//app.service('NpolarTranslate', require('angular-npolar/src/ui/i18n/TranslateService'));
-//app.filter('t', require('angular-npolar/src/ui/i18n/translateFilter'));
-//app.filter('title', require('angular-npolar/src/ui/i18n/titleFilter'));
 
 app.controller('IndicatorSearchController', require('./indicator/IndicatorSearchController.js'));
 app.controller('IndicatorEditController', require('./indicator/IndicatorEditController.js'));
