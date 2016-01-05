@@ -15,11 +15,8 @@
   "dependencies": {
     "angular": "^1.4.7",
     "angular-xeditable": "*",
-    "formula": "git://github.com/npolar/formula.git",
     "lodash": "^3.10.0",
-    "tv4": "^1.1.12",
-    "npdc-common": "npolar/npdc-common",
-    "chronopic": "npolar/chronopic.js"
+    "npdc-common": "npolar/npdc-common"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
