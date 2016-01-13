@@ -12,9 +12,6 @@ let app = angular.module('indicatorApp', [
   //xeditable
 ]);
 
-app.controller('IndicatorSearchController', require('./indicator/IndicatorSearchController.js'));
-app.controller('IndicatorEditController', require('./indicator/IndicatorEditController.js'));
-app.controller('IndicatorShowController', require('./indicator/IndicatorShowController.js'));
 
 app.controller('ParameterSearchController', require('./indicator-parameter/ParameterSearchController.js'));
 app.controller('ParameterEditController', require('./indicator-parameter/ParameterEditController.js'));
