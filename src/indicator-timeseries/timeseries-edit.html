@@ -4,36 +4,21 @@
     <a>{{ document.titles | title }}</a> ({{ document.systems.join(',') }})
   </h1>
   <h3>Parameter:
-    <a ng-href="{{parameter/parameter.id}}">{{ parameter.titles | title }}</a>
+    <a ng-href="parameter/{{parameter.id}}">{{ parameter.titles | title }}</a>
   </h3>
-  <h3>Indicator:
-    <a ng-href="./{{indicator.id}}">{{ indicator.titles | title }}</a>
-  </h3>
-<!--
-	<dygraph ng-click="newData = !newData" ng-show="!newData" data="dygraph.data" options="dygraph.options" ng-click="dataEdit = !dataEdit"></dygraph>
--->
-<npdc:formula></npdc:formula>
 
-<!--
-<div ng-repeat="e in edits">
--->
+  <npdc:formula></npdc:formula>
 
-<!--      <span ng-repeat="sibling in siblings">
--->
+  <!--
+  <div ng-repeat="e in edits">
+  -->
 
-<!--	<dt>Indicator</dt>
-  <dd ng-repeat="t in indicator.titles">
-    <a ng-if="t.lang == lang" ng-href="{{indicator.id}}/show">{{t.title}}</a>
-  </dd>-->
+  <!-- <span ng-repeat="sibling in siblings">
+  -->
 
-<!--  <dt>Parameter</dt>
-  <dd ng-repeat="t in parameter.titles">
-    <a ng-if="t.lang == T.{{" ng-href="parameter/{{parameter.id}}">{{t.title}}</a>
-  </dd>-->
-
-<md-input-container>
-  <label>Raw JSON data</label>
-	<textarea npolar-json-text type="text" class="form-control" ng-model="document.data" ></textarea>
-</md-input-container>
+  <!--<md-input-container>
+	<label>Raw JSON data</label>
+	  <textarea npolar-json-text type="text" class="form-control" ng-model="document.data" ></textarea>
+  </md-input-container>-->
 
 </article>

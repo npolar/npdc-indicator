@@ -3,19 +3,17 @@
     {
       "title": "Timeseries",
       "fields": [
-        "systems",
         {
-          "id": "titles"
-        }
+          "id": "systems"
+        },
+        "titles"
       ]
     },
     {
       "title": "Data",
       "fields": [
         "resolution",
-        {
-          "id": "data"
-        }
+        "data"
       ]
     },
     {
