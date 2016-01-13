@@ -19,7 +19,7 @@
     <p>Filter: <input ng-model="query" placeholder="Filter parameters"></p>
     <ol>
     <li ng-repeat="p in feed.entries | filter:query">
-      <a href="parameter/{{p.id}}/show?title={{ p.titles | title }}">
+      <a href="parameter/{{p.id}}/show">
         {{ p.titles | title }}
       </a> [{{p.timeseries.length || 0 }} timeseries ]
     </li> 
