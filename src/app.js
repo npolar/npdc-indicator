@@ -4,12 +4,12 @@
 let angular = require('angular');
 let npdcCommon = require('npdc-common');
 let AutoConfig = npdcCommon.AutoConfig;
-require('angular-xeditable');
+//require('angular-xeditable');
 
 // Create "vesselApp" (angular module) and declare its dependencies
 let app = angular.module('indicatorApp', [
-  'npdcCommon',
-  "xeditable"
+  'npdcCommon'
+  //xeditable
 ]);
 
 app.controller('IndicatorSearchController', require('./indicator/IndicatorSearchController.js'));
@@ -24,10 +24,22 @@ app.controller('TimeseriesSearchController', require('./indicator-timeseries/Tim
 app.controller('TimeseriesEditController', require('./indicator-timeseries/TimeseriesEditController'));
 
 
-app.directive('input', require('npdc-common/src/wrappers/chronopic')({
-  css: { 'max-width': '340px' },
-  format: '{date}' // display format (stored as proper RFC 3339 date or date-time)
-}));
+app.factory('Google', function() {
+  return window.google; // assumes google has already been loaded on the page
+});
+
+app.factory('google', function() {
+  return window.google; // assumes google has already been loaded on the page
+});
+
+app.service('Sparkline', require('./google/Sparkline'));
+
+// FIXME Chronopic is broken now, triggers on created fields shown hidden, but not for when field (timeseries)
+// 
+//app.directive('input', require('npdc-common/src/wrappers/chronopic')({
+//  css: { 'max-width': '340px' },
+//  format: '{date}' // display format (stored as proper RFC 3339 date or date-time)
+//}));
 
 var services = [
   {"path": "/indicator",  "resource": "Indicator"},
