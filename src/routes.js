@@ -7,6 +7,8 @@ var routes = function($routeProvider, $locationProvider) {
   $locationProvider.html5Mode(true).hashPrefix('!');
 
   $routeProvider
+
+  
   // timeseries
   .when('/timeseries/:id/edit', {
     templateUrl: 'indicator-timeseries/timeseries-edit.html', controller: 'TimeseriesEditController'
@@ -15,18 +17,20 @@ var routes = function($routeProvider, $locationProvider) {
     redirectTo: '/timeseries/:id/edit'
   })
   .when('/timeseries', {
-    templateUrl: 'indicator-timeseries/timeseries-search.html', controller: 'TimeseriesSearchController'
+    templateUrl: 'indicator-timeseries/timeseries-search.html',
+    controller: 'TimeseriesSearchController',
+    reloadOnSearch: false
   })
 
   // parameter
   .when('/parameter/:id/show', {
     redirectTo: '/parameter/:id'
   })
-  //.when('/parameter', {
-  //  redirectTo: '/parameter/search'
-  //})
+
   .when('/parameter', {
-    templateUrl: 'indicator-parameter/parameter-search.html', controller: 'ParameterSearchController'
+    templateUrl: 'indicator-parameter/parameter-search.html',
+    controller: 'ParameterSearchController',
+    reloadOnSearch: false
   })
   .when('/parameter/:id', {
     //redirectTo: '/parameter/:id/edit'
@@ -36,30 +40,18 @@ var routes = function($routeProvider, $locationProvider) {
     templateUrl: 'indicator-parameter/parameter-edit.html', controller: 'ParameterEditController'
   })
 
-  // (indicator)
-  //.when('/', {
-  //  redirectTo: '/search'
-  //})
+    
+    
+    //.when('/', {
+    //  redirectTo: '/timeseries'
+    //})
+    
+    ;
+    
+    
+    
 
-  //.when('/__new/edit', {
-  //  templateUrl: 'indicator/indicator-edit.html', controller: 'IndicatorEditController'
-  //})
-
-  .when('/', {
-      templateUrl: 'indicator/indicator-search.html',
-      controller: 'IndicatorSearchController'
-    })
-    .when('/:id/show', {
-      redirectTo: '/:id'
-    })
-    .when('/:id', {
-      templateUrl: 'indicator/indicator-show.html',
-      controller: 'IndicatorShowController'
-    })
-    .when('/:id/edit', {
-      templateUrl: 'indicator/indicator-edit.html',
-      controller: 'IndicatorEditController'
-    });
+    
 
 };
 module.exports = routes;

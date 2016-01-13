@@ -15,7 +15,6 @@
   "dependencies": {
     "angular": "^1.4.7",
     "angular-xeditable": "*",
-    "lodash": "^3.10.0",
     "npdc-common": "npolar/npdc-common"
   },
   "devDependencies": {
