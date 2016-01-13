@@ -1,7 +1,7 @@
 'use strict';
 
 // @ngInject
-var TimeseriesEditController = function($scope, $controller, $routeParams, NpolarApiSecurity, Timeseries, Parameter, Indicator) {
+var TimeseriesEditController = function($scope, $controller, $routeParams, NpolarApiSecurity, Timeseries, Parameter) {
   
   const schema = '//api.npolar.no/schema/indicator-timeseries-1';
   
