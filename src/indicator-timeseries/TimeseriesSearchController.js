@@ -1,9 +1,7 @@
 'use strict';
-var angular = require('angular');
-var _ = require('lodash');
 
 // @ngInject
-var TimeseriesSearchController = function($scope, $location, $controller, npdcAppConfig, Timeseries) {
+var TimeseriesSearchController = function($scope, $location, $controller, $filter, $timeout, npdcAppConfig, NpolarLang, Timeseries, Sparkline) {
   
   // Extend NpolarApiBaseController
   $controller("NpolarBaseController", {
@@ -11,38 +9,55 @@ var TimeseriesSearchController = function($scope, $location, $controller, npdcAp
   });
   $scope.resource = Timeseries;
 
-  npdcAppConfig.cardTitle = 'Environmental monitoring timeseries';
-
-  var query = {
-    start: 0,
-    limit: 1000,
-    "size-facet": 5,
-    format: "json",
-    variant: "atom",
-    sort: "-updated",
-    "filter-data.year": "0..",
-    facets: "systems,collection,species,themes,warn,unit,locations.placename,links.rel",
-    fields: "systems,collection,species,titles,id,created,created_by,updated,updated_by"
+  $scope.avatar = function(t) {
+    return t.systems.join(',');
   };
-  //&date-year=datetime&rangefacet-latitude=10&rangefacet-size=10&sort=datetime&filter-collection=timeseries&q=&format=json
-  Timeseries.feed(angular.extend(query, $location.search()), function(data) {
-    $scope.feed = data.feed;
-  });
-
-  $scope.lang = query.lang || "nb";
-
-  $scope.orderProp = 'updated';
-
-  $scope.getTitle = function(lang) {
-    return _.where($scope.timeseries.titles, {
-      lang: lang
-    })[0].title || $scope.timeseries.title[0].title;
+  
+  $scope.subtitle = function(t) {
+    let points = 0;
+    let subtitle = '';
+    if (t.data && t.data.length > 0) {
+      points = t.data.length;
+      let first = t.data[0];
+      let last = t.data[t.data.length-1];
+      subtitle = `${points} data points (${first.when||first.year}-${last.when||last.year})`;
+    }
+    subtitle += `. Updates: ${ $filter('date')(t.updated)}`;
+    return subtitle;
   };
 
-  $scope.setNoData = function() {
+  let query = function() {
+ 
+    let defaults = {
+      start: 0,
+      limit: 'all',
+      "size-facet": 5,
+      format: "json",
+      variant: "atom",
+      sort: "-updated",
+      "filter-data.year": "0..",
+      facets: "systems,collection,species,themes,warn,unit,locations.placename,links.rel",
+      fields: "systems,data,labels,collection,species,titles,id,created,created_by,updated,updated_by"
+    };
+    
+    let invariants = {}; //$scope.security.isAuthenticated() ? {} : { "not-draft": "yes", "not-progress": "planned", "filter-links.rel": "data" };
+    return Object.assign({}, defaults, invariants);
+  };
+
+  let search = function() {
+    $scope.search(query()).$promise.then(response => {
+      $timeout(function(){
+        Sparkline.drawArray(response.feed.entries);
+      });
+    });
+    
+    
+  };
+  
+  $scope.findTimeseriesWithoutData = function() {
     var noDataQuery = {
       start: 0,
-      limit: 1000,
+      limit: 'all',
       "variant": "array",
       format: "json",
       "not-data.year": "0..",
@@ -50,13 +65,18 @@ var TimeseriesSearchController = function($scope, $location, $controller, npdcAp
       sort: "-updated"
 
     };
-    Timeseries.array(angular.extend(noDataQuery, $location.search()), function(array) {
+    Timeseries.array(Object.assign(noDataQuery, $location.search()), function(array) {
       $scope.noData = array;
     });
   };
 
-  $scope.setNoData();
-
-
+  $scope.findTimeseriesWithoutData();
+  search();
+  
+    
+  $scope.$on('$locationChangeSuccess', (event, data, x) => {
+    // console.log(data, x);
+    search();
+  });
 };
 module.exports = TimeseriesSearchController;
