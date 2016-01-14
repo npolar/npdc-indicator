@@ -2,9 +2,9 @@
 <npdc:create-button class="np-primary-control"></npdc:create-button>
 
 <md-whiteframe class="np-search-input md-whiteframe-z1">
-	
-	
-	
+
+
+
 	<h2>System: <span ng-repeat="system in ['mosj.no', 'nare']">
 			<a href="?q=&filter-systems={{system}}">{{ system | t }}</a>
 		</span>
@@ -17,55 +17,55 @@
 
 <div class="npdc-search">
   <md-content>
-	
+
   <md-tabs md-dynamic-height>
 
-			
+
 		<md-tab label="Timeseries">
-		
+
 			<!--<section>
 				<h4>Timeseries with data</h4>
-			
+
 			<ol>
-					<li ng-repeat="t in feed.entries | filter:query"> 
+					<li ng-repeat="t in feed.entries | filter:query">
 						<a ng-href="timeseries/{{t.id}}">
 							{{ t.titles | title }}
 						</a>
 					</li>
 				</ol>
 			</section>-->
-				
+
 				<md-content class="np-layout-list" ng-repeat="t in feed.entries | filter:query" style="overflow: hidden;">
           <a ng-href="timeseries/{{t.id}}/edit">
             <md-list>
               <md-list-item class="md-2-line">
                 <div class="md-list-item-text">
                   <h3 class="md-headline">
-                    {{ t.titles | title }} 
+                    {{ t.titles | title }}
                   </h3>
-									
+
                   <p flex><em>「<span class="md-avatar">{{ avatar(t) }}</span>」</em>
 										{{ subtitle(t) }}
 									</p>
-									<div id="sparkline-{{$index}}" style="width: 240px; height: 60px;"></div>
-                  
+									<!-- <div id="sparkline-{{$index}}" style="width: 240px; height: 60px;"></div> -->
+
                 </div>
               </md-list-item>
             </md-list>
             <md-divider></md-divider>
 					</a>
         </md-content>
-				
-				
+
+
 
 		</md-tab>
-		
+
 		<md-tab label="Without data">
-			
-				
+
+
 				<section class="alert alert-danger" role="alert">
 					<h4>Timeseries without any data points</h4>
-					
+
 					<ol class="np-layout-list">
 						<li ng-repeat="t in noData | filter:query" class="md-2-line">
 							<a ng-href="timeseries/{{t.id}}">
@@ -76,9 +76,9 @@
 				</section>
 
 		</md-tab>
-		
+
 	</md-tabs>
-	
+
 	</md-content>
 </div>
 

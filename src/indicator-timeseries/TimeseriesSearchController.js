@@ -2,7 +2,7 @@
 
 // @ngInject
 var TimeseriesSearchController = function($scope, $location, $controller, $filter, $timeout, npdcAppConfig, NpolarLang, Timeseries, Sparkline) {
-  
+
   // Extend NpolarApiBaseController
   $controller("NpolarBaseController", {
     $scope: $scope
@@ -12,7 +12,7 @@ var TimeseriesSearchController = function($scope, $location, $controller, $filte
   $scope.avatar = function(t) {
     return t.systems.join(',');
   };
-  
+
   $scope.subtitle = function(t) {
     let points = 0;
     let subtitle = '';
@@ -27,7 +27,7 @@ var TimeseriesSearchController = function($scope, $location, $controller, $filte
   };
 
   let query = function() {
- 
+
     let defaults = {
       start: 0,
       limit: 'all',
@@ -39,21 +39,21 @@ var TimeseriesSearchController = function($scope, $location, $controller, $filte
       facets: "systems,collection,species,themes,warn,unit,locations.placename,links.rel",
       fields: "systems,data,labels,collection,species,titles,id,created,created_by,updated,updated_by"
     };
-    
+
     let invariants = {}; //$scope.security.isAuthenticated() ? {} : { "not-draft": "yes", "not-progress": "planned", "filter-links.rel": "data" };
     return Object.assign({}, defaults, invariants);
   };
 
   let search = function() {
     $scope.search(query()).$promise.then(response => {
-      $timeout(function(){
-        Sparkline.drawArray(response.feed.entries);
-      });
+      // $timeout(function(){
+      //   Sparkline.drawArray(response.feed.entries);
+      // });
     });
-    
-    
+
+
   };
-  
+
   $scope.findTimeseriesWithoutData = function() {
     var noDataQuery = {
       start: 0,
@@ -72,10 +72,8 @@ var TimeseriesSearchController = function($scope, $location, $controller, $filte
 
   $scope.findTimeseriesWithoutData();
   search();
-  
-    
-  $scope.$on('$locationChangeSuccess', (event, data, x) => {
-    // console.log(data, x);
+
+  $scope.$on('$locationChangeSuccess', (event) => {
     search();
   });
 };

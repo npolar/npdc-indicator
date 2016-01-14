@@ -34,13 +34,6 @@ app.factory('google', function() {
 
 app.service('Sparkline', require('./google/Sparkline'));
 
-// FIXME Chronopic is broken now, triggers on created fields shown hidden, but not for when field (timeseries)
-// 
-//app.directive('input', require('npdc-common/src/wrappers/chronopic')({
-//  css: { 'max-width': '340px' },
-//  format: '{date}' // display format (stored as proper RFC 3339 date or date-time)
-//}));
-
 var services = [
   {"path": "/indicator",  "resource": "Indicator"},
   {"path": "/indicator/parameter",  "resource": "Parameter"},

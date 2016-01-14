@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<article ng-if="document">
-  <h1>Timeseries:
-    <a>{{ document.titles | title }}</a> ({{ document.systems.join(',') }})
-  </h1>
-  <h3>Parameter:
-    <a ng-href="parameter/{{parameter.id}}">{{ parameter.titles | title }}</a>
-  </h3>
+<article>
+  <div class="np-padding" ng-if="document">
+    <h1>Timeseries:
+      <a>{{ document.titles | title }}</a> ({{ document.systems.join(',') }})
+    </h1>
+    <h3>Parameter:
+      <a ng-href="parameter/{{parameter.id}}">{{ parameter.titles | title }}</a>
+    </h3>
+  </div>
 
   <npdc:formula></npdc:formula>
 
