@@ -30,16 +30,11 @@ var ParameterShowController = function($scope, $routeParams, $location, $control
       }, function(timeseries) {
         
         $scope.timeseries = timeseries;
+        
+        // @todo Warn user if linked data is not there
         if (timeseries.length !== filter_timeseries_ids.length) {
-          console.warn(filter_timeseries_ids);
-          console.warn(timeseries.map(t => t.id));
-          
-          Array.prototype.diff = function(a) {
-            return this.filter(function(i) {
-              return a.indexOf(i) < 0;}
-              );
-          };
-          $scope.missing_timeseries = filter_timeseries_ids.diff(timeseries.map(t => t.id)).map(id => `http://api.npolar.no/indicator/timeseries/${id}`);
+          console.warn("timeseries", filter_timeseries_ids);
+          console.warn("existing timeseries", timeseries.map(t => t.id));
         }
         
         // Draw sparklines after page load
