@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<npdc:edit-button class="np-primary-control"></npdc:edit-button>
+<npdc:loader ng-if="!document"></npdc:loader>
+
+<article ng-if="document">
+  <h1>Timeseries:
+    <a>{{ document.titles | title }}</a> ({{ document.systems.join(',') }})
+  </h1>
+  <h3>Parameter:
+    <a ng-href="parameter/{{parameter.id}}">{{ parameter.titles | title }}</a>
+  </h3>
+
+ {{ document | json }}
+
+  <!--
+  <div ng-repeat="e in edits">
+  -->
+
+  <!-- <span ng-repeat="sibling in siblings">
+  -->
+
+  <!--<md-input-container>
+	<label>Raw JSON data</label>
+	  <textarea npolar-json-text type="text" class="form-control" ng-model="document.data" ></textarea>
+  </md-input-container>-->
+
+</article>

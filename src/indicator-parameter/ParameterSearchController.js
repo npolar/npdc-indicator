@@ -9,20 +9,27 @@ var ParameterSearchController = function($scope, $location, $controller, npdcApp
   $scope.resource = Parameter;
 
   npdcAppConfig.cardTitle = 'Environmental monitoring parameters';
-
-  var query = {
-    start: 0,
-    limit: 1000,
-    "size-facet": 5,
-    format: "json",
-    variant: "atom",
-    facets: "systems,collection,species,themes,dataseries,label,warn,variable,unit,locations.placename,links.rel"
+  
+  let query = function() {
+    let defaults = {
+      start: 0,
+      limit: 50,
+      "size-facet": 5,
+      format: "json",
+      variant: "atom",
+      facets: "systems,collection,species,themes,dataseries,label,warn,variable,unit,locations.placename,links.rel"
+    };
+    return Object.assign({}, defaults, $location.search());
   };
 
-  //&date-year=datetime&rangefacet-latitude=10&rangefacet-size=10&sort=datetime&filter-collection=timeseries&q=&format=json
-  Parameter.feed(Object.assign(query, $location.search()), function(data) {
-    $scope.feed = data.feed;
+  $scope.search(query());
+
+  $scope.$on('$locationChangeSuccess', (event, data) => {
+    $scope.search(query());
   });
+  
+  
+  
 };
 
 module.exports = ParameterSearchController;

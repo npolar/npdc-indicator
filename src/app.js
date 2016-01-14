@@ -18,6 +18,7 @@ app.controller('ParameterEditController', require('./indicator-parameter/Paramet
 app.controller('ParameterShowController', require('./indicator-parameter/ParameterShowController.js'));
 
 app.controller('TimeseriesSearchController', require('./indicator-timeseries/TimeseriesSearchController'));
+app.controller('TimeseriesShowController', require('./indicator-timeseries/TimeseriesShowController'));
 app.controller('TimeseriesEditController', require('./indicator-timeseries/TimeseriesEditController'));
 
 
@@ -32,7 +33,6 @@ app.factory('google', function() {
 app.service('Sparkline', require('./google/Sparkline'));
 
 var services = [
-  {"path": "/indicator",  "resource": "Indicator"},
   {"path": "/indicator/parameter",  "resource": "Parameter"},
   {"path": "/indicator/timeseries", "resource": "Timeseries" },
   {"path": "/placename", "base": "//api.npolar.no", "resource": "Placename", fields: "*" },

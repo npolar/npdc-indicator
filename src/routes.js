@@ -8,13 +8,12 @@ var routes = function($routeProvider, $locationProvider) {
 
   $routeProvider
 
-  
   // timeseries
   .when('/timeseries/:id/edit', {
     templateUrl: 'indicator-timeseries/timeseries-edit.html', controller: 'TimeseriesEditController'
   })
   .when('/timeseries/:id', {
-    redirectTo: '/timeseries/:id/edit'
+    templateUrl: 'indicator-timeseries/timeseries-show.html', controller: 'TimeseriesShowController'
   })
   .when('/timeseries', {
     templateUrl: 'indicator-timeseries/timeseries-search.html',
@@ -26,32 +25,23 @@ var routes = function($routeProvider, $locationProvider) {
   .when('/parameter/:id/show', {
     redirectTo: '/parameter/:id'
   })
-
   .when('/parameter', {
-    templateUrl: 'indicator-parameter/parameter-search.html',
+    template: '<npdc:search-input feed="feed"></npdc:search-input><npdc:search feed="feed"></npdc:search>',
     controller: 'ParameterSearchController',
     reloadOnSearch: false
   })
   .when('/parameter/:id', {
-    //redirectTo: '/parameter/:id/edit'
     templateUrl: 'indicator-parameter/parameter-show.html', controller: 'ParameterShowController'
   })
   .when('/parameter/:id/edit', {
     templateUrl: 'indicator-parameter/parameter-edit.html', controller: 'ParameterEditController'
   })
-
-    
-    
-    //.when('/', {
-    //  redirectTo: '/timeseries'
-    //})
-    
-    ;
-    
-    
-    
-
-    
+  
+  // Default route
+  .when('/', {
+    redirectTo: '/timeseries'
+  })    
+  ;
 
 };
 module.exports = routes;

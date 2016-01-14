@@ -13,6 +13,7 @@ var TimeseriesEditController = function($scope, $controller, $routeParams, Npola
 
   let resource = $scope.edit();
 
+  // For edit (and not new) we want to fetch the parent parameter
   if (resource && resource.$promise) {
     resource.$promise.then(timeseries => {
 
