@@ -1,7 +1,8 @@
 'use strict';
 
 // @ngInject
-var TimeseriesSearchController = function($scope, $location, $controller, $filter, $timeout, npdcAppConfig, NpolarLang, Timeseries, Sparkline) {
+var TimeseriesSearchController = function($scope, $location, $controller, $filter, $timeout, $http,
+  npdcAppConfig, NpolarLang, Timeseries, Sparkline) {
 
   // Extend NpolarApiBaseController
   $controller("NpolarBaseController", {
@@ -26,11 +27,32 @@ var TimeseriesSearchController = function($scope, $location, $controller, $filte
     return subtitle;
   };
 
+  $scope.showNext = function() {
+    if (!$scope.feed) {
+      return false;
+    }
+    return ($scope.feed.entries.length < $scope.feed.opensearch.totalResults);
+  };
+
+  $scope.next = function() {
+    if (!$scope.feed.links) {
+      return;
+    }
+
+    let nextLink = $scope.feed.links.find(link => { return (link.rel === "next"); });
+    if (nextLink.href) {
+      $http.get(nextLink.href.replace(/^https?:/, '')).success(function(response) {
+        response.feed.entries = $scope.feed.entries.concat(response.feed.entries);
+        $scope.feed = response.feed;
+      });
+    }
+  };
+
   let query = function() {
 
     let defaults = {
       start: 0,
-      limit: 'all',
+      limit: '50',
       "size-facet": 5,
       format: "json",
       variant: "atom",
@@ -57,7 +79,7 @@ var TimeseriesSearchController = function($scope, $location, $controller, $filte
   $scope.findTimeseriesWithoutData = function() {
     var noDataQuery = {
       start: 0,
-      limit: 'all',
+      limit: '50',
       "variant": "array",
       format: "json",
       "not-data.year": "0..",
@@ -65,9 +87,7 @@ var TimeseriesSearchController = function($scope, $location, $controller, $filte
       sort: "-updated"
 
     };
-    Timeseries.array(Object.assign(noDataQuery, $location.search()), function(array) {
-      $scope.noData = array;
-    });
+    $scope.noData = Timeseries.array(Object.assign(noDataQuery, $location.search()));
   };
 
   $scope.findTimeseriesWithoutData();
