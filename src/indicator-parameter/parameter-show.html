@@ -9,10 +9,10 @@
     </a> ({{ document.systems.join(',') }})
   </h1>
   
-  <h3>Indicator:
-    <a ng-href="{{indicator.id}}/show">{{ indicator.titles | title }}</a>
-  </h3>
-  
+  <pre ng-if="missing_timeseries">
+    {{ missing_timeseries | json }}
+  </pre>
+    
   <h3>Timeseries ({{ timeseries.length }})</h3>
   <ul ng-repeat="t in timeseries">
     <li>

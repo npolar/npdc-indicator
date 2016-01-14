@@ -21,6 +21,18 @@ var ParameterSearchController = function($scope, $location, $controller, npdcApp
     };
     return Object.assign({}, defaults, $location.search());
   };
+  
+  
+  let detail = function(p) {
+    let subtitle = '';
+    if (p.timeseries && p.timeseries.length > 0) {
+      subtitle = `Timeseries: ${p.timeseries.length}`;
+    }
+    //subtitle += `. Updates: ${ $filter('date')(t.updated)}`;
+    return subtitle;
+  };
+  npdcAppConfig.search.local.results.subtitle = function(p) { return p.species || ''; };
+  npdcAppConfig.search.local.results.detail = detail;
 
   $scope.search(query());
 

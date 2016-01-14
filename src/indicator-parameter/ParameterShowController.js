@@ -1,14 +1,8 @@
 'use strict';
-var _ = require('lodash');
 
 // @ngInject
-var ParameterShowController = function($scope, $routeParams, $location, $controller, $route, $timeout,
-  npolarApiConfig, npdcAppConfig, Parameter, Timeseries, google, Sparkline) {
-
-  let title = function (titles, lang) {
-    return titles.find((title) => title.lang === lang).title;
-  };
-  $scope.lang = $location.search().lang || "nb";
+var ParameterShowController = function($scope, $routeParams, $location, $controller, $route, $timeout, $filter,
+  npdcAppConfig, Parameter, Timeseries, google, Sparkline) {
 
   // Extend NpolarApiBaseController and inject resource
   $controller("NpolarBaseController", {
@@ -19,82 +13,41 @@ var ParameterShowController = function($scope, $routeParams, $location, $control
   // Fetch parameter document with parent indicator and timeseries children
   Parameter.fetch($routeParams, function(parameter) {
     
-  
-    let drawTrendlines = function(timeseriesArray) {
-      var data = new google.visualization.DataTable();
-      data.addColumn('number', 'When');
-      timeseriesArray.forEach(t => {
-        //data.addColumn('number', t.titles[0].title);
-      });
-      
-      let rows = [];
-      timeseriesArray.forEach(t => {
-        let rows = t.data.map(d => { return [d.when||d.year, d.value]; });
-        console.log(rows);
-      });
-      //data.addRows(rows);
-      
-      var options = {
-        hAxis: {
-          title: 'Time'
-        },
-        vAxis: {
-          title: 'vAxis.title'
-        },
-        colors: ['#AB0D06', '#007329'],
-        trendlines: {
-          0: {type: 'exponential', color: '#333', opacity: 1},
-          1: {type: 'linear', color: '#111', opacity: 0.3}
-        }
-      };
-
-      //var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-      //chart.draw(data, options);
-    };
-    
-    
-   
-    
-    
-    
-    
-    
-    
     $scope.document = parameter;
-    npdcAppConfig.cardTitle = title(parameter.titles, $scope.lang) + '(' + parameter.systems.join(',') + ')';
+    npdcAppConfig.cardTitle = $filter('title')(parameter.titles);
 
-    var filter_timeseries_ids = _.map(parameter.timeseries, function(t) {
+    // Fetch timeseries children and draw sparklines
+    let filter_timeseries_ids = parameter.timeseries.map(t => {
       return t.match(/\/([-\w]+)$/)[1];
     });
 
     if (filter_timeseries_ids.length > 0) {
-      // Fetch timeseries children
+      // Fetch all timeseries children
       Timeseries.array({
         "filter-id": filter_timeseries_ids.join("|"),
         fields: "*",
         limit: filter_timeseries_ids.length
       }, function(timeseries) {
+        
         $scope.timeseries = timeseries;
+        if (timeseries.length !== filter_timeseries_ids.length) {
+          console.warn(filter_timeseries_ids);
+          console.warn(timeseries.map(t => t.id));
+          
+          Array.prototype.diff = function(a) {
+            return this.filter(function(i) {
+              return a.indexOf(i) < 0;}
+              );
+          };
+          $scope.missing_timeseries = filter_timeseries_ids.diff(timeseries.map(t => t.id)).map(id => `http://api.npolar.no/indicator/timeseries/${id}`);
+        }
         
-        let i = 0;
-        
+        // Draw sparklines after page load
         $timeout(() => {
-          //  let elmt = document.getElementById('sparkline-0');
-          //  let data = timeseries[0].data.map(d => d.value).filter(v => !isNaN(parseFloat(v)) && isFinite(v));
-          Sparkline.drawArray(timeseries);
-          google.setOnLoadCallback(drawTrendlines(timeseries));
-          
-          
-          
+          google.setOnLoadCallback(Sparkline.drawArray(timeseries));
         });
-        
-        
       });
-
     }
-
-
-
 
   });
 

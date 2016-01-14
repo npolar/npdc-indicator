@@ -1,7 +1,7 @@
 'use strict';
 
 // @ngInject
-let ParameterEditController = function($scope, $routeParams, $location, $controller, $route, npolarApiConfig, NpolarMessage, Indicator, Parameter, Timeseries) {
+let ParameterEditController = function($scope, $routeParams, $location, $controller, $route, npolarApiConfig, NpolarMessage, Parameter, Timeseries) {
 
   const schema = '//api.npolar.no/schema/indicator-parameter-1';
 
