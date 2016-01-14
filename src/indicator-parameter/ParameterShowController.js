@@ -2,8 +2,8 @@
 var _ = require('lodash');
 
 // @ngInject
-var ParameterShowController = function($scope, $routeParams, $location, $controller, $route,
-  npolarApiConfig, npdcAppConfig, Indicator, Parameter, Timeseries) {
+var ParameterShowController = function($scope, $routeParams, $location, $controller, $route, $timeout,
+  npolarApiConfig, npdcAppConfig, Parameter, Timeseries, google, Sparkline) {
 
   let title = function (titles, lang) {
     return titles.find((title) => title.lang === lang).title;
@@ -18,6 +18,54 @@ var ParameterShowController = function($scope, $routeParams, $location, $control
 
   // Fetch parameter document with parent indicator and timeseries children
   Parameter.fetch($routeParams, function(parameter) {
+    
+    
+    
+    
+    
+    
+    
+    
+    let drawTrendlines = function(timeseriesArray) {
+      var data = new google.visualization.DataTable();
+      data.addColumn('number', 'When');
+      timeseriesArray.forEach(t => {
+        //data.addColumn('number', t.titles[0].title);
+      });
+      
+      let rows = [];
+      timeseriesArray.forEach(t => {
+        let rows = t.data.map(d => { return [d.when||d.year, d.value]; });
+        console.log(rows);
+      });
+      //data.addRows(rows);
+      
+      var options = {
+        hAxis: {
+          title: 'Time'
+        },
+        vAxis: {
+          title: 'vAxis.title'
+        },
+        colors: ['#AB0D06', '#007329'],
+        trendlines: {
+          0: {type: 'exponential', color: '#333', opacity: 1},
+          1: {type: 'linear', color: '#111', opacity: 0.3}
+        }
+      };
+
+      //var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      //chart.draw(data, options);
+    };
+    
+    
+   
+    
+    
+    
+    
+    
+    
     $scope.document = parameter;
     npdcAppConfig.cardTitle = title(parameter.titles, $scope.lang) + '(' + parameter.systems.join(',') + ')';
 
@@ -33,14 +81,25 @@ var ParameterShowController = function($scope, $routeParams, $location, $control
         limit: filter_timeseries_ids.length
       }, function(timeseries) {
         $scope.timeseries = timeseries;
-      }, function(error) { // Timeseries.array
-        $scope.error = error;
+        
+        let i = 0;
+        
+        $timeout(() => {
+          //  let elmt = document.getElementById('sparkline-0');
+          //  let data = timeseries[0].data.map(d => d.value).filter(v => !isNaN(parseFloat(v)) && isFinite(v));
+          Sparkline.drawArray(timeseries);
+          google.setOnLoadCallback(drawTrendlines(timeseries));
+          
+          
+          
+        });
+        
+        
       });
 
     }
 
     // Fetch indicator parent
-    // FIXME Atm. only "id" and not link.rel=edit is guaranteed...
     var parameter_uri = "http:" + npolarApiConfig.base + "/indicator/parameter/" + parameter.id;
 
     Indicator.array({
@@ -49,13 +108,9 @@ var ParameterShowController = function($scope, $routeParams, $location, $control
       limit: 1
     }, function(indicators) {
       $scope.indicator = indicators[0];
-    }, function(error) { // Indicator.array
-      $scope.error = error;
     });
 
 
-  }, function(error) { // Parameter.fetch
-    $scope.error = error;
   });
 
 };
