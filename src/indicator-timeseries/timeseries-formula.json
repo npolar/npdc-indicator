@@ -4,53 +4,56 @@
       "title": "Timeseries",
       "fields": [
         {
-          "id": "systems"
-        },
-        "titles"
-      ]
-    },
-    {
-      "title": "Data",
-      "fields": [
-        "resolution",
-        "data"
-      ]
-    },
-    {
-      "title": "Units and labels",
-      "fields": [
-        "unit",
-        {
-          "id": "labels"
+          "id": "titles", "fields": [
+          {"id": "lang", "enum": ["nb", "en"]}, "title", "label"
+          ]
         }
       ]
     },
     {
-      "title": "Locations and species",
+      "title": "Systems",
       "fields": [
-
-       
-        "locations",
+        {
+          "id": "systems", "type": "array", "multiple": true, "enum": ["mosj.no", "NARE-EMP"], "default": ["mosj.no"]
+        }
+      ]
+    },
+    {
+      "title": "Variables",
+      "fields": [
+        "unit",
+        {
+          "id": "labels"
+        },
+        "variables"
+      ]
+    },
+    {
+      "title": "Locations",
+      "fields": [
+        "locations"
+      ]
+    },
+    {
+      "title": "Species",
+      "fields": [
         "species"
-
-
       ]
     },
     {
       "title": "Metadata",
       "fields": [
+        { "id": "id", "hidden": false, "disabled": true },
         { "id": "_id", "hidden": false, "disabled": true },
         { "id": "_rev", "hidden": false, "disabled": true },
-        { "id": "schema", "hidden": false, "disabled": true },
-        { "id": "workspace", "hidden": false, "disabled": true },
-        { "id": "collection", "hidden": false, "disabled": true },
+        { "id": "schema", "hidden": false, "disabled": false, "default": "http://api.npolar.no/schema/indicator-timeseries-1" },
+        { "id": "workspace", "hidden": false, "disabled": true, "default": "indicator" },
+        { "id": "collection", "hidden": false, "disabled": true, "default": "timeseries" },
         { "id": "created", "hidden": false, "disabled": true },
-         { "id": "created_by", "hidden": false, "disabled": true },
-         { "id": "updated", "hidden": false, "disabled": true },
-         { "id": "updated_by", "hidden": false, "disabled": true }
-
+        { "id": "created_by", "hidden": false, "disabled": true },
+        { "id": "updated", "hidden": false, "disabled": true },
+        { "id": "updated_by", "hidden": false, "disabled": true }
       ]
-    }
-     
+    } 
   ]
 }

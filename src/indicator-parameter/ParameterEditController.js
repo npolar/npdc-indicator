@@ -31,23 +31,22 @@ let ParameterEditController = function($scope, $routeParams, $location, $control
   };
 
   $scope.formula.schema = schema;
-  $scope.formula.form = "parameter/parameter-formula.json";
-  $scope.formula.template = 'material';
-
+  $scope.formula.form = "indicator-parameter/parameter-formula.json";
+ 
   // @overide
-  $scope.newAction = function() {
-    console.debug('newAction');
-    $scope.document = new Parameter({
-      titles: [{ lang: "nb", title: "Parameter (nb)"}, { lang: "en", title: "Parameter (en)"}],
-      systems: ["mosj.no"],
-      schema: 'http:'+schema,
-      workspace: "indicator",
-      collection: "indicator"
-    });
-
-    console.debug($scope.document);
-    $scope.formula.model = $scope.document;
-  };
+  //$scope.newAction = function() {
+  //  console.debug('newAction');
+  //  $scope.document = new Parameter({
+  //    titles: [{ lang: "nb", title: "Parameter (nb)"}, { lang: "en", title: "Parameter (en)"}],
+  //    systems: ["mosj.no"],
+  //    schema: 'http:'+schema,
+  //    workspace: "indicator",
+  //    collection: "indicator"
+  //  });
+  //
+  //  console.debug($scope.document);
+  //  $scope.formula.model = $scope.document;
+  //};
   $scope.edit();
 
 };

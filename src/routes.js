@@ -10,10 +10,10 @@ var routes = function($routeProvider, $locationProvider) {
 
   // timeseries
   .when('/timeseries/:id/edit', {
-    templateUrl: 'indicator-timeseries/timeseries-edit.html', controller: 'TimeseriesEditController'
+    templateUrl: 'indicator-timeseries/timeseries.html', controller: 'TimeseriesEditController'
   })
   .when('/timeseries/:id', {
-    templateUrl: 'indicator-timeseries/timeseries-show.html', controller: 'TimeseriesShowController'
+    templateUrl: 'indicator-timeseries/timeseries.html', controller: 'TimeseriesShowController'
   })
   .when('/timeseries', {
     templateUrl: 'indicator-timeseries/timeseries-search.html',
@@ -26,7 +26,7 @@ var routes = function($routeProvider, $locationProvider) {
     redirectTo: '/parameter/:id'
   })
   .when('/parameter', {
-    template: '<npdc:search-input feed="feed"></npdc:search-input><npdc:search feed="feed"></npdc:search>',
+    templateUrl: 'indicator-parameter/parameter-search.html',
     controller: 'ParameterSearchController',
     reloadOnSearch: false
   })

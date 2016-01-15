@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <npdc:create-button class="np-primary-control"></npdc:create-button>
 
-	<h2 class="np-padding">System: <span ng-repeat="system in ['mosj.no', 'nare']">
-			<a href="?q=&filter-systems={{system}}">{{ system | t }}</a>
-		</span>
-	</h2>
+<div>	
+<h1>Timeseries (switch to <a href="parameter">parameters</a>)</h1>
+</div>
 
 <npdc:search-input feed="feed"></npdc:search-input>
-
+<!--<h2 class="np-padding">System: <span ng-repeat="system in ['mosj.no', 'nare']">
+	<a href="?q=&filter-systems={{system}}">{{ system | t }}</a>
+		</span>
+	</h2>-->
 <div class="npdc-search">
   <md-content>
   <md-tabs md-dynamic-height>
@@ -37,7 +39,7 @@
                   <p flex><em>「<span class="md-avatar">{{ avatar(t) }}</span>」</em>
 										{{ subtitle(t) }}
 									</p>
-									<!-- <div id="sparkline-{{$index}}" style="width: 240px; height: 60px;"></div> -->
+									 <div id="sparkline-{{$index}}" style="width: 240px; height: 60px;"></div> 
 
                 </div>
               </md-list-item>

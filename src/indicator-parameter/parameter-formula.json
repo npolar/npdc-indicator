@@ -3,7 +3,9 @@
     {
       "title": "Parameter",
       "fields": [
-        "systems",
+        {
+          "id": "systems", "type": "array", "multiple": true, "enum": ["mosj.no", "NARE-EMP"], "default": ["mosj.no"]
+        },
         {
           "id": "titles"
         }
@@ -11,7 +13,7 @@
       ]
     },
     {
-      "title": "Timeseries",
+      "title": "Timeseries children",
       "fields": [
 
         {

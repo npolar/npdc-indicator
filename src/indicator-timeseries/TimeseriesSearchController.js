@@ -21,7 +21,7 @@ var TimeseriesSearchController = function($scope, $location, $controller, $filte
       points = t.data.length;
       let first = t.data[0];
       let last = t.data[t.data.length-1];
-      subtitle = `${points} data points (${first.when||first.year}-${last.when||last.year})`;
+      subtitle = `${points} data points (${first.when}-${last.when})`;
     }
     subtitle += `. Updates: ${ $filter('date')(t.updated)}`;
     return subtitle;
@@ -57,7 +57,7 @@ var TimeseriesSearchController = function($scope, $location, $controller, $filte
       format: "json",
       variant: "atom",
       sort: "-updated",
-      "filter-data.year": "0..",
+      "filter-data.when": "0..",
       facets: "systems,collection,species,themes,warn,unit,locations.placename,links.rel",
       fields: "systems,data,labels,collection,species,titles,id,created,created_by,updated,updated_by"
     };
@@ -68,9 +68,9 @@ var TimeseriesSearchController = function($scope, $location, $controller, $filte
 
   let search = function() {
     $scope.search(query()).$promise.then(response => {
-      // $timeout(function(){
-      //   Sparkline.drawArray(response.feed.entries);
-      // });
+       $timeout(function(){
+         Sparkline.drawArray(response.feed.entries);
+       });
     });
 
 
@@ -82,7 +82,7 @@ var TimeseriesSearchController = function($scope, $location, $controller, $filte
       limit: '50',
       "variant": "array",
       format: "json",
-      "not-data.year": "0..",
+      "not-data.when": "0..",
       fields: "id,titles",
       sort: "-updated"
 
