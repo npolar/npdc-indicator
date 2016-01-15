@@ -1,0 +1,10 @@
+{
+  "fieldsets": [
+    {
+      "title": "Data",
+      "fields": [
+        "data"
+      ]
+    }
+  ]
+}

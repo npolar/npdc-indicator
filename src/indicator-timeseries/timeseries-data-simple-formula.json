@@ -1,0 +1,10 @@
+{
+  "fieldsets": [
+    {
+      "title": "Data",
+      "fields": [
+        { "id": "data", "fields": ["!low", "!high", "!min", "!max"] }
+      ]
+    }
+  ]
+}
