@@ -3,6 +3,8 @@
 // @ngInject
 let Sparkline = function(google, $timeout) {
   
+  // todo fx let options
+  
   this.getElement = function(i=0, prefix='sparkline-') {
     return document.getElementById(`${prefix}${i++}`);
   };
@@ -14,11 +16,15 @@ let Sparkline = function(google, $timeout) {
 
   };
   
-  this.drawArray = function(arr, opt) {
+  this.drawArray = function(arr=[], opt={}) {
     let i = 0;
     arr.map(t => {
-      let data = t.data.map(d => [d.value]);
-      this.draw(data, opt, this.getElement(i++));
+      if (t.data && t.data.length > 0) {
+        let data = t.data.map(d => [d.value]);
+        this.draw(data, opt, this.getElement(i));
+      }
+      i++;
+
     });
   };
   return this;

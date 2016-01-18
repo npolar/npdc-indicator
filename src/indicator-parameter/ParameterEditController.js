@@ -9,9 +9,13 @@ let ParameterEditController = function($scope, $routeParams, $location, $control
     $scope: $scope
   });
   $scope.resource = Parameter;
+  $scope.formula.schema = schema;
+  $scope.formula.form = "indicator-parameter/parameter-formula.json";
+  
+  $scope.document = {};
 
   // Add new timeseries to current parameter
-  $scope.addTimeseries = function(parameter) {
+  /*$scope.addTimeseries = function(parameter) {
     let duplicate = Object.create(parameter);
     let timeseries = new Timeseries({
       titles: duplicate.titles, //map(t => { t.title += ` [${duplicate.timeseries.length+1}]`; return t; }
@@ -28,10 +32,9 @@ let ParameterEditController = function($scope, $routeParams, $location, $control
       parameter.timeseries.push(timeseries_uri);
       $scope.update(parameter);
     });
-  };
+  };*/
 
-  $scope.formula.schema = schema;
-  $scope.formula.form = "indicator-parameter/parameter-formula.json";
+
  
   // @overide
   //$scope.newAction = function() {
@@ -47,7 +50,7 @@ let ParameterEditController = function($scope, $routeParams, $location, $control
   //  console.debug($scope.document);
   //  $scope.formula.model = $scope.document;
   //};
-  $scope.edit();
+  $scope.edit().$promise.then(p => console.log(p) );
 
 };
 module.exports = ParameterEditController;

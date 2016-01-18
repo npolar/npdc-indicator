@@ -26,7 +26,7 @@ var routes = function($routeProvider, $locationProvider) {
     redirectTo: '/parameter/:id'
   })
   .when('/parameter', {
-    templateUrl: 'indicator-parameter/parameter-search.html',
+    template: '<npdc:search-input feed="feed"></npdc:search-input><npdc:search feed="feed"></npdc:search>',
     controller: 'ParameterSearchController',
     reloadOnSearch: false
   })
