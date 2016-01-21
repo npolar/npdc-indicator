@@ -13,7 +13,7 @@
       ]
     },
     {
-      "title": "Timeseries children",
+      "title": "Children",
       "fields": [
 
         {
@@ -31,15 +31,7 @@
       ]
     },
     {
-      "title": "Links",
-      "fields": [
-        {
-          "id": "links"
-        }
-      ]
-    },
-    {
-      "title": "Locations and species",
+      "title": "Species",
       "fields": [
 
        
@@ -50,17 +42,34 @@
       ]
     },
     {
+      "title": "Links",
+      "fields": [
+        {
+          "id": "links"
+        }
+      ]
+    },
+    {
+      "title": "Systems",
+      "fields": [
+        {
+          "id": "systems"
+        }
+      ]
+    },
+    {
       "title": "Metadata",
       "fields": [
+        { "id": "id", "hidden": false, "disabled": true },
         { "id": "_id", "hidden": false, "disabled": true },
         { "id": "_rev", "hidden": false, "disabled": true },
-        { "id": "schema", "hidden": false, "disabled": true },
-        { "id": "workspace", "hidden": false, "disabled": true },
-        { "id": "collection", "hidden": false, "disabled": true },
+        { "id": "schema", "hidden": false, "disabled": true, "default": "http://api.npolar.no/schema/indicator-parameter-1" },
+        { "id": "workspace", "hidden": false, "disabled": true, "default": "indicator" },
+        { "id": "collection", "hidden": false, "disabled": true, "default": "parameter" },
         { "id": "created", "hidden": false, "disabled": true },
-         { "id": "created_by", "hidden": false, "disabled": true },
-         { "id": "updated", "hidden": false, "disabled": true },
-         { "id": "updated_by", "hidden": false, "disabled": true }
+        { "id": "created_by", "hidden": false, "disabled": true },
+        { "id": "updated", "hidden": false, "disabled": true },
+        { "id": "updated_by", "hidden": false, "disabled": true }
 
       ]
     }

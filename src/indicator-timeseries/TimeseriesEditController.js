@@ -2,29 +2,43 @@
 
 // @ngInject
 var TimeseriesEditController = function($scope, $controller, $routeParams, $timeout, $location,
-  NpolarApiSecurity, Timeseries, Parameter, google, Sparkline) {
+  NpolarApiSecurity, NpdcSearchService, Timeseries, Parameter, google, Sparkline) {
 
   const schema = '//api.npolar.no/schema/indicator-timeseries-1';
-  $controller("NpolarEditController", {$scope: $scope});
-  $scope.document = {};  
-  $scope.resource = Timeseries;
-  $scope.formula.schema = schema;
   
-  if ($location.search().data) {
-    let vars = parseInt($location.search().data);
-    if (vars === 2) {
-      // Formula simple data (when/value) editing
-     $scope.formula.form = "indicator-timeseries/timeseries-data-simple-formula.json";
+  let init = function() {
+    $controller("NpolarEditController", {$scope: $scope});
+    $scope.resource = Timeseries;
+    $scope.parameter = null;
+    $scope.siblings = [];
+    $scope.formula.schema = schema;
+    $scope.formula.templates = [{
+        match(field) {
+          return field.id === "locations_object";
+        },
+        template: '<npdc:formula-placename></npdc:formula-placename>'
+      }
+    ];
+    
+    // Select formula based on type of data
+    if ($location.search().data) {
+      let vars = parseInt($location.search().data);
+      if (vars <= 2) {
+        // Formula simple data (when/value) editing
+       $scope.formula.form = "indicator-timeseries/timeseries-data-simple-formula.json";
+      } else {
+        // Formula data editing
+        $scope.formula.form = "indicator-timeseries/timeseries-data-formula.json";
+      }
+    
     } else {
-      // Formula data editing
-      $scope.formula.form = "indicator-timeseries/timeseries-data-formula.json";
+      // Formula without data editing
+      $scope.formula.form = "indicator-timeseries/timeseries-formula.json";
     }
-  
-  } else {
-    // Formula without data editing
-    $scope.formula.form = "indicator-timeseries/timeseries-formula.json";
-  }
-  console.debug($scope.formula.form);
+    
+  };
+  init();
+  NpdcSearchService.injectAutocompleteFacetSources(['species', 'unit.symbol'], Timeseries);
   
   let resource = $scope.edit();
 
@@ -40,17 +54,16 @@ var TimeseriesEditController = function($scope, $controller, $routeParams, $time
           google.setOnLoadCallback(Sparkline.draw(sparkline));
         });
       }
-
       
       let uri = NpolarApiSecurity.canonicalUri(`/indicator/timeseries/${timeseries.id}`, 'http');
       Parameter.array({ "filter-timeseries": uri, fields: "*", limit: 1 }, parameters => {
-        $scope.parameter = parameters[0];
-        
-        
-        $scope.siblings = $scope.parameter.timeseries.filter(uri => {
-          let id = uri.split('/').slice(-1)[0];
-          return (id !== timeseries.id);
-        });
+        if (parameters.length > 0) {   
+          $scope.parameter = parameters[0];
+          $scope.siblings = $scope.parameter.timeseries.filter(uri => {
+            let id = uri.split('/').slice(-1)[0];
+            return (id !== timeseries.id);
+          });
+        }
         
         
       });
