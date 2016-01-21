@@ -2,7 +2,7 @@
 
 // @ngInject
 var TimeseriesSearchController = function($scope, $location, $controller, $filter, $timeout, $http,
-  npdcAppConfig, NpolarLang, Timeseries, Sparkline) {
+  npdcAppConfig, NpolarLang, Timeseries, google, Sparkline) {
 
   // Extend NpolarApiBaseController
   $controller("NpolarBaseController", {
@@ -69,7 +69,7 @@ var TimeseriesSearchController = function($scope, $location, $controller, $filte
   let search = function() {
     $scope.search(query()).$promise.then(response => {
        $timeout(function(){
-         Sparkline.drawArray(response.feed.entries);
+         google.setOnLoadCallback(Sparkline.drawArray(response.feed.entries));
        });
     });
 

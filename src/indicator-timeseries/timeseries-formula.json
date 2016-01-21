@@ -11,21 +11,19 @@
       ]
     },
     {
-      "title": "Systems",
+      "title": "Units",
       "fields": [
-        {
-          "id": "systems", "type": "array", "multiple": true, "enum": ["mosj.no", "NARE-EMP"], "default": ["mosj.no"]
-        }
+        "resolution",
+        { "id": "unit", "fields": [{ "id": "symbol", "autocomplete": true}]}
       ]
     },
     {
-      "title": "Variables",
+      "title": "Labels",
       "fields": [
-        "unit",
         {
           "id": "labels"
         },
-        "variables"
+        "!variables"
       ]
     },
     {
@@ -37,7 +35,21 @@
     {
       "title": "Species",
       "fields": [
-        "species"
+        { "id": "species", "autocomplete": true }
+      ]
+    },
+    {
+      "title": "Links",
+      "fields": [
+        "links"
+      ]
+    },
+    {
+      "title": "Systems",
+      "fields": [
+        {
+          "id": "systems", "type": "array", "multiple": true, "enum": ["mosj.no", "NARE-EMP"], "default": ["mosj.no"]
+        }
       ]
     },
     {

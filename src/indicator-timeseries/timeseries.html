@@ -12,9 +12,7 @@
 	  <span>{{ document.unit.symbol || 'N' }}/{{document.resolution}}</span>
 		
 	  [<span ng-repeat="v in document.variables"> {{ v.variable }}</span> ]
-	  
-	  <span ng-if="security.isAuthorized('update', resource.path)"><a ng-href="timeseries/{{document.id}}/edit?data={{document.variables.length}}">edit data</a></span>
-	
+	  	
 	</div>
 	
     <h3>Parameter:
@@ -23,22 +21,24 @@
     </h3>
   </div>
 
-  <div ng-if="formula">
-	<npdc:formula></npdc:formula>
+  <npdc:formula ng-if="formula"></npdc:formula>
+
+  <div ng-if="!formula">
+	<npdc:edit-button  class="np-primary-control"></npdc:edit-button>
+	<div ng-if="security.isAuthorized('update', resource.path)" layout layout-align="end center">
+	  <a ng-href="timeseries/{{document.id}}/edit?data={{document.variables.length||'0'}}"><md-button class="md-primary md-raised"  md-button-primary>edit data</md-button></a>
+	</div>
+  </div>
+
+</article>
+
 	<!--<md-input-container>
 	<label>Raw JSON data</label>
 	  <textarea npolar-json-text type="text" class="form-control" ng-model="document.data" ></textarea>
 	</md-input-container>-->
 	
-  </div>
+
 
   <!--
   <div ng-repeat="e in edits">
   -->
-
-  <!-- <span ng-repeat="sibling in siblings">
-  -->
-  <npdc:edit-button ng-if="!formula" class="np-primary-control"></npdc:edit-button>
-
-  
-</article>

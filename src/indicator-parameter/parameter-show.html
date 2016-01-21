@@ -14,8 +14,8 @@
   </pre>
     
   <h3>Timeseries ({{ timeseries.length }})</h3>
-  <ul ng-repeat="t in timeseries">
-    <li>
+  <ul>
+    <li ng-repeat="t in timeseries">
       <a ng-href="timeseries/{{t.id}}">{{ t.titles | title }}</a>
     </li>
     <div id="sparkline-{{$index}}"></div>
