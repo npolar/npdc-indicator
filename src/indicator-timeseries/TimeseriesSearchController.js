@@ -10,6 +10,8 @@ var TimeseriesSearchController = function($scope, $location, $controller, $filte
   });
   $scope.resource = Timeseries;
 
+  npdcAppConfig.cardTitle = "Environmental monitoring timeseries";
+
   $scope.avatar = function(t) {
     return t.systems.join(',');
   };

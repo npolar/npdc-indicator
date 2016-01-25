@@ -26,7 +26,7 @@ var routes = function($routeProvider, $locationProvider) {
     redirectTo: '/parameter/:id'
   })
   .when('/parameter', {
-    template: '<npdc:search-input feed="feed"></npdc:search-input><npdc:search feed="feed"></npdc:search>',
+    templateUrl: 'indicator-parameter/parameter-search.html',
     controller: 'ParameterSearchController',
     reloadOnSearch: false
   })
@@ -36,11 +36,11 @@ var routes = function($routeProvider, $locationProvider) {
   .when('/parameter/:id/edit', {
     templateUrl: 'indicator-parameter/parameter-edit.html', controller: 'ParameterEditController'
   })
-  
+
   // Default route
   .when('/', {
     redirectTo: '/timeseries'
-  })    
+  })
   ;
 
 };

@@ -2,19 +2,19 @@
 <article class="np-padding" ng-if="document">
   <div ng-if="document._rev">
     <h1>Timeseries:
-      <a href="timeseries/{{document.id}}">{{ document.titles | title }}</a> (<a ng-href="timeseries/?filter-systems={{document.systems[0]}}">{{ document.systems.join(',') }})</a>
+      {{ document.titles | title }} (<a ng-href="timeseries/?filter-systems={{document.systems[0]}}">{{ document.systems.join(',') }})</a>
     </h1>
 	<div>
 	  <span id="sparkline-0" style="width: 240px; height: 60px;"></span>
-	  
+
 	  <span>{{ data.length }} points ({{data[0].when}} - {{data[data.length-1].when}})</span>
-	  
+
 	  <span>{{ document.unit.symbol || 'N' }}/{{document.resolution}}</span>
-		
+
 	  [<span ng-repeat="v in document.variables"> {{ v.variable }}</span> ]
-	  	
+
 	</div>
-	
+
     <h3>Parameter:
       <a ng-href="parameter/{{parameter.id}}">{{ parameter.titles | title }}</a>
 	  ({{ siblings.length }} {{ (siblings.length == 1) ? ('sibling'|t) : ('siblings'|t) }})
@@ -36,7 +36,7 @@
 	<label>Raw JSON data</label>
 	  <textarea npolar-json-text type="text" class="form-control" ng-model="document.data" ></textarea>
 	</md-input-container>-->
-	
+
 
 
   <!--

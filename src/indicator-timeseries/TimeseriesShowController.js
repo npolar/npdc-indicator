@@ -1,25 +1,26 @@
 'use strict';
 
 // @ngInject
-let TimeseriesShowController = function($scope, $controller, $routeParams, $timeout,
-  NpolarApiSecurity, Timeseries, Parameter, google, Sparkline) {
+let TimeseriesShowController = function($scope, $controller, $timeout,
+  $filter, NpolarApiSecurity, npdcAppConfig, Timeseries, Parameter, google, Sparkline) {
 
   $controller("NpolarBaseController", {$scope: $scope});
   $scope.resource = Timeseries;
-  $scope.document = {};  
-  
+  $scope.document = {};
+
   // Load timeseries and fetch parent parameter
   $scope.show().$promise.then(timeseries => {
-    
+
+    npdcAppConfig.cardTitle = $filter('title')(timeseries.titles);
     $scope.data = timeseries.data;
-    
+
     if ($scope.data && $scope.data.length > 0) {
       $timeout(function(){
         let sparkline = timeseries.data.map(d => [d.value]);
         google.setOnLoadCallback(Sparkline.draw(sparkline));
       });
     }
-    
+
     let uri = NpolarApiSecurity.canonicalUri(`/indicator/timeseries/${timeseries.id}`, 'http');
     Parameter.array({ "filter-timeseries": uri, fields: "*", limit: 1 }, parameters => {
         $scope.parameter = parameters[0];
@@ -30,6 +31,6 @@ let TimeseriesShowController = function($scope, $controller, $routeParams, $time
       });
     }
   );
-  
+
 };
 module.exports = TimeseriesShowController;

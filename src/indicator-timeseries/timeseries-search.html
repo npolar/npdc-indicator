@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <npdc:create-button class="np-primary-control"></npdc:create-button>
 
-<div>	
-<h1>Timeseries (switch to <a href="parameter">parameters</a>)</h1>
+<div class="np-padding">
+<h3>Timeseries (switch to <a href="parameter">parameters</a>)</h3>
 </div>
 
 <npdc:search-input feed="feed"></npdc:search-input>
@@ -39,7 +39,7 @@
                   <p flex><em>「<span class="md-avatar">{{ avatar(t) }}</span>」</em>
 										{{ subtitle(t) }}
 									</p>
-									 <div id="sparkline-{{$index}}" style="width: 240px; height: 60px;"></div> 
+									 <div id="sparkline-{{$index}}" style="width: 240px; height: 60px;"></div>
 
                 </div>
               </md-list-item>
