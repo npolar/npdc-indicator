@@ -18,6 +18,10 @@
       ]
     },
     {
+      "title": "Data",
+      "fields": ["data"]
+    },
+    {
       "title": "Labels",
       "fields": [
         {
@@ -66,6 +70,6 @@
         { "id": "updated", "hidden": false, "disabled": true },
         { "id": "updated_by", "hidden": false, "disabled": true }
       ]
-    } 
+    }
   ]
 }

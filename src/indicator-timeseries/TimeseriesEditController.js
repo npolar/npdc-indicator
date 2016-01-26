@@ -5,47 +5,40 @@ var TimeseriesEditController = function($scope, $controller, $routeParams, $time
   NpolarApiSecurity, NpdcSearchService, Timeseries, Parameter, google, Sparkline) {
 
   const schema = '//api.npolar.no/schema/indicator-timeseries-1';
-  
+
   let init = function() {
-    $controller("NpolarEditController", {$scope: $scope});
+    $controller("NpolarEditController", {
+      $scope: $scope
+    });
     $scope.resource = Timeseries;
     $scope.parameter = null;
     $scope.siblings = [];
     $scope.formula.schema = schema;
+    $scope.formula.form = "indicator-timeseries/timeseries-formula.json";
     $scope.formula.templates = [{
-        match(field) {
+      match(field) {
           return field.id === "locations_object";
         },
         template: '<npdc:formula-placename></npdc:formula-placename>'
-      }
-    ];
-    
-    // Select formula based on type of data
-    if ($location.search().data) {
-      let vars = parseInt($location.search().data);
-      if (vars <= 2) {
-        // Formula simple data (when/value) editing
-       $scope.formula.form = "indicator-timeseries/timeseries-data-simple-formula.json";
-      } else {
-        // Formula data editing
-        $scope.formula.form = "indicator-timeseries/timeseries-data-formula.json";
-      }
-    
-    } else {
-      // Formula without data editing
-      $scope.formula.form = "indicator-timeseries/timeseries-formula.json";
+    },
+    {
+      match(field) {
+          return field.id === "data";
+        },
+        template: '<npdc:formula-tabdata></npdc:formula-tabdata>'
     }
-    
+    ];
+
   };
   init();
   NpdcSearchService.injectAutocompleteFacetSources(['species', 'unit.symbol'], Timeseries);
-  
+
   let resource = $scope.edit();
 
   // For edit (and not new) we want to fetch the parent parameter
   if (resource && resource.$promise) {
     resource.$promise.then(timeseries => {
-      
+
       $scope.data = timeseries.data;
 
       if ($scope.data && $scope.data.length > 0) {
@@ -54,21 +47,25 @@ var TimeseriesEditController = function($scope, $controller, $routeParams, $time
           google.setOnLoadCallback(Sparkline.draw(sparkline));
         });
       }
-      
+
       let uri = NpolarApiSecurity.canonicalUri(`/indicator/timeseries/${timeseries.id}`, 'http');
-      Parameter.array({ "filter-timeseries": uri, fields: "*", limit: 1 }, parameters => {
-        if (parameters.length > 0) {   
+      Parameter.array({
+        "filter-timeseries": uri,
+        fields: "*",
+        limit: 1
+      }, parameters => {
+        if (parameters.length > 0) {
           $scope.parameter = parameters[0];
           $scope.siblings = $scope.parameter.timeseries.filter(uri => {
             let id = uri.split('/').slice(-1)[0];
             return (id !== timeseries.id);
           });
         }
-        
-        
+
+
       });
-      
-      
+
+
     });
   }
 

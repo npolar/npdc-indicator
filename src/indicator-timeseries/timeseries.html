@@ -2,43 +2,25 @@
 <article class="np-padding" ng-if="document">
   <div ng-if="document._rev">
     <h1>Timeseries:
-      {{ document.titles | title }} (<a ng-href="timeseries/?filter-systems={{document.systems[0]}}">{{ document.systems.join(',') }})</a>
+      {{ document.titles | title }}
+      (<a ng-href="timeseries/?filter-systems={{document.systems[0]}}">{{ document.systems.join(',') }}</a>)
     </h1>
-	<div>
-	  <span id="sparkline-0" style="width: 240px; height: 60px;"></span>
-
-	  <span>{{ data.length }} points ({{data[0].when}} - {{data[data.length-1].when}})</span>
-
-	  <span>{{ document.unit.symbol || 'N' }}/{{document.resolution}}</span>
-
-	  [<span ng-repeat="v in document.variables"> {{ v.variable }}</span> ]
-
-	</div>
+    <div>
+      <span id="sparkline-0" style="width: 240px; height: 60px;"></span>
+      <span>{{ data.length }} points ({{data[0].when}} - {{data[data.length-1].when}})</span>
+      <span>{{ document.unit.symbol || 'N' }}/{{document.resolution}}</span>
+      [<span ng-repeat="v in document.variables">{{ v.variable }}</span>]
+    </div>
 
     <h3>Parameter:
       <a ng-href="parameter/{{parameter.id}}">{{ parameter.titles | title }}</a>
-	  ({{ siblings.length }} {{ (siblings.length == 1) ? ('sibling'|t) : ('siblings'|t) }})
+      ({{ siblings.length }} {{ (siblings.length == 1) ? ('sibling'|t) : ('siblings'|t) }})
     </h3>
   </div>
 
   <npdc:formula ng-if="formula"></npdc:formula>
 
   <div ng-if="!formula">
-	<npdc:edit-button  class="np-primary-control"></npdc:edit-button>
-	<div ng-if="security.isAuthorized('update', resource.path)" layout layout-align="end center">
-	  <a ng-href="timeseries/{{document.id}}/edit?data={{document.variables.length||'0'}}"><md-button class="md-primary md-raised"  md-button-primary>edit data</md-button></a>
-	</div>
+    <npdc:edit-button class="np-primary-control"></npdc:edit-button>
   </div>
-
 </article>
-
-	<!--<md-input-container>
-	<label>Raw JSON data</label>
-	  <textarea npolar-json-text type="text" class="form-control" ng-model="document.data" ></textarea>
-	</md-input-container>-->
-
-
-
-  <!--
-  <div ng-repeat="e in edits">
-  -->
