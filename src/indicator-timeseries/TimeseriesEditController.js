@@ -31,7 +31,7 @@ var TimeseriesEditController = function($scope, $controller, $routeParams, $time
 
   };
   init();
-  NpdcSearchService.injectAutocompleteFacetSources(['species', 'unit.symbol'], Timeseries);
+  //NpdcSearchService.injectAutocompleteFacetSources(['species', 'unit.symbol'], Timeseries);
 
   let resource = $scope.edit();
 
