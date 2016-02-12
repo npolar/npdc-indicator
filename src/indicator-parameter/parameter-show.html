@@ -8,18 +8,30 @@
     {{ document.titles | title }} (<a ng-href="parameter/?filter-systems={{document.systems[0]}}">{{ document.systems.join(',') }}</a>)
   </h1>
 
+{{ document.species }}
+
   <pre ng-if="missing_timeseries">
     {{ missing_timeseries | json }}
   </pre>
 
-  <h3>Timeseries ({{ timeseries.length }})</h3>
+  <h3>Children ({{ timeseries.length }} timeseries)</h3>
   <ul class="np-padding">
     <li ng-repeat="t in timeseries">
       <a ng-href="timeseries/{{t.id}}">{{ t.titles | title }}</a>
     </li>
     <div id="sparkline-{{$index}}"></div>
   </ul>
+  
+  <h3>Links</h3>
+  <ul class="np-padding">
+    <li ng-repeat="l in document.links">
+      <a ng-href="{{l.href}}">{{ l.rel }}</a> ({{l.type}})
+    </li>
+  </ul>
 
 <!--  <div id="chart_div" style="position: relative; overflow: hidden; height: 600px; text-align: left; line-height: normal; z-index: 0; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></div>
 -->
+
+  <npdc:document-meta></npdc:document-meta>
+
 </article>
