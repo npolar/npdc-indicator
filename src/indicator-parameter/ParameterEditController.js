@@ -1,7 +1,7 @@
 'use strict';
 
 // @ngInject
-let ParameterEditController = function($scope, $routeParams, $location, $controller, $route, npolarApiConfig, NpolarMessage, Parameter, Timeseries) {
+let ParameterEditController = function($scope, $controller, formula, npolarApiConfig, npdcAppConfig, Parameter, Timeseries) {
 
   const schema = '//api.npolar.no/schema/indicator-parameter-1';
 
@@ -9,9 +9,11 @@ let ParameterEditController = function($scope, $routeParams, $location, $control
     $scope: $scope
   });
   $scope.resource = Parameter;
-  $scope.formula.schema = schema;
-  $scope.formula.form = "indicator-parameter/parameter-formula.json";
-  $scope.document = {};
+  $scope.formula = formula.getInstance({
+    schema,
+    form: "indicator-parameter/parameter-formula.json",
+    templates: npdcAppConfig.formula.templates
+  });
 
   // Add new timeseries to current parameter
   $scope.addTimeseries = function(parameter) {
@@ -33,10 +35,6 @@ let ParameterEditController = function($scope, $routeParams, $location, $control
     });
   };
 
-  let r = $scope.edit();
-  if (r && r.$promise) {
-    console.debug(r.$promise);
-  }
-
+  $scope.edit();
 };
 module.exports = ParameterEditController;
