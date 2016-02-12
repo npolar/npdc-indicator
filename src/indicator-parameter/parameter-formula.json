@@ -7,7 +7,7 @@
           "id": "systems", "type": "array", "multiple": true, "enum": ["mosj.no", "NARE-EMP"], "default": ["mosj.no"]
         },
         {
-          "id": "titles"
+          "id": "titles", "fields": ["!label"]
         }
 
       ]
