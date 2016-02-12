@@ -5,14 +5,14 @@
       {{ document.titles | title }}
       (<a ng-href="timeseries/?filter-systems={{document.systems[0]}}">{{ document.systems.join(',') }}</a>)
     </h1>
-    <div>
+    <div ng-if="data.length">
       <span id="sparkline-0" style="width: 240px; height: 60px;"></span>
       <span>{{ data.length }} points ({{data[0].when}} - {{data[data.length-1].when}})</span>
       <span>{{ document.unit.symbol || 'N' }}/{{document.resolution}}</span>
       [<span ng-repeat="v in document.variables">{{ v.variable }}</span>]
     </div>
 
-    <h3>Parameter:
+    <h3 ng-if="parameter">Parameter:
       <a ng-href="parameter/{{parameter.id}}">{{ parameter.titles | title }}</a>
       ({{ siblings.length }} {{ (siblings.length == 1) ? ('sibling'|t) : ('siblings'|t) }})
     </h3>

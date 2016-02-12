@@ -1,8 +1,8 @@
 'use strict';
 
-// @ngInject
-var TimeseriesEditController = function($scope, $controller, $routeParams, $timeout, $location,
-  NpolarApiSecurity, NpdcSearchService, Timeseries, Parameter, google, Sparkline) {
+var TimeseriesEditController = function($scope, $controller, $timeout,
+  NpolarApiSecurity, formulaAutoCompleteService, Timeseries, Parameter, npdcAppConfig, formula, google, Sparkline) {
+    'ngInject';
 
   const schema = '//api.npolar.no/schema/indicator-timeseries-1';
 
@@ -10,28 +10,35 @@ var TimeseriesEditController = function($scope, $controller, $routeParams, $time
     $controller("NpolarEditController", {
       $scope: $scope
     });
+    let chartElement = Sparkline.getElement();
+    if (chartElement) {
+      chartElement.innerHTML = '';
+    }
     $scope.resource = Timeseries;
     $scope.parameter = null;
     $scope.siblings = [];
-    $scope.formula.schema = schema;
-    $scope.formula.form = "indicator-timeseries/timeseries-formula.json";
-    $scope.formula.templates = [{
-      match(field) {
-          return field.id === "locations_object";
+    $scope.formula = formula.getInstance({
+      schema,
+      form: "indicator-timeseries/timeseries-formula.json",
+      templates: npdcAppConfig.formula.templates.concat([{
+          match(field) {
+            return field.id === "locations_object";
+          },
+          template: '<npdc:formula-placename></npdc:formula-placename>'
         },
-        template: '<npdc:formula-placename></npdc:formula-placename>'
-    },
-    {
-      match(field) {
-          return field.id === "data";
-        },
-        template: '<npdc:formula-tabdata></npdc:formula-tabdata>'
-    }
-    ];
+        {
+          match(field) {
+            return field.id === "data";
+          },
+          template: '<npdc:formula-tabdata></npdc:formula-tabdata>'
+        }
+      ])
+    });
 
+    formulaAutoCompleteService.autocompleteFacets(['species', 'unit.symbol'], Timeseries, $scope.formula);
   };
   init();
-  //NpdcSearchService.injectAutocompleteFacetSources(['species', 'unit.symbol'], Timeseries);
+
 
   let resource = $scope.edit();
 
@@ -45,7 +52,7 @@ var TimeseriesEditController = function($scope, $controller, $routeParams, $time
         $timeout(() => {
           let sparkline = timeseries.data.map(d => [d.value]);
           google.setOnLoadCallback(Sparkline.draw(sparkline));
-        });
+        },20);
       }
 
       let uri = NpolarApiSecurity.canonicalUri(`/indicator/timeseries/${timeseries.id}`, 'http');
@@ -61,13 +68,8 @@ var TimeseriesEditController = function($scope, $controller, $routeParams, $time
             return (id !== timeseries.id);
           });
         }
-
-
       });
-
-
     });
   }
-
 };
 module.exports = TimeseriesEditController;

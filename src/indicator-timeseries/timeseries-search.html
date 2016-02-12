@@ -1,77 +1,69 @@
 <!DOCTYPE html>
 <npdc:create-button class="np-primary-control"></npdc:create-button>
-
 <div class="np-padding">
-<h3>Timeseries (switch to <a href="parameter">parameters</a>)</h3>
-</div>
-
-<npdc:search-input feed="feed"></npdc:search-input>
+  <h3>Timeseries (switch to <a href="parameter">parameters</a>)</h3>
 <!--<h2 class="np-padding">System: <span ng-repeat="system in ['mosj.no', 'nare']">
 	<a href="?q=&filter-systems={{system}}">{{ system | t }}</a>
 		</span>
 	</h2>-->
-<div class="npdc-search">
-  <md-content>
-  <md-tabs md-dynamic-height>
-		<md-tab label="Timeseries">
-
-			<!--<section>
-				<h4>Timeseries with data</h4>
-
-			<ol>
-					<li ng-repeat="t in feed.entries | filter:query">
-						<a ng-href="timeseries/{{t.id}}">
-							{{ t.titles | title }}
-						</a>
-					</li>
-				</ol>
-			</section>-->
-
-				<md-content class="np-layout-list" ng-repeat="t in feed.entries | filter:query" style="overflow: hidden;">
-          <a ng-href="timeseries/{{t.id}}">
-            <md-list>
-              <md-list-item class="md-2-line">
-                <div class="md-list-item-text">
-                  <h3 class="md-headline">
-                    {{ t.titles | title }}
-                  </h3>
-
-                  <p flex><em>「<span class="md-avatar">{{ avatar(t) }}</span>」</em>
-										{{ subtitle(t) }}
-									</p>
-									 <div id="sparkline-{{$index}}" style="width: 240px; height: 60px;"></div>
-
-                </div>
-              </md-list-item>
-            </md-list>
-            <md-divider></md-divider>
-					</a>
-        </md-content>
-		</md-tab>
-
-
-		<md-tab label="Without data">
-				<section class="alert alert-danger" role="alert">
-					<h4>Timeseries without any data points</h4>
-
-					<ol class="np-layout-list">
-						<li ng-repeat="t in noData track by t.id | filter:query" class="md-2-line">
-							<a ng-href="timeseries/{{t.id}}">
-								 {{ t.titles | title }}
-							</a>
-						</li>
-					</ol>
-				</section>
-		</md-tab>
-	</md-tabs>
-
-	</md-content>
 </div>
 
-<div layout-padding>
-	<div ng-if="feed.opensearch.totalResults > 0" layout layout-align="space-between center">
-		<div style="line-height: 48px;">{{feed.opensearch.totalResults}} results, displaying {{ feed.entries.length}}</div>
-		<div><md-button class="md-raised md-primary" ng-if="showNext()" ng-click="next()">More ...</md-button></div>
-	</div>
-	<div ng-if="feed.opensearch.totalResults == 0">No results when searching for "{{q()}}"</div>
+<npdc:search-input feed="feed"></npdc:search-input>
+<div class="npdc-search">
+  <md-content>
+    <npdc:loader ng-if="!feed.entries"></npdc:loader>
+    <md-tabs md-dynamic-height ng-if="feed.entries">
+  		<md-tab label="Timeseries">
+        <section>
+
+          <div class="np-layout-list">
+            <md-list>
+              <md-list-item class="md-2-line" style="padding: 10px;" ng-repeat="t in feed.entries | filter:query" ng-href="timeseries/{{t.id}}">
+                <div class="md-list-item-text">
+                  <h3 class="md-headline">
+                    <span>{{ t.titles | title }}</span>
+                  </h3>
+                  <p flex><em>「<span class="md-avatar">{{ avatar(t) }}</span>」</em>
+                    {{ subtitle(t) }}
+                  </p>
+                  <div id="sparkline-{{$index}}" style="width: 240px; height: 60px;"></div>
+                </div>
+                <md-divider></md-divider>
+
+              </md-list-item>
+            </md-list>
+          </div>
+
+
+
+          <div layout-padding>
+            <div ng-if="feed.opensearch.totalResults > 0" layout layout-align="space-between center">
+              <div style="line-height: 48px;">{{feed.opensearch.totalResults}}
+                results, displaying
+                {{ feed.entries.length}}</div>
+              <div>
+                <md-button class="md-raised md-primary" ng-if="showNext()" ng-click="next()">More ...</md-button>
+              </div>
+            </div>
+            <div ng-if="feed.opensearch.totalResults == 0">No results when searching for "{{q()}}"</div>
+          </div>
+        </section>
+      </md-tab>
+
+
+      <md-tab label="Without data">
+          <section class="alert alert-danger np-padding" role="alert">
+            <h4>Timeseries without any data points</h4>
+
+            <ol class="np-layout-list">
+              <li ng-repeat="t in noData track by t.id | filter:query" class="md-2-line">
+                <a ng-href="timeseries/{{t.id}}">
+                   {{ t.titles | title }}
+                </a>
+              </li>
+            </ol>
+          </section>
+      </md-tab>
+    </md-tabs>
+  </md-content>
 </div>

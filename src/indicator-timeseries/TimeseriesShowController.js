@@ -8,6 +8,11 @@ let TimeseriesShowController = function($scope, $controller, $timeout,
   $scope.resource = Timeseries;
   $scope.document = {};
 
+  let chartElement = Sparkline.getElement();
+  if (chartElement) {
+    chartElement.innerHTML = '';
+  }
+
   // Load timeseries and fetch parent parameter
   $scope.show().$promise.then(timeseries => {
 
@@ -23,14 +28,14 @@ let TimeseriesShowController = function($scope, $controller, $timeout,
 
     let uri = NpolarApiSecurity.canonicalUri(`/indicator/timeseries/${timeseries.id}`, 'http');
     Parameter.array({ "filter-timeseries": uri, fields: "*", limit: 1 }, parameters => {
+      if (parameters && parameters.length > 0) {
         $scope.parameter = parameters[0];
         $scope.siblings = $scope.parameter.timeseries.filter(uri => {
           let id = uri.split('/').slice(-1)[0];
           return (id !== timeseries.id);
         });
-      });
-    }
-  );
-
+      }
+    });
+  });
 };
 module.exports = TimeseriesShowController;

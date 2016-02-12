@@ -54,7 +54,7 @@ var TimeseriesSearchController = function($scope, $location, $controller, $filte
 
     let defaults = {
       start: 0,
-      limit: '50',
+      limit: '30',
       "size-facet": 5,
       format: "json",
       variant: "atom",
