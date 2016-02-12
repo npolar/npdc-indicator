@@ -64,13 +64,13 @@ var TimeseriesSearchController = function($scope, $location, $controller, $filte
       fields: "systems,data,labels,collection,species,titles,id,created,created_by,updated,updated_by"
     };
 
+    // @todo
     // Limit asearch for folks with NARE-EMP read access
     // https://api.npolar.no/indicator/system/nare-emp
     let invariants = {}; //$scope.security.isAuthenticated() ? {} : { "not-draft": "yes", "not-progress": "planned", "filter-links.rel": "data" };
     if ($scope.security.isAuthorized('read', 'https://api.npolar.no/indicator/system/nare-emp')) {
-      $location.search({'filter-systems': 'NARE-EMP'});
-      
-      invariants['filter-systems'] = 'NARE-EMP';
+      //$location.search({'filter-systems': 'NARE-EMP'}, false);
+      //invariants['filter-systems'] = 'NARE-EMP';
     }
     
     return Object.assign({}, defaults, invariants);
