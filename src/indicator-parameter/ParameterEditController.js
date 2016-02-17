@@ -1,18 +1,44 @@
 'use strict';
 
 // @ngInject
-let ParameterEditController = function($scope, $routeParams, $location, $controller, $route, npolarApiConfig, NpolarMessage, Parameter, Timeseries) {
+let ParameterEditController = function($scope, $routeParams, $location, $controller, $route,
+                                       
+                                       formula, formulaAutoCompleteService,
+                                       npolarApiConfig, NpolarMessage,
+                                       npdcAppConfig,
+                                       Parameter, Timeseries) {
 
   const schema = '//api.npolar.no/schema/indicator-parameter-1';
+  
+  function init() {
+    $controller("NpolarEditController", {
+      $scope: $scope
+    });
+    $scope.resource = Parameter;
 
-  $controller('NpolarEditController', {
-    $scope: $scope
-  });
-  $scope.resource = Parameter;
-  $scope.formula.schema = schema;
-  $scope.formula.form = "indicator-parameter/parameter-formula.json";
-  $scope.document = {};
-
+    $scope.siblings = [];
+    $scope.formula = formula.getInstance({
+      schema,
+      form: "indicator-parameter/parameter-formula.json",
+      templates: npdcAppConfig.formula.templates.concat([{
+          match(field) {
+            return field.id === "locations_object";
+          },
+          template: '<npdc:formula-placename></npdc:formula-placename>'
+        },
+        {
+          match(field) {
+            return field.id === "data";
+          },
+          template: '<npdc:formula-tabdata></npdc:formula-tabdata>'
+        }
+      ])
+    });
+    $scope.document = {};
+    formulaAutoCompleteService.autocompleteFacets(['species', 'unit.symbol'], Timeseries, $scope.formula);
+  }
+  init();
+  
   // Add new timeseries to current parameter
   $scope.addTimeseries = function(parameter) {
     let duplicate = Object.create(parameter);
