@@ -9,7 +9,7 @@
       <span id="sparkline-0" style="width: 240px; height: 60px;"></span>
       <span>{{ data.length }} points ({{data[0].when}} - {{data[data.length-1].when}})</span>
       <span>{{ document.unit.symbol || 'N' }}/{{document.resolution}}</span>
-      [<span ng-repeat="v in document.variables">{{ v.variable }}</span>]
+      [<span ng-repeat="v in document.variables">{{ v.variable }} </span>]
     </div>
 
     <h3 ng-if="parameter">Parameter:
@@ -22,5 +22,34 @@
 
   <div ng-if="!formula">
     <npdc:edit-button class="np-primary-control"></npdc:edit-button>
+    
+    <h3>Links</h3>
+    <ul class="np-padding">
+      <li ng-repeat="l in document.links">
+        <a ng-href="{{l.href}}">{{ l.rel }}</a> ({{l.type}})
+      </li>
+    </ul>
+    
+    <h3>Labels</h3>
+    <ul class="np-padding">
+      <li ng-repeat="l in document.labels">
+        {{l | json }})
+    </ul>
+    
+    Species
+    {{ document.species }}
+    
+    <h4>Edits</h4>
+    {{ document.created_by }}
+    
+    {{ document.updated_by }}
+    
+    <h4>Open data</h4>
+    License: CC-BY 4
+    Data: JSON
+    
   </div>
+  
+  <npdc:document-meta></npdc:document-meta>
+  
 </article>

@@ -59,16 +59,16 @@
     {
       "title": "Metadata",
       "fields": [
-        { "id": "id", "hidden": false, "disabled": true },
-        { "id": "_id", "hidden": false, "disabled": true },
-        { "id": "_rev", "hidden": false, "disabled": true },
-        { "id": "schema", "hidden": false, "disabled": false, "default": "http://api.npolar.no/schema/indicator-timeseries-1" },
-        { "id": "workspace", "hidden": false, "disabled": true, "default": "indicator" },
-        { "id": "collection", "hidden": false, "disabled": true, "default": "timeseries" },
-        { "id": "created", "hidden": false, "disabled": true },
-        { "id": "created_by", "hidden": false, "disabled": true },
-        { "id": "updated", "hidden": false, "disabled": true },
-        { "id": "updated_by", "hidden": false, "disabled": true }
+        { "id": "id", "hidden": true, "disabled": true },
+        { "id": "_id", "hidden": true, "disabled": true },
+        { "id": "_rev", "hidden": true, "disabled": true },
+        { "id": "schema", "hidden": true, "disabled": true, "default": "http://api.npolar.no/schema/indicator-timeseries-1" },
+        { "id": "workspace", "hidden": true, "disabled": true, "default": "indicator" },
+        { "id": "collection", "hidden": true, "disabled": true, "default": "timeseries" },
+        { "id": "created", "hidden": true, "disabled": true },
+        { "id": "created_by", "hidden": true, "disabled": true },
+        { "id": "updated", "hidden": true, "disabled": true },
+        { "id": "updated_by", "hidden": true, "disabled": true }
       ]
     }
   ]

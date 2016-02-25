@@ -1,6 +1,6 @@
 {
   "name": "npdc-indicator",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "https://data.npolar.no/indicator",
   "main": "gulpfile.js",
   "scripts": {
@@ -29,7 +29,14 @@
   },
   "browserify": {
     "transform": [
-      ["babelify",{"presets": ["es2015"]}],
+      [
+        "babelify",
+        {
+          "presets": [
+            "es2015"
+          ]
+        }
+      ],
       "partialify",
       "browserify-ngannotate"
     ]

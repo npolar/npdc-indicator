@@ -17,6 +17,7 @@ var ParameterSearchController = function($scope, $location, $controller, npdcApp
       "size-facet": 5,
       format: "json",
       variant: "atom",
+      sort: "-updated",
       facets: "systems,collection,species,themes,dataseries,label,warn,variable,unit,locations.placename,links.rel"
     };
     return Object.assign({}, defaults, $location.search());
