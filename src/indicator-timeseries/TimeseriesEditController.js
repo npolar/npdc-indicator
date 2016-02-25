@@ -22,7 +22,7 @@ var TimeseriesEditController = function($scope, $controller, $timeout,
       form: "indicator-timeseries/timeseries-formula.json",
       templates: npdcAppConfig.formula.templates.concat([{
           match(field) {
-            return field.id === "locations_object";
+            return field.id === "locations_item";
           },
           template: '<npdc:formula-placename></npdc:formula-placename>'
         },
