@@ -70,7 +70,6 @@ app.run(function($http, npolarApiConfig, npdcAppConfig, NpolarLang, NpolarTransl
 
   Object.assign(npolarApiConfig, new AutoConfig(environment));
 
-  npdcAppConfig.cardTitle = '';
   npdcAppConfig.toolbarTitle = NpolarTranslate.translate('npdc.app.Title');
 
   console.debug("npolarApiConfig", npolarApiConfig);

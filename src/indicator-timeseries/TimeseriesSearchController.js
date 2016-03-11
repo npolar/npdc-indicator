@@ -10,8 +10,6 @@ var TimeseriesSearchController = function($scope, $location, $controller, $filte
   });
   $scope.resource = Timeseries;
 
-  npdcAppConfig.cardTitle = "Environmental monitoring timeseries";
-
   $scope.avatar = function(t) {
     return t.systems.join(',');
   };
@@ -72,7 +70,7 @@ var TimeseriesSearchController = function($scope, $location, $controller, $filte
       //$location.search({'filter-systems': 'NARE-EMP'}, false);
       //invariants['filter-systems'] = 'NARE-EMP';
     }
-    
+
     return Object.assign({}, defaults, invariants);
   };
 
@@ -87,9 +85,9 @@ var TimeseriesSearchController = function($scope, $location, $controller, $filte
   };
 
   $scope.findTimeseriesWithoutData = function() {
-    
-    
-    
+
+
+
     var noDataQuery = {
       start: 0,
       limit: '50',
@@ -103,7 +101,7 @@ var TimeseriesSearchController = function($scope, $location, $controller, $filte
     if ($scope.security.isAuthorized('read', 'https://api.npolar.no/indicator/system/nare-emp')) {
       noDataQuery['filter-systems'] = 'NARE-EMP';
     }
-    
+
     $scope.noData = Timeseries.array(Object.assign(noDataQuery, $location.search()));
   };
 

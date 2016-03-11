@@ -12,9 +12,9 @@ var ParameterShowController = function($scope, $routeParams, $location, $control
 
   // Fetch parameter document with parent indicator and timeseries children
   Parameter.fetch($routeParams, function(parameter) {
-    
+
     $scope.document = parameter;
-    npdcAppConfig.cardTitle = $filter('title')(parameter.titles);
+    //npdcAppConfig.cardTitle = $filter('title')(parameter.titles);
 
     // Fetch timeseries children and draw sparklines
     let filter_timeseries_ids = parameter.timeseries.map(t => {
@@ -28,15 +28,15 @@ var ParameterShowController = function($scope, $routeParams, $location, $control
         fields: "*",
         limit: filter_timeseries_ids.length
       }, function(timeseries) {
-        
+
         $scope.timeseries = timeseries;
-        
+
         // @todo Warn user if linked data is not there
         if (timeseries.length !== filter_timeseries_ids.length) {
           console.warn("timeseries", filter_timeseries_ids);
           console.warn("existing timeseries", timeseries.map(t => t.id));
         }
-        
+
         // Draw sparklines after page load
         $timeout(() => {
           google.setOnLoadCallback(Sparkline.drawArray(timeseries));
