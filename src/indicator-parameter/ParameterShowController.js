@@ -1,8 +1,7 @@
 'use strict';
 
-// @ngInject
-var ParameterShowController = function($scope, $routeParams, $location, $controller, $route, $timeout, $filter,
-  npdcAppConfig, Parameter, Timeseries, google, Sparkline) {
+var ParameterShowController = function($scope, $controller, $timeout, Parameter, Timeseries, google, Sparkline) {
+  'ngInject';
 
   // Extend NpolarApiBaseController and inject resource
   $controller("NpolarBaseController", {
@@ -11,10 +10,7 @@ var ParameterShowController = function($scope, $routeParams, $location, $control
   $scope.resource = Parameter;
 
   // Fetch parameter document with parent indicator and timeseries children
-  Parameter.fetch($routeParams, function(parameter) {
-
-    $scope.document = parameter;
-    //npdcAppConfig.cardTitle = $filter('title')(parameter.titles);
+  $scope.show().$promise.then(function(parameter) {
 
     // Fetch timeseries children and draw sparklines
     let filter_timeseries_ids = parameter.timeseries.map(t => {

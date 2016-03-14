@@ -1,8 +1,7 @@
 'use strict';
 
-// @ngInject
-var TimeseriesSearchController = function($scope, $location, $controller, $filter, $timeout, $http,
-  npdcAppConfig, NpolarLang, Timeseries, google, Sparkline) {
+var TimeseriesSearchController = function($scope, $location, $controller, $filter, $timeout, $http, Timeseries, google, Sparkline) {
+    'ngInject';
 
   // Extend NpolarApiBaseController
   $controller("NpolarBaseController", {

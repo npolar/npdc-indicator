@@ -6,7 +6,6 @@ let TimeseriesShowController = function($scope, $controller, $timeout,
 
   $controller("NpolarBaseController", {$scope: $scope});
   $scope.resource = Timeseries;
-  $scope.document = {};
 
   let chartElement = Sparkline.getElement();
   if (chartElement) {
@@ -16,7 +15,6 @@ let TimeseriesShowController = function($scope, $controller, $timeout,
   // Load timeseries and fetch parent parameter
   $scope.show().$promise.then(timeseries => {
 
-    //npdcAppConfig.cardTitle = $filter('title')(timeseries.titles);
     $scope.data = timeseries.data;
 
     if ($scope.data && $scope.data.length > 0) {

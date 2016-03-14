@@ -2,7 +2,7 @@
 
 var TimeseriesEditController = function($scope, $controller, $timeout,
   NpolarApiSecurity, formulaAutoCompleteService, Timeseries, Parameter, npdcAppConfig, formula, google, Sparkline) {
-    'ngInject';
+  'ngInject';
 
   const schema = '//api.npolar.no/schema/indicator-timeseries-1';
 
@@ -21,18 +21,16 @@ var TimeseriesEditController = function($scope, $controller, $timeout,
       schema,
       form: "indicator-timeseries/timeseries-formula.json",
       templates: npdcAppConfig.formula.templates.concat([{
-          match(field) {
-            return field.id === "locations_item";
-          },
-          template: '<npdc:formula-placename></npdc:formula-placename>'
+        match(field) {
+          return field.id === "locations_item";
         },
-        {
-          match(field) {
-            return field.id === "data";
-          },
-          template: '<npdc:formula-tabdata></npdc:formula-tabdata>'
-        }
-      ])
+        template: '<npdc:formula-placename></npdc:formula-placename>'
+      }, {
+        match(field) {
+          return field.id === "data";
+        },
+        template: '<npdc:formula-tabdata></npdc:formula-tabdata>'
+      }])
     });
 
     formulaAutoCompleteService.autocompleteFacets(['species', 'unit.symbol'], Timeseries, $scope.formula);
@@ -42,17 +40,17 @@ var TimeseriesEditController = function($scope, $controller, $timeout,
 
   let resource = $scope.edit();
 
-  // For edit (and not new) we want to fetch the parent parameter
-  if (resource && resource.$promise) {
-    resource.$promise.then(timeseries => {
 
+  resource.$promise.then(timeseries => {
+
+    if (timeseries._rev) { // not for new documents
       $scope.data = timeseries.data;
 
       if ($scope.data && $scope.data.length > 0) {
         $timeout(() => {
           let sparkline = timeseries.data.map(d => [d.value]);
           google.setOnLoadCallback(Sparkline.draw(sparkline));
-        },20);
+        }, 20);
       }
 
       let uri = NpolarApiSecurity.canonicalUri(`/indicator/timeseries/${timeseries.id}`, 'http');
@@ -69,7 +67,10 @@ var TimeseriesEditController = function($scope, $controller, $timeout,
           });
         }
       });
-    });
-  }
+
+    }
+  });
+
+
 };
 module.exports = TimeseriesEditController;

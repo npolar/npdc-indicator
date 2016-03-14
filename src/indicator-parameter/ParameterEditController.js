@@ -28,7 +28,7 @@ let ParameterEditController = function($scope, $controller, formula, formulaAuto
         template: '<npdc:formula-tabdata></npdc:formula-tabdata>'
       }])
     });
-    $scope.document = {};
+
     formulaAutoCompleteService.autocompleteFacets(['species', 'unit.symbol'], Timeseries, $scope.formula);
   }
   init();
@@ -53,10 +53,7 @@ let ParameterEditController = function($scope, $controller, formula, formulaAuto
     });
   };
 
-  let r = $scope.edit();
-  if (r && r.$promise) {
-    console.debug(r.$promise);
-  }
+  $scope.edit();
 
 };
 module.exports = ParameterEditController;

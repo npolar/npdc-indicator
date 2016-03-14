@@ -1,7 +1,8 @@
 'use strict';
 
-// @ngInject
 var ParameterSearchController = function($scope, $location, $controller, npdcAppConfig, Parameter) {
+  'ngInject';
+
   // Extend NpolarApiBaseController
   $controller("NpolarBaseController", {
     $scope: $scope
