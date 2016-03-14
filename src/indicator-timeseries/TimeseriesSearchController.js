@@ -66,10 +66,10 @@ var TimeseriesSearchController = function($scope, $location, $controller, $filte
     // Limit asearch for folks with NARE-EMP read access
     // https://api.npolar.no/indicator/system/nare-emp
     let invariants = {}; //$scope.security.isAuthenticated() ? {} : { "not-draft": "yes", "not-progress": "planned", "filter-links.rel": "data" };
-    if ($scope.security.isAuthorized('read', 'https://api.npolar.no/indicator/system/nare-emp')) {
+    // if ($scope.security.isAuthorized('read', 'https://api.npolar.no/indicator/system/nare-emp')) {
       //$location.search({'filter-systems': 'NARE-EMP'}, false);
       //invariants['filter-systems'] = 'NARE-EMP';
-    }
+    // }
 
     return Object.assign({}, defaults, invariants);
   };

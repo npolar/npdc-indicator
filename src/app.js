@@ -51,29 +51,15 @@ services.forEach(function (service) {
 app.config(require('./routes'));
 
 // Inject auth interceptor
-app.config(function($httpProvider) {
+app.config(function($httpProvider, npolarApiConfig) {
+  let environment = "production"; // development | test | production
+  Object.assign(npolarApiConfig, new AutoConfig(environment));
+
   $httpProvider.interceptors.push("npolarApiInterceptor");
 });
 
 // Inject npolarApiConfig and run
-app.run(function($http, npolarApiConfig, npdcAppConfig, NpolarLang, NpolarTranslate) {
-
-  let environment = "production"; // development | test | production
-
-  // i18n
-  $http.get('//api.npolar.no/text/?q=&filter-bundle=npolar|npdc|npdc-indicator&format=json&variant=array&limit=all').then(response => {
-    NpolarTranslate.appendToDictionary(response.data);
-    NpolarLang.setLanguagesFromDictionaryUse({ min: 0.50, force: ['en', 'nb'], dictionary: response.data});
-    console.debug(NpolarLang.getLanguageCounts(response.data));
-  });
-
-
-  Object.assign(npolarApiConfig, new AutoConfig(environment));
-
-  npdcAppConfig.toolbarTitle = NpolarTranslate.translate('npdc.app.Title');
-
-  console.debug("npolarApiConfig", npolarApiConfig);
-  console.debug("npdcAppConfig", npdcAppConfig);
-
-
+app.run(function(npdcAppConfig, NpolarTranslate) {
+  npdcAppConfig.toolbarTitle = "Indicator";
+  NpolarTranslate.loadBundles('npdc-indicator');
 });
