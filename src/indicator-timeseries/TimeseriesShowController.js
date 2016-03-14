@@ -1,8 +1,8 @@
 'use strict';
 
-// @ngInject
 let TimeseriesShowController = function($scope, $controller, $timeout,
   $filter, NpolarApiSecurity, npdcAppConfig, Timeseries, Parameter, google, Sparkline) {
+    'ngInject';
 
   $controller("NpolarBaseController", {$scope: $scope});
   $scope.resource = Timeseries;
