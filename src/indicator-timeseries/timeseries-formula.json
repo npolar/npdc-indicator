@@ -1,104 +1,149 @@
 {
-  "fieldsets": [{
-    "title": "Timeseries",
-    "fields": [{
-      "id": "titles",
-      "items": {
-        "fields": [{
-          "id": "lang",
-          "enum": ["nb", "en"]
-        }, "title", "label"]
-      }
-    }]
-  }, {
-    "title": "Units",
-    "fields": [
-      "resolution", {
-        "id": "unit",
-        "fields": [{
-          "id": "symbol"
-        }]
-      }
-    ]
-  }, {
-    "title": "Data",
-    "fields": ["data"]
-  }, {
-    "title": "Labels",
-    "fields": [{
-        "id": "labels"
-      },
-      "!variables"
-    ]
-  }, {
-    "title": "Locations",
-    "fields": [
-      "locations"
-    ]
-  }, {
-    "title": "Species",
-    "fields": [{
-      "id": "species"
-    }]
-  }, {
-    "title": "Links",
-    "fields": [
-      "links"
-    ]
-  }, {
-    "title": "Systems",
-    "fields": [{
-      "id": "systems",
-      "type": "array",
-      "multiple": true,
-      "enum": ["mosj.no", "NARE-EMP"],
-      "default": ["mosj.no"]
-    }]
-  }, {
-    "title": "Metadata",
-    "fields": [{
-      "id": "id",
-      "hidden": true,
-      "disabled": true
-    }, {
-      "id": "_id",
-      "hidden": true,
-      "disabled": true
-    }, {
-      "id": "_rev",
-      "hidden": true,
-      "disabled": true
-    }, {
-      "id": "schema",
-      "hidden": true,
-      "disabled": true,
-      "default": "http://api.npolar.no/schema/indicator-timeseries-1"
-    }, {
-      "id": "workspace",
-      "hidden": true,
-      "disabled": true,
-      "default": "indicator"
-    }, {
-      "id": "collection",
-      "hidden": true,
-      "disabled": true,
-      "default": "timeseries"
-    }, {
-      "id": "created",
-      "hidden": true,
-      "disabled": true
-    }, {
-      "id": "created_by",
-      "hidden": true,
-      "disabled": true
-    }, {
-      "id": "updated",
-      "hidden": true,
-      "disabled": true
-    }, {
-      "id": "updated_by",
-      "hidden": true,
-      "disabled": true
-    }]
-  }]
+"fieldsets": [
+{
+"title": "Timeseries",
+"fields": [
+{
+"id": "titles",
+"items": {
+"fields": [
+{
+"id": "lang",
+"enum": [
+"nb",
+"en"
+]
+},
+"title",
+"label"
+]
+}
+}
+]
+},
+{
+"title": "Units",
+"fields": [
+"resolution",
+{
+"id": "unit",
+"fields": [
+{
+"id": "symbol"
+}
+]
+}
+]
+},
+{
+"title": "Data",
+"fields": [
+"data"
+]
+},
+{
+"title": "Labels",
+"fields": [
+{
+"id": "labels"
+},
+"!variables"
+]
+},
+{
+"title": "Locations",
+"fields": [
+"locations"
+]
+},
+{
+"title": "Species",
+"fields": [
+{
+"id": "species"
+}
+]
+},
+{
+"title": "Links",
+"fields": [
+"links"
+]
+},
+{
+"title": "Systems",
+"fields": [
+{
+"id": "systems",
+"type": "array",
+"multiple": true,
+"enum": [
+"mosj.no",
+"NARE-EMP"
+],
+"default": [
+"mosj.no"
+]
+}
+]
+},
+{
+"title": "Metadata",
+"fields": [
+{
+"id": "id",
+"hidden": true,
+"disabled": true
+},
+{
+"id": "_id",
+"hidden": true,
+"disabled": true
+},
+{
+"id": "_rev",
+"hidden": true,
+"disabled": true
+},
+{
+"id": "schema",
+"hidden": true,
+"disabled": true,
+"default": "http://api.npolar.no/schema/indicator-timeseries-1"
+},
+{
+"id": "workspace",
+"hidden": true,
+"disabled": true,
+"default": "indicator"
+},
+{
+"id": "collection",
+"hidden": true,
+"disabled": true,
+"default": "timeseries"
+},
+{
+"id": "created",
+"hidden": true,
+"disabled": true
+},
+{
+"id": "created_by",
+"hidden": true,
+"disabled": true
+},
+{
+"id": "updated",
+"hidden": true,
+"disabled": true
+},
+{
+"id": "updated_by",
+"hidden": true,
+"disabled": true
+}
+]
+}
+]
 }

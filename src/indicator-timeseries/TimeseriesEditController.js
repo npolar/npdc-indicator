@@ -4,8 +4,9 @@ var TimeseriesEditController = function($scope, $controller, $timeout,
   NpolarApiSecurity, formulaAutoCompleteService, Timeseries, Parameter, npdcAppConfig, formula, google, Sparkline) {
   'ngInject';
 
-  const schema = '//api.npolar.no/schema/indicator-timeseries-1';
-
+  //const schema = '//api.npolar.no/schema/indicator-timeseries-1';
+  const schema = './indicator-timeseries/indicator-timeseries-1.json';
+  
   let init = function() {
     $controller("NpolarEditController", {
       $scope: $scope

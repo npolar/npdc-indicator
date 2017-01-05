@@ -1,17 +1,15 @@
   'use strict';
-// [indicatorApp](https://github.com/npolar/npdc-indicator)
+// [NPDC timeseries](https://github.com/npolar/npdc-indicator)
 
 let angular = require('angular');
 let npdcCommon = require('npdc-common');
 let AutoConfig = npdcCommon.AutoConfig;
 //require('angular-xeditable');
 
-// Create "vesselApp" (angular module) and declare its dependencies
 let app = angular.module('indicatorApp', [
   'npdcCommon'
   //xeditable
 ]);
-
 
 app.controller('ParameterSearchController', require('./indicator-parameter/ParameterSearchController.js'));
 app.controller('ParameterEditController', require('./indicator-parameter/ParameterEditController.js'));
@@ -36,8 +34,7 @@ var services = [
   {"path": "/indicator/parameter",  "resource": "Parameter"},
   {"path": "/indicator/timeseries", "resource": "Timeseries" },
   {"path": "/placename", "base": "//api.npolar.no", "resource": "Placename", fields: "*" },
-  {"path": "/editlog", "resource": "Editlog" },
-  {"path": "", "resource": "Config", base: "config" }
+  {"path": "/editlog", "resource": "Editlog" }
 ];
 
 services.forEach(function (service) {
@@ -54,8 +51,21 @@ app.config(require('./routes'));
 app.config(function($httpProvider, npolarApiConfig) {
   let environment = "production"; // development | test | production
   Object.assign(npolarApiConfig, new AutoConfig(environment));
-
   $httpProvider.interceptors.push("npolarApiInterceptor");
+
+  // i18n
+  $http.get('//api.npolar.no/text/?q=&filter-bundle=npolar|npdc|npdc-indicator&format=json&variant=array&limit=all').then(response => {
+    NpolarTranslate.appendToDictionary(response.data);
+    NpolarLang.setLanguagesFromDictionaryUse({ min: 0.50, force: ['en', 'nb'], dictionary: response.data});
+    console.debug(NpolarLang.getLanguageCounts(response.data));
+  });
+
+  //$http.get('//api.npolar.no/service/_all?fields=path,created&format=json&format=json&variant=array&limit=all').then(response => {
+  //  console.debug(response);
+  //});
+
+  console.debug("npolarApiConfig", npolarApiConfig);
+  console.debug("npdcAppConfig", npdcAppConfig);
 });
 
 // Inject npolarApiConfig and run

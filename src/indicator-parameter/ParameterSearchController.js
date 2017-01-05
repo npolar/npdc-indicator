@@ -35,7 +35,6 @@ var ParameterSearchController = function($scope, $location, $controller, npdcApp
   npdcAppConfig.search.local.results.detail = detail;
 
   $scope.search(query());
-
   $scope.$on('$locationChangeSuccess', (event, data) => {
     $scope.search(query());
   });
