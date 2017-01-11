@@ -4,7 +4,11 @@ var TimeseriesEditController = function($scope, $controller, $timeout,
   NpolarApiSecurity, formulaAutoCompleteService, Timeseries, Parameter, npdcAppConfig, formula, google, Sparkline) {
     'ngInject';
 
+  //@todo Autocomplete @id for authors
+  // Duplicate
+  // Consider again having multiple timeseries in one => avoids keywords...
   const schema = '//api.npolar.no/schema/indicator-timeseries-1';
+  //const schema = 'indicator-timeseries/indicator-timeseries-1.json';
 
   let init = function() {
     $controller("NpolarEditController", {
@@ -35,7 +39,12 @@ var TimeseriesEditController = function($scope, $controller, $timeout,
       ])
     });
 
-    formulaAutoCompleteService.autocompleteFacets(['species', 'unit.symbol'], Timeseries, $scope.formula);
+    $scope.$watch('formula.getModel().keywords', function(keywords, was) {
+      console.log('watch keywords', keywords, was);
+    });
+
+
+    formulaAutoCompleteService.autocompleteFacets(['species', 'unit.symbol', 'authors.@id'], Timeseries, $scope.formula);
   };
   init();
 
@@ -47,6 +56,9 @@ var TimeseriesEditController = function($scope, $controller, $timeout,
     resource.$promise.then(timeseries => {
 
       $scope.data = timeseries.data;
+
+
+
 
       if ($scope.data && $scope.data.length > 0) {
         $timeout(() => {

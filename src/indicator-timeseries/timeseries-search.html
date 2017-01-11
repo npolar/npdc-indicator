@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <npdc:create-button class="np-primary-control"></npdc:create-button>
 <div class="np-padding">
-  <h3>Timeseries (switch to <a href="parameter">parameters</a>)</h3>
-<!--<h2 class="np-padding">System: <span ng-repeat="system in ['mosj.no', 'nare']">
-	<a href="?q=&filter-systems={{system}}">{{ system | t }}</a>
-		</span>
-	</h2>-->
+ <npdc:search-input feed="feed"></npdc:search-input>
+  <npdc:search feed="feed"></npdc:search>
 </div>
 
-<npdc:search-input feed="feed"></npdc:search-input>
+<!--
+Sparklines:
+
 <div class="npdc-search">
   <md-content>
     <npdc:loader ng-if="!feed.entries"></npdc:loader>
@@ -65,5 +64,6 @@
           </section>
       </md-tab>
     </md-tabs>
-  </md-content>
+
+-->
 </div>

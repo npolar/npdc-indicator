@@ -1,14 +1,14 @@
 'use strict';
 
-// @ngInject
 let ParameterEditController = function($scope, $routeParams, $location, $controller, $route,
-                                       
-                                       formula, formulaAutoCompleteService,
-                                       npolarApiConfig, NpolarMessage,
-                                       npdcAppConfig,
-                                       Parameter, Timeseries) {
+  formula, formulaAutoCompleteService,
+  npolarApiConfig, NpolarMessage,
+  npdcAppConfig,
+  Parameter, Timeseries) {
+  'ngInject';
 
-  const schema = '//api.npolar.no/schema/indicator-parameter-1';
+  //const schema = '//api.npolar.no/schema/indicator-parameter-1';
+  const schema = 'indicator-parameter/indicator-parameter-1.json';
   
   function init() {
     $controller("NpolarEditController", {
@@ -38,7 +38,7 @@ let ParameterEditController = function($scope, $routeParams, $location, $control
     formulaAutoCompleteService.autocompleteFacets(['species', 'unit.symbol'], Timeseries, $scope.formula);
   }
   init();
-  
+
   // Add new timeseries to current parameter
   $scope.addTimeseries = function(parameter) {
     let duplicate = Object.create(parameter);
@@ -58,11 +58,8 @@ let ParameterEditController = function($scope, $routeParams, $location, $control
       $scope.update(parameter);
     });
   };
+  $scope.edit();
 
-  let r = $scope.edit();
-  if (r && r.$promise) {
-    console.debug(r.$promise);
-  }
 
 };
 module.exports = ParameterEditController;

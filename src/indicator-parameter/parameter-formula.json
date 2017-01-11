@@ -4,11 +4,25 @@
       "title": "Parameter",
       "fields": [
         {
-          "id": "systems", "type": "array", "multiple": true, "enum": ["mosj.no", "NARE-EMP"], "default": ["mosj.no"]
-        },
-        {
           "id": "titles", "fields": ["!label"]
         }
+      ]
+    },
+    {
+      "title": "Authors",
+      "fields": [
+        {
+          "id": "authors"
+        }
+      ]
+    },
+    {
+      "title": "Systems",
+      "fields": [
+        {
+          "id": "systems", "type": "array", "multiple": true
+        }
+
 
       ]
     },
@@ -33,12 +47,7 @@
     {
       "title": "Species",
       "fields": [
-
-       
-        "locations",
         "species"
-
-
       ]
     },
     {

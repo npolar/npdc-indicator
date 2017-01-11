@@ -9,7 +9,7 @@ var ParameterSearchController = function($scope, $location, $controller, npdcApp
   $scope.resource = Parameter;
 
   npdcAppConfig.cardTitle = 'Environmental monitoring parameters';
-  
+
   let query = function() {
     let defaults = {
       start: 0,
@@ -18,12 +18,12 @@ var ParameterSearchController = function($scope, $location, $controller, npdcApp
       format: "json",
       variant: "atom",
       sort: "-updated",
-      facets: "systems,collection,species,themes,dataseries,label,warn,variable,unit,locations.placename,links.rel"
+      facets: "systems,collection,species,themes,dataseries,label,warn,variable,unit,locations.placename,links.rel,created_by,updated_by"
     };
     return Object.assign({}, defaults, $location.search());
   };
-  
-  
+
+
   let detail = function(p) {
     let subtitle = '';
     if (p.timeseries && p.timeseries.length > 0) {
@@ -40,9 +40,9 @@ var ParameterSearchController = function($scope, $location, $controller, npdcApp
   $scope.$on('$locationChangeSuccess', (event, data) => {
     $scope.search(query());
   });
-  
-  
-  
+
+
+
 };
 
 module.exports = ParameterSearchController;

@@ -12,6 +12,9 @@ let app = angular.module('indicatorApp', [
   //xeditable
 ]);
 
+app.service('TimeseriesCitation', require('./indicator-timeseries/TimeseriesCitation.js'));
+app.service('TimeseriesModel', require('./indicator-timeseries/TimeseriesModel'));
+
 
 app.controller('ParameterSearchController', require('./indicator-parameter/ParameterSearchController.js'));
 app.controller('ParameterEditController', require('./indicator-parameter/ParameterEditController.js'));
@@ -31,13 +34,11 @@ app.factory('google', function() {
 });
 
 app.service('Sparkline', require('./google/Sparkline'));
-
-var services = [
+let services = [
   {"path": "/indicator/parameter",  "resource": "Parameter"},
   {"path": "/indicator/timeseries", "resource": "Timeseries" },
   {"path": "/placename", "base": "//api.npolar.no", "resource": "Placename", fields: "*" },
-  {"path": "/editlog", "resource": "Editlog" },
-  {"path": "", "resource": "Config", base: "config" }
+  {"path": "/editlog", "resource": "Editlog" }
 ];
 
 services.forEach(function (service) {
@@ -61,18 +62,12 @@ app.run(function($http, npolarApiConfig, npdcAppConfig, NpolarLang, NpolarTransl
   let environment = "production"; // development | test | production
 
   // i18n
-  $http.get('//api.npolar.no/text/?q=&filter-bundle=npolar|npdc|npdc-indicator&format=json&variant=array&limit=all').then(response => {
+  $http.get('//api.npolar.no/text/?q=&filter-bundle=npolar|npdc|npdc-indicator|npdc-monitoring&format=json&variant=array&limit=all').then(response => {
     NpolarTranslate.appendToDictionary(response.data);
-    NpolarLang.setLanguagesFromDictionaryUse({ min: 0.50, force: ['en', 'nb'], dictionary: response.data});
-    console.debug(NpolarLang.getLanguageCounts(response.data));
   });
 
 
   Object.assign(npolarApiConfig, new AutoConfig(environment));
-
-  npdcAppConfig.cardTitle = '';
-  npdcAppConfig.toolbarTitle = NpolarTranslate.translate('npdc.app.Title');
-
   console.debug("npolarApiConfig", npolarApiConfig);
   console.debug("npdcAppConfig", npdcAppConfig);
 

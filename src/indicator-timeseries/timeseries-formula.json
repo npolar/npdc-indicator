@@ -1,7 +1,7 @@
 {
   "fieldsets": [
     {
-      "title": "Timeseries",
+      "title": "Title",
       "fields": [
         {
           "id": "titles", "fields": [
@@ -11,10 +11,20 @@
       ]
     },
     {
+      "title": "Authors",
+      "fields": [
+        {
+          "id": "authors", "fields": [
+            {"id": "@id"}
+          ]
+        }
+      ]
+    },
+    {
       "title": "Units",
       "fields": [
         "resolution",
-        { "id": "unit", "fields": [{ "id": "symbol", "autocomplete": true}]}
+        "unit"
       ]
     },
     {
@@ -26,8 +36,7 @@
       "fields": [
         {
           "id": "labels"
-        },
-        "!variables"
+        }
       ]
     },
     {
@@ -39,7 +48,7 @@
     {
       "title": "Species",
       "fields": [
-        { "id": "species", "autocomplete": true }
+        { "id": "species" }
       ]
     },
     {
@@ -53,22 +62,15 @@
       "fields": [
         {
           "id": "systems", "type": "array", "multiple": true, "enum": ["mosj.no", "NARE-EMP"], "default": ["mosj.no"]
-        }
+        },
+        { "id": "uri", "disabled": true },
+        { "id": "parameter", "disabled": true }
       ]
     },
     {
-      "title": "Metadata",
+      "title": "Keywords",
       "fields": [
-        { "id": "id", "hidden": true, "disabled": true },
-        { "id": "_id", "hidden": true, "disabled": true },
-        { "id": "_rev", "hidden": true, "disabled": true },
-        { "id": "schema", "hidden": true, "disabled": true, "default": "http://api.npolar.no/schema/indicator-timeseries-1" },
-        { "id": "workspace", "hidden": true, "disabled": true, "default": "indicator" },
-        { "id": "collection", "hidden": true, "disabled": true, "default": "timeseries" },
-        { "id": "created", "hidden": true, "disabled": true },
-        { "id": "created_by", "hidden": true, "disabled": true },
-        { "id": "updated", "hidden": true, "disabled": true },
-        { "id": "updated_by", "hidden": true, "disabled": true }
+        { "id": "keywords", "title": "keywords: related timeseries (same graph; same parameter/indicator) should share a unique set of keywords" }
       ]
     }
   ]
