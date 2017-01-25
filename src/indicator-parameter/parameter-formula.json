@@ -1,10 +1,12 @@
 {
   "fieldsets": [
     {
-      "title": "Parameter",
+      "title": "Title",
       "fields": [
-        {
-          "id": "titles", "fields": ["!label"]
+        "title","label",
+        {"id": "titles", "fields": [
+          {"id": "lang", "enum": ["nb", "en"]}, "title", "label"
+          ]
         }
       ]
     },
@@ -12,74 +14,62 @@
       "title": "Authors",
       "fields": [
         {
-          "id": "authors"
+          "id": "authors", "fields": [
+            {"id": "@id"}
+          ]
         }
       ]
     },
     {
-      "title": "Systems",
+      "title": "Units",
       "fields": [
-        {
-          "id": "systems", "type": "array", "multiple": true
-        }
-
-
+        "resolution",
+        "unit"
       ]
     },
     {
-      "title": "Children",
+      "title": "Data",
+      "fields": ["data"]
+    },
+    {
+      "title": "Labels",
       "fields": [
-
         {
-          "id": "timeseries",
-          "placeholder": "Timeseries URI"
+          "id": "labels"
         }
       ]
     },
     {
       "title": "Locations",
       "fields": [
-        {
-          "id": "locations"
-        }
+        "locations"
       ]
     },
     {
       "title": "Species",
       "fields": [
-        "species"
+        { "id": "species" }
       ]
     },
     {
       "title": "Links",
       "fields": [
-        {
-          "id": "links"
-        }
+        "links"
       ]
     },
     {
       "title": "Systems",
       "fields": [
         {
-          "id": "systems"
-        }
+          "id": "systems", "type": "array", "multiple": true, "enum": ["mosj.no", "NARE-EMP"], "default": ["mosj.no"]
+        },
+        { "id": "uri", "disabled": true }
       ]
     },
     {
-      "title": "Metadata",
+      "title": "Keywords",
       "fields": [
-        { "id": "id", "hidden": false, "disabled": true },
-        { "id": "_id", "hidden": false, "disabled": true },
-        { "id": "_rev", "hidden": false, "disabled": true },
-        { "id": "schema", "hidden": false, "disabled": true, "default": "http://api.npolar.no/schema/indicator-parameter-1" },
-        { "id": "workspace", "hidden": false, "disabled": true, "default": "indicator" },
-        { "id": "collection", "hidden": false, "disabled": true, "default": "parameter" },
-        { "id": "created", "hidden": false, "disabled": true },
-        { "id": "created_by", "hidden": false, "disabled": true },
-        { "id": "updated", "hidden": false, "disabled": true },
-        { "id": "updated_by", "hidden": false, "disabled": true }
-
+        { "id": "keywords", "title": "keywords: related timeseries (same graph; same parameter/indicator) should share a unique set of keywords" }
       ]
     }
   ]

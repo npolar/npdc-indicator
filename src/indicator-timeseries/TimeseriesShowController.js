@@ -15,9 +15,9 @@ let TimeseriesShowController = function($scope, $controller, $timeout,
     });
   };
 
+
   $controller("NpolarBaseController", {$scope: $scope});
   $scope.resource = Timeseries;
-  $scope.document = {};
 
   let chartElement = Sparkline.getElement();
   if (chartElement) {

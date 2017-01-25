@@ -2,14 +2,11 @@
 
 var TimeseriesEditController = function($scope, $controller, $timeout,
   NpolarApiSecurity, formulaAutoCompleteService, Timeseries, Parameter, npdcAppConfig, formula, google, Sparkline) {
+
     'ngInject';
 
-  //@todo Autocomplete @id for authors
-  // Duplicate
-  // Consider again having multiple timeseries in one => avoids keywords...
-  //const schema = '//api.npolar.no/schema/indicator-timeseries-1';
-  const schema = 'indicator-timeseries/indicator-timeseries-1.json';
-
+  const schema = '//api.npolar.no/schema/indicator-timeseries-1';
+  
   let init = function() {
     $controller("NpolarEditController", {
       $scope: $scope
@@ -25,18 +22,16 @@ var TimeseriesEditController = function($scope, $controller, $timeout,
       schema,
       form: "indicator-timeseries/timeseries-formula.json",
       templates: npdcAppConfig.formula.templates.concat([{
-          match(field) {
-            return field.id === "locations_object";
-          },
-          template: '<npdc:formula-placename></npdc:formula-placename>'
+        match(field) {
+          return field.id === "locations_item";
         },
-        {
-          match(field) {
-            return field.id === "data";
-          },
-          template: '<npdc:formula-tabdata></npdc:formula-tabdata>'
-        }
-      ])
+        template: '<npdc:formula-placename></npdc:formula-placename>'
+      }, {
+        match(field) {
+          return field.id === "data";
+        },
+        template: '<npdc:formula-tabdata></npdc:formula-tabdata>'
+      }])
     });
 
     $scope.$watch('formula.getModel().keywords', function(keywords, was) {
@@ -51,10 +46,10 @@ var TimeseriesEditController = function($scope, $controller, $timeout,
 
   let resource = $scope.edit();
 
-  // For edit (and not new) we want to fetch the parent parameter
-  if (resource && resource.$promise) {
-    resource.$promise.then(timeseries => {
 
+  resource.$promise.then(timeseries => {
+
+    if (timeseries._rev) { // not for new documents
       $scope.data = timeseries.data;
 
 
@@ -64,7 +59,7 @@ var TimeseriesEditController = function($scope, $controller, $timeout,
         $timeout(() => {
           let sparkline = timeseries.data.map(d => [d.value]);
           google.setOnLoadCallback(Sparkline.draw(sparkline));
-        },20);
+        }, 20);
       }
 
       let uri = NpolarApiSecurity.canonicalUri(`/indicator/timeseries/${timeseries.id}`, 'http');
@@ -81,7 +76,10 @@ var TimeseriesEditController = function($scope, $controller, $timeout,
           });
         }
       });
-    });
-  }
+
+    }
+  });
+
+
 };
 module.exports = TimeseriesEditController;

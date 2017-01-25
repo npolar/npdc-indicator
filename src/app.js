@@ -1,12 +1,11 @@
   'use strict';
-// [indicatorApp](https://github.com/npolar/npdc-indicator)
+// [NPDC timeseries](https://github.com/npolar/npdc-indicator)
 
 let angular = require('angular');
 let npdcCommon = require('npdc-common');
 let AutoConfig = npdcCommon.AutoConfig;
 //require('angular-xeditable');
 
-// Create "vesselApp" (angular module) and declare its dependencies
 let app = angular.module('indicatorApp', [
   'npdcCommon'
   //xeditable
@@ -15,15 +14,9 @@ let app = angular.module('indicatorApp', [
 app.service('TimeseriesCitation', require('./indicator-timeseries/TimeseriesCitation.js'));
 app.service('TimeseriesModel', require('./indicator-timeseries/TimeseriesModel'));
 
-
-app.controller('ParameterSearchController', require('./indicator-parameter/ParameterSearchController.js'));
-app.controller('ParameterEditController', require('./indicator-parameter/ParameterEditController.js'));
-app.controller('ParameterShowController', require('./indicator-parameter/ParameterShowController.js'));
-
 app.controller('TimeseriesSearchController', require('./indicator-timeseries/TimeseriesSearchController'));
 app.controller('TimeseriesShowController', require('./indicator-timeseries/TimeseriesShowController'));
 app.controller('TimeseriesEditController', require('./indicator-timeseries/TimeseriesEditController'));
-
 
 app.factory('Google', function() {
   return window.google; // assumes google has already been loaded on the page
@@ -52,24 +45,23 @@ services.forEach(function (service) {
 app.config(require('./routes'));
 
 // Inject auth interceptor
-app.config(function($httpProvider) {
-  $httpProvider.interceptors.push("npolarApiInterceptor");
-});
-
-// Inject npolarApiConfig and run
-app.run(function($http, npolarApiConfig, npdcAppConfig, NpolarLang, NpolarTranslate) {
-
+app.config(function($httpProvider, npolarApiConfig) {
   let environment = "production"; // development | test | production
+  Object.assign(npolarApiConfig, new AutoConfig(environment));
+  $httpProvider.interceptors.push("npolarApiInterceptor");
 
   // i18n
   $http.get('//api.npolar.no/text/?q=&filter-bundle=npolar|npdc|npdc-indicator|npdc-monitoring&format=json&variant=array&limit=all').then(response => {
     NpolarTranslate.appendToDictionary(response.data);
   });
 
-
   Object.assign(npolarApiConfig, new AutoConfig(environment));
   console.debug("npolarApiConfig", npolarApiConfig);
   console.debug("npdcAppConfig", npdcAppConfig);
+});
 
-
+// Inject npolarApiConfig and run
+app.run(function(npdcAppConfig, NpolarTranslate) {
+  npdcAppConfig.toolbarTitle = "Indicator";
+  NpolarTranslate.loadBundles('npdc-indicator');
 });
