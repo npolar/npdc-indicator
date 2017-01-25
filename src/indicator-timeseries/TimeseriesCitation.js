@@ -17,12 +17,24 @@ function TimeseriesCitation($location, $filter,
     });
   };
 
+
+  this.published = (t) => {
+    if (!t) {
+      return;
+    }
+    if (t.published) {
+      return t.published;
+    } else {
+      return new Date().getFullYear();
+    }
+  };
+
   // @return String "Authorlist (year [first published])"
   this.reference = (t) => {
     if (!t || !t.authors) {
       return;
     }
-    return NpdcAPA.reference(self.authors(t), t.created.split('-')[0]); // NpdcCitationModel.year(t)
+    return NpdcAPA.reference(self.authors(t), self.published(t));
   };
 
   // URI (web address) of the monitoring dataset
@@ -46,16 +58,19 @@ function TimeseriesCitation($location, $filter,
   };
 
   // Citation helper
-  this.citation = (t, style='APA') => {
+  this.citation = (t, style='APA', l = NpolarLang.getLang()) => {
     if (!t) {
       return;
     }
 
     let authors = self.authors(t);
-    let year = new Date(t.created).getFullYear();
+    let year = self.published(t);
     let title = $filter('title')(t.titles);
+    // t.title[l]
     let type;
     let publisher = NpolarTranslate.translate('mosj.no');
+    // systems => publisher
+    // license!?
     let uri = self.uri(t);
 
     if ((/apa/i).test(style)) {
