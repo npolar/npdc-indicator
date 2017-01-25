@@ -49,15 +49,7 @@ app.config(function($httpProvider, npolarApiConfig) {
   let environment = "production"; // development | test | production
   Object.assign(npolarApiConfig, new AutoConfig(environment));
   $httpProvider.interceptors.push("npolarApiInterceptor");
-
-  // i18n
-  $http.get('//api.npolar.no/text/?q=&filter-bundle=npolar|npdc|npdc-indicator|npdc-monitoring&format=json&variant=array&limit=all').then(response => {
-    NpolarTranslate.appendToDictionary(response.data);
-  });
-
   Object.assign(npolarApiConfig, new AutoConfig(environment));
-  console.debug("npolarApiConfig", npolarApiConfig);
-  console.debug("npdcAppConfig", npdcAppConfig);
 });
 
 // Inject npolarApiConfig and run
