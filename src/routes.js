@@ -22,7 +22,7 @@ var routes = function($routeProvider, $locationProvider) {
   })
 
   // parameter
-  .when('/parameter/:id/show', {
+  /* .when('/parameter/:id/show', {
     redirectTo: '/parameter/:id'
   })
   .when('/parameter', {
@@ -35,7 +35,7 @@ var routes = function($routeProvider, $locationProvider) {
   })
   .when('/parameter/:id/edit', {
     templateUrl: 'indicator-parameter/parameter-edit.html', controller: 'ParameterEditController'
-  })
+  })*/
 
   // Default route
   .when('/', {

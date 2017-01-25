@@ -2,10 +2,10 @@
 
 var TimeseriesEditController = function($scope, $controller, $timeout,
   NpolarApiSecurity, formulaAutoCompleteService, Timeseries, Parameter, npdcAppConfig, formula, google, Sparkline) {
-  'ngInject';
 
-  //const schema = '//api.npolar.no/schema/indicator-timeseries-1';
-  const schema = './indicator-timeseries/indicator-timeseries-1.json';
+    'ngInject';
+
+  const schema = '//api.npolar.no/schema/indicator-timeseries-1';
   
   let init = function() {
     $controller("NpolarEditController", {
@@ -34,7 +34,12 @@ var TimeseriesEditController = function($scope, $controller, $timeout,
       }])
     });
 
-    formulaAutoCompleteService.autocompleteFacets(['species', 'unit.symbol'], Timeseries, $scope.formula);
+    $scope.$watch('formula.getModel().keywords', function(keywords, was) {
+      console.log('watch keywords', keywords, was);
+    });
+
+
+    formulaAutoCompleteService.autocompleteFacets(['title.en', 'title.nb', 'systems', 'keywords.@value', 'species', 'unit.symbol', 'authors.@id'], Timeseries, $scope.formula);
   };
   init();
 
@@ -46,6 +51,9 @@ var TimeseriesEditController = function($scope, $controller, $timeout,
 
     if (timeseries._rev) { // not for new documents
       $scope.data = timeseries.data;
+
+
+
 
       if ($scope.data && $scope.data.length > 0) {
         $timeout(() => {

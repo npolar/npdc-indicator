@@ -11,14 +11,12 @@ let app = angular.module('indicatorApp', [
   //xeditable
 ]);
 
-app.controller('ParameterSearchController', require('./indicator-parameter/ParameterSearchController.js'));
-app.controller('ParameterEditController', require('./indicator-parameter/ParameterEditController.js'));
-app.controller('ParameterShowController', require('./indicator-parameter/ParameterShowController.js'));
+app.service('TimeseriesCitation', require('./indicator-timeseries/TimeseriesCitation.js'));
+app.service('TimeseriesModel', require('./indicator-timeseries/TimeseriesModel'));
 
 app.controller('TimeseriesSearchController', require('./indicator-timeseries/TimeseriesSearchController'));
 app.controller('TimeseriesShowController', require('./indicator-timeseries/TimeseriesShowController'));
 app.controller('TimeseriesEditController', require('./indicator-timeseries/TimeseriesEditController'));
-
 
 app.factory('Google', function() {
   return window.google; // assumes google has already been loaded on the page
@@ -29,8 +27,7 @@ app.factory('google', function() {
 });
 
 app.service('Sparkline', require('./google/Sparkline'));
-
-var services = [
+let services = [
   {"path": "/indicator/parameter",  "resource": "Parameter"},
   {"path": "/indicator/timeseries", "resource": "Timeseries" },
   {"path": "/placename", "base": "//api.npolar.no", "resource": "Placename", fields: "*" },
@@ -54,16 +51,11 @@ app.config(function($httpProvider, npolarApiConfig) {
   $httpProvider.interceptors.push("npolarApiInterceptor");
 
   // i18n
-  $http.get('//api.npolar.no/text/?q=&filter-bundle=npolar|npdc|npdc-indicator&format=json&variant=array&limit=all').then(response => {
+  $http.get('//api.npolar.no/text/?q=&filter-bundle=npolar|npdc|npdc-indicator|npdc-monitoring&format=json&variant=array&limit=all').then(response => {
     NpolarTranslate.appendToDictionary(response.data);
-    NpolarLang.setLanguagesFromDictionaryUse({ min: 0.50, force: ['en', 'nb'], dictionary: response.data});
-    console.debug(NpolarLang.getLanguageCounts(response.data));
   });
 
-  //$http.get('//api.npolar.no/service/_all?fields=path,created&format=json&format=json&variant=array&limit=all').then(response => {
-  //  console.debug(response);
-  //});
-
+  Object.assign(npolarApiConfig, new AutoConfig(environment));
   console.debug("npolarApiConfig", npolarApiConfig);
   console.debug("npdcAppConfig", npdcAppConfig);
 });

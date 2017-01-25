@@ -1,57 +1,97 @@
 <!DOCTYPE html>
-<article class="np-padding" ng-if="document">
-  <div ng-if="document._rev">
-    <h1>Timeseries:
-      {{ document.titles | title }}
-      (<a ng-href="timeseries/?filter-systems={{document.systems[0]}}">{{ document.systems.join(',') }}</a>)
-    </h1>
-    <div ng-if="data.length">
-      <span id="sparkline-0" style="width: 240px; height: 60px;"></span>
-      <span>{{ data.length }} points ({{data[0].when}} - {{data[data.length-1].when}})</span>
-      <span>{{ document.unit.symbol || 'N' }}/{{document.resolution}}</span>
-      [<span ng-repeat="v in document.variables">{{ v.variable }} </span>]
-    </div>
+<npdc:formula ng-if="document && formula"></npdc:formula>
+<article ng-if="document && !formula" ng-controller="TimeseriesShowController as ctrl">
+  <md-card>
+    <md-card-content>
+      <h1 class="md-display-2">{{ document.titles | title }}</h1>
 
-    <h3 ng-if="parameter">Parameter:
-      <a ng-href="parameter/{{parameter.id}}">{{ parameter.titles | title }}</a>
-      ({{ siblings.length }} {{ (siblings.length == 1) ? ('sibling'|t) : ('siblings'|t) }})
-    </h3>
-  </div>
+      <h2 class="md-headline"><md-tooltip md-direction="left">{{ 'Dataset author' | t }}</md-tooltip><span ng-if="document.authors.length > 0" ng-repeat="a in document.authors" class="author"><a ng-href="{{ resource.uiPath() }}?filter-authors.@id={{a['@id']}}">{{ a['@id'] | t }}</a><span ng-if="!$last">, </span></h2>
 
-  <npdc:formula ng-if="formula"></npdc:formula>
+      <h3 class="md-headline"><span ng-repeat="s in document.systems">{{ s | t }}</span></h3>
 
-  <div ng-if="!formula">
-    <npdc:edit-button class="np-primary-control"></npdc:edit-button>
-    
-    <h3>Links</h3>
-    <ul class="np-padding">
-      <li ng-repeat="l in document.links">
-        <a ng-href="{{l.href}}">{{ l.rel }}</a> ({{l.type}})
-      </li>
-    </ul>
-    
+      <div ng-if="data && data.length > 1">
+        <span id="sparkline-0" style="width: 240px; height: 60px;"></span>
+      </div>
+
+      <section><span>{{ data.length }} data points<span ng-if="data.length != data_not_null.length">; {{ data.length-data_not_null.length }} with no value</span> ({{data[0].when}} - {{data[data.length-1].when}})</span>
+        <span>{{ document.unit.symbol || 'N' }}</span>
+        [<span ng-repeat="v in document.variables">{{ v.variable }} </span>]
+        resolution: {{document.resolution}}
+      </section>
+
+    </md-card-content>
+  </md-card>
+
+  <md-card>
+    <md-card-header>
+      <md-card-avatar>
+        <md-icon>label_outline</md-icon>
+      </md-card-avatar>
+      <md-card-header-text>
+        <span class="md-headline">{{ 'Keywords' |t }}</span>
+        <!--span class="md-subhead"></span>-->
+      </md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+
+      Keywords: <a ng-href="{{resource.uiPath()}}?filter-keywords.@value={{ keywords.en.join(',') }}">{{ keywords.en.join('/') }}</a> ({{ siblings_en}})
+      Nøkkelord: <a ng-href="{{resource.uiPath()}}?filter-keywords.@value={{ keywords.no.join(',') }}">{{ keywords.no.join('/') }} ({{ siblings_no}})</a>
+
+      <br>Unit: {{ document.unit | json }}
+
+      <br>Locations: {{ document.locations | json }}
+      <br>Species: {{ document.species | json }}
+      <br>Labels: {{ document.labels | json }}
+      <br>Variables: {{ document.variables | json }}
+      <br>Short title: {{ document.label | json }}
+      <br>Titles: {{ document.title | json}}
+
+    </md-card-content>
+  </md-card>
+
+<!--  <p ng-if="parameter">[Legacy] Parameter (use to compare with keyword-links above):
+    <a ng-href="parameter/{{parameter.id}}">{{ parameter.titles | title }}</a>
+    ({{ siblings.length }})
+  </p>-->
+
+  <!--
     <h3>Labels</h3>
     <ul class="np-padding">
       <li ng-repeat="l in document.labels">
         {{l | json }})
-    </ul>
-    
-    Species
+    </ul>-->
+
+    <!--Species
     {{ document.species }}
-    
-    <h4>Edits</h4>
-    {{ document.created_by }}
-    
-    {{ document.updated_by }}
-    
-    <h4>Open data</h4>
-    License: CC-BY 4
-    Data: JSON
-    
-  </div>
-  
-  <npdc:metadata document="document" path="resource.path" metadata="{ 'license': 'URI'}"></npdc:metadata>
-  
-  <npdc:document-meta></npdc:document-meta>
-  
+-->
+
+<!-- <section ng-if="!sparkline">
+  <h3 class="md-headline">Data</h3>
+  <table>
+    <tr ng-repeat="data in document.data"><td align="right"><code>{{data.when}}</td>&#9;</code><td align="right"><code>{{data.value}}</code></td></tr>
+  </table>
+  </section>-->
+
+
+
+  <npdc:edit-button class="np-primary-control"></npdc:edit-button>
+
+  <npdc-links links="document.links"></npdc-links>
+
+  <md-card>
+    <md-card-header>
+      <md-card-avatar>
+        <md-icon>format_quote</md-icon>
+      </md-card-avatar>
+      <md-card-header-text>
+        <span class="md-headline">{{ 'Citation'|t }}</span>
+        <span class="md-subhead">{{ 'APA'|t }}<md-tooltip md-direction="left">APA-style citation</md-tooltip>
+      </md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+      <code class="np-citation">{{ citation(document) }}</code>
+    </md-card-content>
+  </md-card>
+    <!--<npdc:metadata document="document" metadata="metadata"></npdc:metadata>-->
+    <!--<span class="md-subhead" title="URI">{{document.uri[0]}}<md-tooltip md-direction="left">URI (persistent web address)</md-tooltip></span>-->
 </article>
