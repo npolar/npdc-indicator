@@ -37,13 +37,22 @@
       Keywords: <a ng-href="{{resource.uiPath()}}?filter-keywords.@value={{ keywords.en.join(',') }}">{{ keywords.en.join('/') }}</a> ({{ siblings_en}})
       Nøkkelord: <a ng-href="{{resource.uiPath()}}?filter-keywords.@value={{ keywords.no.join(',') }}">{{ keywords.no.join('/') }} ({{ siblings_no}})</a>
 
+      <br>Unit: {{ document.unit | json }}
+
+      <br>Locations: {{ document.locations | json }}
+      <br>Species: {{ document.species | json }}
+      <br>Labels: {{ document.labels | json }}
+      <br>Variables: {{ document.variables | json }}
+      <br>Short title: {{ document.label | json }}
+      <br>Titles: {{ document.title | json}}
+
     </md-card-content>
   </md-card>
 
-  <p ng-if="parameter">[Legacy] Parameter (use to compare with keyword-links above):
+<!--  <p ng-if="parameter">[Legacy] Parameter (use to compare with keyword-links above):
     <a ng-href="parameter/{{parameter.id}}">{{ parameter.titles | title }}</a>
     ({{ siblings.length }})
-  </p>
+  </p>-->
 
   <!--
     <h3>Labels</h3>

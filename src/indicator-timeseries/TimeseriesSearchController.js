@@ -14,11 +14,13 @@ function TimeseriesSearchController($scope, $location, $controller, $filter, $ti
   $scope.resource = Timeseries;
 
   npdcAppConfig.search.local.results.subtitle = (t) => {
-    if (t.systems) {
-      return t.systems.join(',');
+    if (t.locations && t.locations.length > 0) {
+      return t.locations.map(l => l.placename).join(', ');
     } else if (t.species) {
       return t.species;
-    }
+    } /*else if (t.systems) {
+      return t.systems.join(', ');
+    }*/
     return '';
   };
   npdcAppConfig.search.local.results.detail = (t) => {
@@ -39,8 +41,8 @@ function TimeseriesSearchController($scope, $location, $controller, $filter, $ti
       format: "json",
       variant: "atom",
       //sort: param.sort || "-updated",
-      facets: "keywords.@value,authors.@id,parameter,unit.symbol,systems,species,locations.placename,labels.label,links.rel,created_by,updated_by",
-      fields: "titles,authors,systems,keywords,size,labels,species,id,created,created_by,updated,updated_by"
+      facets: "keywords.@value,authors.@id,links.title,unit.symbol,systems,species,locations.placename,links.rel,created_by,updated_by",
+      fields: "titles,authors,systems,keywords,locations.placename,size,labels,species,id,created,created_by,updated,updated_by"
     };
 
     // Limit search for folks in A using NARE-EMP https://api.npolar.no/indicator/system/nare-emp

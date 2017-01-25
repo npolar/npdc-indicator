@@ -3,8 +3,8 @@
     {
       "title": "Title",
       "fields": [
-        {
-          "id": "titles", "fields": [
+        "title","label",
+        {"id": "titles", "fields": [
           {"id": "lang", "enum": ["nb", "en"]}, "title", "label"
           ]
         }
@@ -63,8 +63,7 @@
         {
           "id": "systems", "type": "array", "multiple": true, "enum": ["mosj.no", "NARE-EMP"], "default": ["mosj.no"]
         },
-        { "id": "uri", "disabled": true },
-        { "id": "parameter", "disabled": true }
+        { "id": "uri", "disabled": true }
       ]
     },
     {

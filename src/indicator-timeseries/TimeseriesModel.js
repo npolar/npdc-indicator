@@ -1,6 +1,6 @@
 'use strict';
 
-function TimeseriesModel(NpolarLang, NpdcAPA, NpdcCitationModel) {
+function TimeseriesModel(NpolarLang, NpdcAPA, NpdcCitationModel,Timeseries) {
   'ngInject';
 
   const LANG_NO = '^(nb|nn|no)';
@@ -8,6 +8,11 @@ function TimeseriesModel(NpolarLang, NpdcAPA, NpdcCitationModel) {
   const SCHEMA = 'https://api.npolar.no/schema/indicator-timeseries-1';
 
   let model = this;
+
+  this.create = () => {
+    return  { systems: ['mosj.no'], uri: ['http://data.npolar.no/monitoring/timeseries'] };
+  };
+  Timeseries.create = model.create;
 
   this.keywords = (timeseries) => {
     return {

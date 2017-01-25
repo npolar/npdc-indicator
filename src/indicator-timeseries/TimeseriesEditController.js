@@ -7,8 +7,8 @@ var TimeseriesEditController = function($scope, $controller, $timeout,
   //@todo Autocomplete @id for authors
   // Duplicate
   // Consider again having multiple timeseries in one => avoids keywords...
-  const schema = '//api.npolar.no/schema/indicator-timeseries-1';
-  //const schema = 'indicator-timeseries/indicator-timeseries-1.json';
+  //const schema = '//api.npolar.no/schema/indicator-timeseries-1';
+  const schema = 'indicator-timeseries/indicator-timeseries-1.json';
 
   let init = function() {
     $controller("NpolarEditController", {
@@ -44,7 +44,7 @@ var TimeseriesEditController = function($scope, $controller, $timeout,
     });
 
 
-    formulaAutoCompleteService.autocompleteFacets(['species', 'unit.symbol', 'authors.@id'], Timeseries, $scope.formula);
+    formulaAutoCompleteService.autocompleteFacets(['title.en', 'title.nb', 'systems', 'keywords.@value', 'species', 'unit.symbol', 'authors.@id'], Timeseries, $scope.formula);
   };
   init();
 
