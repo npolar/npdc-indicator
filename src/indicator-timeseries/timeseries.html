@@ -1,5 +1,13 @@
 <!DOCTYPE html>
 <npdc:formula ng-if="document && formula"></npdc:formula>
+
+<div layout="column" layout-align="space-between end" class="np-formula-file-upload" ng-if="document && formula && formula._cfg.form.ready">
+  <md-button class="md-raised md-primary" ng-disabled="!document._rev" ng-click="duplicate(document);">
+    <md-icon>control_point_duplicate</md-icon>
+    <md-tooltip>Duplicate</md-tooltip>
+  </md-button>
+</div>
+
 <article ng-if="document && !formula" ng-controller="TimeseriesShowController as ctrl">
   <md-card>
     <md-card-content>
@@ -34,8 +42,8 @@
     </md-card-header>
     <md-card-content>
 
-      Keywords: <a ng-href="{{resource.uiPath()}}?filter-keywords.@value={{ keywords.en.join(',') }}">{{ keywords.en.join('/') }}</a> ({{ siblings_en}})
-      Nøkkelord: <a ng-href="{{resource.uiPath()}}?filter-keywords.@value={{ keywords.no.join(',') }}">{{ keywords.no.join('/') }} ({{ siblings_no}})</a>
+      Keywords: <a ng-href="{{resource.uiPath()}}?filter-keywords.@value={{ keywords.en.join(',') }}">{{ keywords.en.join('/') }}</a>
+      <br>Nøkkelord: <a ng-href="{{resource.uiPath()}}?filter-keywords.@value={{ keywords.no.join(',') }}">{{ keywords.no.join('/') }}</a>
 
       <br>Unit: {{ document.unit | json }}
 
@@ -78,7 +86,7 @@
 
   <npdc-links links="document.links"></npdc-links>
 
-  <md-card>
+  <md-card ng-if="document.authors.length">
     <md-card-header>
       <md-card-avatar>
         <md-icon>format_quote</md-icon>
