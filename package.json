@@ -13,7 +13,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "npdc-common": "npolar/npdc-common#v4.8.3"
+    "npdc-common": "npolar/npdc-common#v4.8.4"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6",
