@@ -1,6 +1,6 @@
 {
   "name": "npdc-indicator",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "https://data.npolar.no/indicator",
   "main": "gulpfile.js",
   "scripts": {
