@@ -17,7 +17,6 @@ function TimeseriesCitation($location, $filter,
     });
   };
 
-
   this.published = (t) => {
     if (!t) {
       return;
@@ -39,10 +38,10 @@ function TimeseriesCitation($location, $filter,
 
   // URI (web address) of the monitoring dataset
   this.uri = (t) => {
-    if (!t || !t.uri || ! t.uri.length) {
+    if (!t || !t._rev || !t.id) {
       return;
     }
-    return t.uri[0];
+    return `https://data.npolar.no/indicator/timeseries/${t.id}`;
   };
 
   // List of available citations, use href and header for services
@@ -65,10 +64,10 @@ function TimeseriesCitation($location, $filter,
 
     let authors = self.authors(t);
     let year = self.published(t);
-    let title = $filter('title')(t.titles);
-    // t.title[l]
+    let title = TimeseriesModel.title(t);
+    
     let type;
-    let publisher = NpolarTranslate.translate('mosj.no');
+    let publisher = NpolarTranslate.translate('mosj.no'); // FIXME Other publishers
     // systems => publisher
     // license!?
     let uri = self.uri(t);

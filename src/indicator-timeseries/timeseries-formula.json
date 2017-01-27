@@ -46,7 +46,8 @@
 				"hidden": true
 			}, {
 				"id": "keywords",
-				"title": "keywords"
+				"title": "keywords",
+				"hidden": true
 			}
 		]
 	}]

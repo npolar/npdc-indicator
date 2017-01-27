@@ -3,7 +3,7 @@
 var TimeseriesEditController = function($scope, $controller, $timeout,
   NpolarApiSecurity, formulaAutoCompleteService, Timeseries, Parameter, npdcAppConfig, formula, google, Sparkline) {
 
-    'ngInject';
+  'ngInject';
 
   const schema = '//api.npolar.no/schema/indicator-timeseries-1';
 
@@ -61,18 +61,12 @@ var TimeseriesEditController = function($scope, $controller, $timeout,
     if (timeseries._rev) { // not for new documents
       $scope.data = timeseries.data;
 
-
-
-
       if ($scope.data && $scope.data.length > 0) {
         $timeout(() => {
           let sparkline = timeseries.data.map(d => [d.value]);
           google.setOnLoadCallback(Sparkline.draw(sparkline));
         }, 20);
       }
-
-
-
     }
   });
 

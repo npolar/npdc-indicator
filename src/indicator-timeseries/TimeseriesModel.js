@@ -1,6 +1,6 @@
 'use strict';
 
-function TimeseriesModel(NpolarLang, NpdcAPA, NpdcCitationModel,Timeseries) {
+function TimeseriesModel($filter, NpolarLang, NpdcAPA, NpdcCitationModel,Timeseries) {
   'ngInject';
 
   const LANG_NO = '^(nb|nn|no)';
@@ -13,6 +13,10 @@ function TimeseriesModel(NpolarLang, NpdcAPA, NpdcCitationModel,Timeseries) {
     return  { systems: ['mosj.no'], uri: ['http://data.npolar.no/monitoring/timeseries'] };
   };
   Timeseries.create = model.create;
+
+  this.title = (t) => {
+    return $filter('i18n')(t.title);
+  }
 
   this.keywords = (timeseries) => {
     return {
@@ -30,7 +34,6 @@ function TimeseriesModel(NpolarLang, NpdcAPA, NpdcCitationModel,Timeseries) {
     let k = timeseries.keywords.filter(k => regexp.test(k['@language'])).map(k => k['@value']);
     return k;
   };
-
 
   this.metadata = (timeseries, resource, uri) => {
     let path = resource.path.replace('//api.npolar.no', '');
