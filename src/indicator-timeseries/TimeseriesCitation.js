@@ -36,13 +36,7 @@ function TimeseriesCitation($location, $filter,
     return NpdcAPA.reference(self.authors(t), self.published(t));
   };
 
-  // URI (web address) of the monitoring dataset
-  this.uri = (t) => {
-    if (!t || !t._rev || !t.id) {
-      return;
-    }
-    return `https://data.npolar.no/indicator/timeseries/${t.id}`;
-  };
+
 
   // List of available citations, use href and header for services
   this.citationList = (t) => {
@@ -65,12 +59,12 @@ function TimeseriesCitation($location, $filter,
     let authors = self.authors(t);
     let year = self.published(t);
     let title = TimeseriesModel.title(t);
-    
+
     let type;
     let publisher = NpolarTranslate.translate('mosj.no'); // FIXME Other publishers
     // systems => publisher
     // license!?
-    let uri = self.uri(t);
+    let uri = TimeseriesModel.uri(t);
 
     if ((/apa/i).test(style)) {
       type = NpolarTranslate.translate('Data set');

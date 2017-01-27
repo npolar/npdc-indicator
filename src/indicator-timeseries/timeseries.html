@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <npdc:formula ng-if="document && formula"></npdc:formula>
+<npdc:edit-button ng-if="document && !formula" class="np-primary-control"></npdc:edit-button>
 
 <div layout="column" layout-align="space-between end" class="np-formula-file-upload" ng-if="document && formula && formula._cfg.form.ready">
   <md-button class="md-raised md-primary" ng-disabled="!document._rev" ng-click="duplicate(document);">
@@ -11,7 +12,7 @@
 <article ng-if="document && !formula" ng-controller="TimeseriesShowController as ctrl">
   <md-card>
     <md-card-content>
-      <h1 class="md-display-2">{{ document.titles | title }}</h1>
+      <h1 class="md-display-2">{{ document.title | i18n }}</h1>
 
       <h2 class="md-headline"><md-tooltip md-direction="left">{{ 'Dataset author' | t }}</md-tooltip><span ng-if="document.authors.length > 0" ng-repeat="a in document.authors" class="author"><a ng-href="{{ resource.uiPath() }}?filter-authors.@id={{a['@id']}}">{{ a['@id'] | t }}</a><span ng-if="!$last">, </span></h2>
 
@@ -27,6 +28,28 @@
         resolution: {{document.resolution}}
       </section>
 
+
+
+    </md-card-content>
+  </md-card>
+
+
+
+  <md-card ng-if="document.authors.length">
+    <md-card-header>
+      <md-card-avatar>
+        <md-icon>format_quote</md-icon>
+      </md-card-avatar>
+      <md-card-header-text>
+        <span class="md-headline">{{ 'Collection'|t }}</span>
+        <span class="md-subhead">{{ 'Datasets belonging to the same collection'|t }}</span>
+      </md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+      <ol><li ng-repeat="l in ['en', 'nb']">
+        <a ng-href="{{collection[l].href}}"> {{ collection[l].title }}</a> ({{ collection[l].count }})
+        </li>
+      </ol>
     </md-card-content>
   </md-card>
 
@@ -36,31 +59,49 @@
         <md-icon>label_outline</md-icon>
       </md-card-avatar>
       <md-card-header-text>
-        <span class="md-headline">{{ 'Keywords' |t }}</span>
-        <!--span class="md-subhead"></span>-->
+        <span class="md-headline">{{ 'Related' |t }}</span>
+        <span class="md-subhead">Timeseries with the same classification</span>
       </md-card-header-text>
     </md-card-header>
     <md-card-content>
 
-      Keywords: <a ng-href="{{resource.uiPath()}}?filter-keywords.@value={{ keywords.en.join(',') }}">{{ keywords.en.join('/') }}</a>
-      <br>Nøkkelord: <a ng-href="{{resource.uiPath()}}?filter-keywords.@value={{ keywords.no.join(',') }}">{{ keywords.no.join('/') }}</a>
+      <ol>
+        <li ng-repeat="l in ['en', 'no']">
+          <span>
+            <a ng-href="{{ keywords[l].href }}">{{ keywords[l].keywords.join(', ')  }}</a>
+            ({{ keywords[l].count }})
+          </span>
+        </li>
+        <li ng-if="document.species" ng-repeat="l in ['en', 'no']">
+          <span>
+            <a ng-href="{{ keywords[l].href }}&filter-species={{document.species}}">{{ keywords[l].keywords.join(', ') }} + {{ document.species | t }}</a>
+             ({{ keywords[l].count_keywords_and_species }})
+          </span>
+        </li>
+      </ol>
+    </md-card-content>
+  </md-card>
 
+  <md-card>
+    <md-card-header>
+      <md-card-avatar>
+        <md-icon>label_outline</md-icon>
+      </md-card-avatar>
+      <md-card-header-text>
+        <span class="md-headline">{{ 'X' |t }}</span>
+        <span class="md-subhead"></span>
+      </md-card-header-text>
+    </md-card-header>
+    <md-card-content>
       <br>Unit: {{ document.unit | json }}
-
       <br>Locations: {{ document.locations | json }}
       <br>Species: {{ document.species | json }}
       <br>Labels: {{ document.labels | json }}
       <br>Variables: {{ document.variables | json }}
-      <br>Short title: {{ document.label | json }}
-      <br>Titles: {{ document.title | json}}
-
+      <br>Label: {{ document.label | json }}
     </md-card-content>
   </md-card>
 
-<!--  <p ng-if="parameter">[Legacy] Parameter (use to compare with keyword-links above):
-    <a ng-href="parameter/{{parameter.id}}">{{ parameter.titles | title }}</a>
-    ({{ siblings.length }})
-  </p>-->
 
   <!--
     <h3>Labels</h3>
@@ -80,11 +121,9 @@
   </table>
   </section>-->
 
-
-
-  <npdc:edit-button class="np-primary-control"></npdc:edit-button>
-
   <npdc-links links="document.links"></npdc-links>
+
+  <npdc:metadata document="document" metadata="metadata"></npdc:metadata>
 
   <md-card ng-if="document.authors.length">
     <md-card-header>
@@ -100,6 +139,4 @@
       <code class="np-citation">{{ citation(document) }}</code>
     </md-card-content>
   </md-card>
-    <!--<npdc:metadata document="document" metadata="metadata"></npdc:metadata>-->
-    <!--<span class="md-subhead" title="URI">{{document.uri[0]}}<md-tooltip md-direction="left">URI (persistent web address)</md-tooltip></span>-->
 </article>
