@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<npdc:formula ng-if="document && formula"></npdc:formula>
+
 <npdc:edit-button ng-if="document && !formula" class="np-primary-control"></npdc:edit-button>
 
-<div layout="column" layout-align="space-between end" class="np-formula-file-upload" ng-if="document && formula && formula._cfg.form.ready">
-  <md-button class="md-raised md-primary" ng-disabled="!document._rev" ng-click="duplicate(document);">
+<npdc:formula ng-if="document && formula"></npdc:formula>
+
+<div layout="column" layout-align="space-between end" class="np-formula-file-upload" ng-if="document && formula && formula._cfg.form.ready" ng-controller="TimeseriesEditController as ctrl">
+  <md-button class="md-raised md-primary" ng-disabled="!document._rev" ng-click="ctrl.duplicate(document);">
     <md-icon>control_point_duplicate</md-icon>
     <md-tooltip>Duplicate</md-tooltip>
   </md-button>
@@ -46,10 +48,11 @@
       </md-card-header-text>
     </md-card-header>
     <md-card-content>
-      <ol><li ng-repeat="l in ['en', 'nb']">
+      <ol ng-if="collection" ><li ng-repeat="l in ['en', 'nb']">
         <a ng-href="{{collection[l].href}}"> {{ collection[l].title }}</a> ({{ collection[l].count }})
         </li>
       </ol>
+      <span ng-if="!collection">No collection</span>
     </md-card-content>
   </md-card>
 
@@ -76,6 +79,12 @@
           <span>
             <a ng-href="{{ keywords[l].href }}&filter-species={{document.species}}">{{ keywords[l].keywords.join(', ') }} + {{ document.species | t }}</a>
              ({{ keywords[l].count_keywords_and_species }})
+          </span>
+        </li>
+        <li ng-if="document.locations" ng-repeat="l in ['en', 'no']">
+          <span>
+            <a ng-href="{{ keywords[l].href }}&filter-locations.placename={{document.locations[0].placename}}">{{ keywords[l].keywords.join(', ') }} + {{ document.locations[0].placename }} </a>
+             ({{ keywords[l].count_keywords_and_placename }})
           </span>
         </li>
       </ol>
