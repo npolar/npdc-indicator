@@ -49,7 +49,6 @@ app.config(function($httpProvider, npolarApiConfig) {
   let environment = "production"; // development | test | production
   Object.assign(npolarApiConfig, new AutoConfig(environment));
   $httpProvider.interceptors.push("npolarApiInterceptor");
-  Object.assign(npolarApiConfig, new AutoConfig(environment));
 });
 
 // Inject npolarApiConfig and run
