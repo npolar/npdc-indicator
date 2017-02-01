@@ -3,7 +3,7 @@
 let TimeseriesShowController = function($scope, $controller, $timeout,
   NpolarApiSecurity, NpolarTranslate,
   npdcAppConfig,
-  Timeseries, TimeseriesModel, TimeseriesCitation, Parameter, google, Sparkline) {
+  Timeseries, TimeseriesModel, TimeseriesCitation, google, Sparkline) {
 
   'ngInject';
 
@@ -32,7 +32,7 @@ let TimeseriesShowController = function($scope, $controller, $timeout,
 
     $scope.data_not_null = timeseries.data.filter(t => t.value !== undefined);
 
-    // Create facet-style links to timeseries with same keywords...
+    // Create facet-style links with counts to timeseries with all of the same keywords...
     if (!$scope.keywords && timeseries.keywords && timeseries.keywords.length > 0) {
       $scope.keywords = {};
       let keywords = TimeseriesModel.keywords(timeseries);
@@ -40,18 +40,30 @@ let TimeseriesShowController = function($scope, $controller, $timeout,
         let k = keywords[l];
         let href = $scope.resource.uiBase+`?filter-keywords.@value=${ k.join(',') }`;
         let link = { keywords: keywords[l], count: 0, href };
-        Timeseries.feed({"filter-keywords.@value": k.join(','), facets: 'keywords,species', limit: 0}).$promise.then((r) => {
+        Timeseries.feed({"filter-keywords.@value": k.join(','), facets: 'keywords,species,locations.placename', limit: 0}).$promise.then((r) => {
 
-          link.count = r.feed.opensearch.totalResults; // Has all keywords
+          link.count = r.feed.opensearch.totalResults; // All keywords
 
+          // Count for all keywords + species
           if (timeseries.species) {
             let f = r.feed.facets.find(f => f.hasOwnProperty('species'));
-            
+
             if (f && f.species) {
               let c = f.species.find(f => f.term === timeseries.species);
               link.count_keywords_and_species = c.count;
             }
           }
+
+          // Count for first all keywords + placename[0]
+          if (timeseries.locations && timeseries.locations.length > 0) {
+            let f = r.feed.facets.find(f => f.hasOwnProperty('locations.placename'));
+
+            if (f && f['locations.placename']) {
+              let c = f['locations.placename'].find(f => f.term === timeseries.locations[0].placename);
+              link.count_keywords_and_placename = c.count;
+            }
+          }
+
 
           $scope.keywords[l] = link;
         }, (e) => {
@@ -76,33 +88,25 @@ let TimeseriesShowController = function($scope, $controller, $timeout,
       });
     }
 
-    // Count keyword-siblings
-    //if ($scope.keywords && $scope.keywords.en) {
-    //
-    //  let k1 = $scope.keywords.en.join(',');
-    //  let k2 = $scope.keywords.no.join(',');
-    //
-    //  Timeseries.array({"filter-keywords.@value": k1, limit: "all"}).$promise.then(t => {
-    //    $scope.siblings_en = t.length;
-    //  });
-    //
-    //  Timeseries.array({"filter-keywords.@value": k2, limit: "all"}).$promise.then(t => {
-    //    $scope.siblings_no = t.length;
-    //  });
-    //}
-
     // Count number of timeseries belonging to the same collection
     if (timeseries.links && timeseries.links.length > 0) {
       ['en', 'nb'].forEach(l => {
         if (!$scope.collection || !$scope.collection[l]) {
           let link = ctrl.collection_link(timeseries.links, l);
-          let query = {"filter-links.href": link.href, limit: 0 };
-          Timeseries.feed(query).$promise.then(r => {
-            if (!$scope.collection) {
-              $scope.collection = {};
-            }
-            $scope.collection[l] = { href: $scope.resource.uiBase+`?filter-links.href=${link.href}`, title: link.title, count: r.feed.opensearch.totalResults }
-          });
+          if (link && link.href) {
+            let query = {"filter-links.href": link.href, limit: 0 };
+            Timeseries.feed(query).$promise.then(r => {
+              if (!$scope.collection) {
+                $scope.collection = {};
+              }
+              $scope.collection[l] = { href: $scope.resource.uiBase+`?filter-links.href=${link.href}`,
+                title: link.title,
+                count: r.feed.opensearch.totalResults
+              };
+
+            });
+          
+          }
         }
       });
     }
