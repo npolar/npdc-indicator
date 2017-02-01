@@ -5,7 +5,7 @@
 <npdc:formula ng-if="document && formula"></npdc:formula>
 
 <div layout="column" layout-align="space-between end" class="np-formula-file-upload" ng-if="document && formula && formula._cfg.form.ready" ng-controller="TimeseriesEditController as ctrl">
-  <md-button class="md-raised md-primary" ng-disabled="!document._rev" ng-click="ctrl.duplicate(document);">
+  <md-button class="md-raised md-primary" ng-disabled="!document._rev" ng-click="duplicate(document, true);">
     <md-icon>control_point_duplicate</md-icon>
     <md-tooltip>Duplicate</md-tooltip>
   </md-button>
@@ -132,7 +132,7 @@
 
   <npdc-links links="document.links"></npdc-links>
 
-  <npdc:metadata document="document" metadata="metadata"></npdc:metadata>
+  <npdc:metadata document="document" resource="resource"></npdc:metadata>
 
   <md-card ng-if="document.authors.length">
     <md-card-header>
