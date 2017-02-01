@@ -1,7 +1,8 @@
 'use strict';
 
-var TimeseriesEditController = function($scope, $controller, $timeout,
-  NpolarApiSecurity, formulaAutoCompleteService, Timeseries, Parameter, npdcAppConfig, formula, google, Sparkline) {
+let TimeseriesEditController = function($scope, $controller, $timeout, $location,
+  NpolarApiSecurity, formulaAutoCompleteService,npdcAppConfig, formula,
+  TimeseriesModel, Timeseries, google, Sparkline) {
 
   'ngInject';
 
@@ -16,7 +17,6 @@ var TimeseriesEditController = function($scope, $controller, $timeout,
       chartElement.innerHTML = '';
     }
     $scope.resource = Timeseries;
-    $scope.parameter = null;
     $scope.siblings = [];
 
     $scope.formula = formula.getInstance({
@@ -35,11 +35,6 @@ var TimeseriesEditController = function($scope, $controller, $timeout,
       }])
     });
 
-    $scope.duplicate = (event) => {
-      console.log(event);
-    };
-
-
     let autocompleteFacets = ['title.en', 'title.nb', 'label.en', 'label.nb',
       'systems', 'keywords.@value', 'species', 'unit.symbol', 'authors.@id',
       'locations.placename', 'locations.country', 'locations.area',
@@ -55,21 +50,7 @@ var TimeseriesEditController = function($scope, $controller, $timeout,
   };
 
   init();
-  let resource = $scope.edit();
-  resource.$promise.then(timeseries => {
-
-    if (timeseries._rev) { // not for new documents
-      $scope.data = timeseries.data;
-
-      if ($scope.data && $scope.data.length > 0) {
-        $timeout(() => {
-          let sparkline = timeseries.data.map(d => [d.value]);
-          google.setOnLoadCallback(Sparkline.draw(sparkline));
-        }, 20);
-      }
-    }
-  });
-
+  $scope.edit();
 
 };
 module.exports = TimeseriesEditController;
