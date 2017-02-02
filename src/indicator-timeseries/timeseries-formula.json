@@ -15,7 +15,7 @@
 		}]
 	}, {
 		"title": "Variables",
-		"fields": ["resolution",
+		"fields": ["resolution","domainType",
 			"labels",
 			"unit"
 		]

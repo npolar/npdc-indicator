@@ -45,7 +45,7 @@ function TimeseriesSearchController($scope, $location, $controller, $filter, $ti
       format: "json",
       variant: "atom",
       //sort: param.sort || "-updated",
-      facets: "keywords.@value,authors.@id,links.title,unit.symbol,systems,species,locations.placename,links.rel,created_by,updated_by",
+      facets: "keywords.@value,authors.@id,links.title,unit.symbol,systems,species,locations.placename,links.rel,created_by,updated_by,domainType",
       fields: "title,authors,systems,keywords,locations.placename,size,labels,species,id,created,created_by,updated,updated_by"
     };
 

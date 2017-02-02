@@ -20,8 +20,12 @@ function TimeseriesModel($filter, NpolarLang, NpolarApiSecurity,
 
   let model = this;
 
-  this.create = () => {
-    return  { systems: ['mosj.no'], uri: ['http://data.npolar.no/monitoring/timeseries'] };
+  model.schema = SCHEMA;
+
+  model.create = () => {
+    return  { systems: ['mosj.no'],
+      domainType: 'PointSeries'
+    };
   };
   Timeseries.create = model.create;
 
@@ -33,31 +37,14 @@ function TimeseriesModel($filter, NpolarLang, NpolarApiSecurity,
     return `https://data.npolar.no/indicator/timeseries/${t.id}`;
   };
 
-  this.title = (t) => {
+  model.title = (t) => {
     return $filter('i18n')(t.title);
   };
 
-  this.keywords = (timeseries) => {
+  model.keywords = (timeseries) => {
     return {
       en: _keywordsT(timeseries, LANG_EN),
       no: _keywordsT(timeseries, LANG_NO)
-    };
-  };
-
-  // FIXME @todo These default should be moved into the directive
-
-  this.metadata = (timeseries, resource, uri=model.uri(timeseries)) => {
-    let path = resource.path.replace('//api.npolar.no', '');
-
-    let byline = ''; //'@todo byline MOSJ';
-
-    return {
-      uri,
-      path,
-      formats: [{ href: NpolarApiSecurity.canonicalUri(resource.path+'/'+timeseries.id), title: "JSON"}],
-      editors: [],
-      byline,
-      schema: SCHEMA
     };
   };
 }

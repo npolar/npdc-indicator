@@ -15,6 +15,7 @@ let TimeseriesShowController = function($scope, $controller, $timeout,
     });
   };
 
+  // @todo NpolarLinkModel?
   ctrl.collection_link = (links,hreflang='en') => {
     return links.find(l => l.rel === 'collection' && l.hreflang === hreflang);
   };
