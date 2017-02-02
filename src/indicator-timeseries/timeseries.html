@@ -21,6 +21,7 @@
         <span>{{ document.unit.symbol || 'N' }}</span>
         [<span ng-repeat="v in document.variables">{{ v.variable }} </span>]
         resolution: {{document.resolution}}
+        domain type: <a href="{{resource.uiBase}}/?filter-domainType={{ document.domainType }}">{{ document.domainType }}</a>
       </section>
 
 
