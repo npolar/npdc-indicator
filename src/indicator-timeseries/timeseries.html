@@ -4,13 +4,6 @@
 
 <npdc:formula ng-if="document && formula"></npdc:formula>
 
-<div layout="column" layout-align="space-between end" class="np-formula-file-upload" ng-if="document && formula && formula._cfg.form.ready" ng-controller="TimeseriesEditController as ctrl">
-  <md-button class="md-raised md-primary" ng-disabled="!document._rev" ng-click="duplicate(document, true);">
-    <md-icon>control_point_duplicate</md-icon>
-    <md-tooltip>Duplicate</md-tooltip>
-  </md-button>
-</div>
-
 <article ng-if="document && !formula" ng-controller="TimeseriesShowController as ctrl">
   <md-card>
     <md-card-content>
