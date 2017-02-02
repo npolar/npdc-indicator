@@ -72,8 +72,6 @@ let TimeseriesShowController = function($scope, $controller, $timeout,
       });
     }
 
-    $scope.metadata = TimeseriesModel.metadata(timeseries, $scope.resource);
-
     $scope.citation = (t) => {
       if (!t) { return; }
       return TimeseriesCitation.citation(timeseries);
@@ -105,7 +103,7 @@ let TimeseriesShowController = function($scope, $controller, $timeout,
               };
 
             });
-          
+
           }
         }
       });
