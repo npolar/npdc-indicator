@@ -2,7 +2,7 @@
 	"fieldsets": [{
 		"title": "Title/Label",
 		"fields": [
-			"title", "label"
+			"title", { "id": "label", "title": "graph legend" }
 		]
 	}, {
 		"title": "Authors",
